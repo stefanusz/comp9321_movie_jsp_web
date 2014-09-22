@@ -1,4 +1,8 @@
 asdasldjnasdasd
 
+<<<<<<< HEAD
 
 stefanus afiuenfuenfwen
+=======
+andrew sadasdasdad
+>>>>>>> 51df11eb6c75fabb37c3b879fa0d3a8865522952
