@@ -25,6 +25,7 @@ public class ControlServlet extends HttpServlet {
         super();
         commandMap = new HashMap<String,Command>();
         commandMap.put("register", new RegisterCommand());
+        commandMap.put("add", new AddCommand());
     }
 
 	/**
@@ -39,32 +40,31 @@ public class ControlServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String register = (String) request.getParameter("register");
+		String addMovies= (String) request.getParameter("addMovies");
 		
 		if(register != null){
-			
 			String message = "An error occurred!";
 			Command command = commandMap.get("register");
 			boolean registered = false;
-			try {
+
 				registered = command.execute(request,response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
 			
 			if(registered){
 				message = "";
 				request.getSession().setAttribute("message", message);
 				response.sendRedirect("index.jsp");
-				
 			}
 			else{
-				
 				request.getSession().setAttribute("message", message);
 				response.sendRedirect("register.jsp");
-			
 			}
 		}
+		else if(addMovies != null){
+			Command command = commandMap.get("add");
+			command.execute(request,response);
+		}
+		
+		
 		
 		
 		//RequestDispatcher rd = request.getRequestDispatcher("/results.jsp");
