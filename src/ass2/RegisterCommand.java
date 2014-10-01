@@ -24,7 +24,7 @@ public class RegisterCommand implements Command{
 	    email = email.toLowerCase();
 		
 	    if(username=="" || firstName=="" || nickname=="" || email=="" || password=="" || password2==""){
-			//error
+			//error asd
 			return false;
 		}
 		if(password != password2){
