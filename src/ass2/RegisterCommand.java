@@ -1,5 +1,10 @@
 package ass2;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,14 +28,28 @@ public class RegisterCommand implements Command{
 	    nickname = nickname.toLowerCase();
 	    email = email.toLowerCase();
 		
+	    try{
+			Connection conn= DBConnectionFactory.getConnection();
+			Statement stmt = conn.createStatement();
+			stmt.execute("INSERT INTO users VALUES (DEFAULT,'asdasdasd','first_name', 'last_name', 'nickname', 'email', 'password', 'role')");
+                        
+		}
+		catch (Exception except){
+            except.printStackTrace();
+        }
+	    
 	    if(username=="" || firstName=="" || nickname=="" || email=="" || password=="" || password2==""){
-			//error asd
+			//error
 			return false;
 		}
 		if(password != password2){
 			//error
 			return false;
 		}
+		
+		
+		
+	
 		
 		return true;
 		
