@@ -23,7 +23,7 @@ public class RegisterCommand implements Command{
 	    nickname = nickname.toLowerCase();
 	    email = email.toLowerCase();
 		
-	    if(username==null || firstName==null || nickname==null || email==null || password==null || password2==null){
+	    if(username=="" || firstName=="" || nickname=="" || email=="" || password=="" || password2==""){
 			//error
 			return false;
 		}
