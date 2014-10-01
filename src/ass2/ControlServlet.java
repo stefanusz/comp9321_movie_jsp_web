@@ -41,14 +41,22 @@ public class ControlServlet extends HttpServlet {
 		String register = (String) request.getParameter("register");
 		
 		if(register != null){
+			
+			String message = "a fail";
 			Command command = commandMap.get("register");
 			boolean registered = command.execute(request,response);
-			request.getSession().setAttribute("registered", registered);
+			
+			
 			System.out.println(registered);
 			if(registered){
+				message = "";
+				request.getSession().setAttribute("message", message);
 				response.sendRedirect("index.jsp");
+				
 			}
 			else{
+				
+				request.getSession().setAttribute("message", message);
 				response.sendRedirect("register.jsp");
 			
 			}

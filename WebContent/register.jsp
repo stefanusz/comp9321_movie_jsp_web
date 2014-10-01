@@ -12,9 +12,8 @@
 <h1>Registration Page</h1>
 
 <form action="control" method="POST">
-<c:if test="${not empty registered}">
-	FAIL
-</c:if>
+
+<c:out value=" ${message} " />
 <table>
 <tr><td>Username: <td><input type='text' name='username'> 
 <tr><td>First name: <td><input type='text' name='firstName'>
