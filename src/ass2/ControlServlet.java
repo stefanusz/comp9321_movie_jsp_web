@@ -44,7 +44,7 @@ public class ControlServlet extends HttpServlet {
 			Command command = commandMap.get("register");
 			boolean registered = command.execute(request,response);
 			request.getSession().setAttribute("registered", registered);
-			
+			System.out.println(registered);
 			if(registered){
 				response.sendRedirect("index.jsp");
 			}
