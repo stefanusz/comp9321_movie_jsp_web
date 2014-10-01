@@ -12,16 +12,20 @@
 
 <form action="control" method="POST">
 
+	<c:if test="${cartSize > 0 }">
+
+	</c:if>
+
 <table>
 <tr><td>Username: <td><input type='text' name='username'> 
-<tr><td>First name: <td><input type='text' name='first_name'>
-<tr><td>Last name: <td><input type='text' name='last_name'>
+<tr><td>First name: <td><input type='text' name='firstName'>
+<tr><td>Last name: <td><input type='text' name='lastName'>
 <tr><td>Nickname: <td><input type='text' name='nickname'>
 <tr><td>E-mail: <td><input type='text' name='email'>
 <tr><td>Password: <td><input type='text' name='password'>
-<tr><td>Repeat password: <td><input type='text' name='password2'>
+<tr><td>Re-type password: <td><input type='text' name='password2'>
 </table>
-<input type='submit' value='Register'>
+<input type='submit' value='Register' name='register'>
 
 </form>
 
