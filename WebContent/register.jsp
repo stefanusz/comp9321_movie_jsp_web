@@ -12,7 +12,7 @@
 
 <form action="control" method="POST">
 
-	<c:if test="${cartSize > 0 }">
+	<c:if test="${registered ==  }">
 
 	</c:if>
 
