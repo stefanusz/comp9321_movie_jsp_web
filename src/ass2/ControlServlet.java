@@ -42,7 +42,7 @@ public class ControlServlet extends HttpServlet {
 		
 		if(register != null){
 			
-			String message = "a fail";
+			String message = "An error occurred!";
 			Command command = commandMap.get("register");
 			boolean registered = false;
 			try {
@@ -50,8 +50,6 @@ public class ControlServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			System.out.println(registered);
 			
 			
 			if(registered){

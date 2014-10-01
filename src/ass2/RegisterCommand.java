@@ -18,6 +18,7 @@ public class RegisterCommand implements Command{
 		conn = DBConnectionFactory.getConnection();
 		stmt = conn.createStatement();
 		
+		//GET ALL PARAMETER
 		String username = (String) request.getParameter("username");
 		String firstName = (String) request.getParameter("firstName");
 		String lastName = (String) request.getParameter("lastName");
@@ -26,26 +27,27 @@ public class RegisterCommand implements Command{
 		String password = (String) request.getParameter("password");
 		String password2 = (String) request.getParameter("password2");
 		
+		//CONVERT TO LOWER CASE
 		username = username.toLowerCase();
 	    firstName = firstName.toLowerCase();
 	    lastName = lastName.toLowerCase();
 	    nickname = nickname.toLowerCase();
 	    email = email.toLowerCase();
-		
 	    
 	    //VALIDATION
-	    /*if(username=="" || firstName=="" || nickname=="" || email==""){
+	    if(username=="" || firstName=="" || nickname=="" || email==""){
 			return false;
 		}
 		if(!password.equals(password2)){
 			return false;
-		}*/
-		
-		
-		ResultSet result = 	stmt.executeQuery("SELECT USERNAME FROM users WHERE USERNAME = '"+username+"'");
-		while (result.next()){
-			String name = result.getString("USERNAME");
-			System.out.println(name);
+		}
+		ResultSet result = stmt.executeQuery("SELECT USERNAME FROM users WHERE USERNAME = '"+username+"'");
+		if(result.next()){
+			return false;
+		}
+		result = stmt.executeQuery("SELECT EMAIL FROM users WHERE EMAIL = '"+email+"'");
+		if(result.next()){
+			return false;
 		}
 		
 		//PASSWORD HASHING
@@ -59,11 +61,9 @@ public class RegisterCommand implements Command{
 		String hashedPassword = sb.toString();
 		
 		//INSERT INTO DATABASE
-		
 		stmt.execute("INSERT INTO users VALUES (DEFAULT,'"+username+"','"+firstName+"+','"+lastName+"','"+nickname+"','"+email+"','"+hashedPassword+"','user')");
 	
 		
-	
 		conn.close();
 		return true;
 		
