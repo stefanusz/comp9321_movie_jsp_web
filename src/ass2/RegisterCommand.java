@@ -1,5 +1,6 @@
 package ass2;
 
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterCommand implements Command{
 
 	@Override
-	public boolean execute(HttpServletRequest request, HttpServletResponse response) {
+	public boolean execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String username = (String) request.getParameter("username");
 		String firstName = (String) request.getParameter("firstName");
@@ -28,26 +29,30 @@ public class RegisterCommand implements Command{
 	    nickname = nickname.toLowerCase();
 	    email = email.toLowerCase();
 		
-	    try{
-			Connection conn= DBConnectionFactory.getConnection();
-			Statement stmt = conn.createStatement();
-			stmt.execute("INSERT INTO users VALUES (DEFAULT,'asdasdasd','first_name', 'last_name', 'nickname', 'email', 'password', 'role')");
-                        
-		}
-		catch (Exception except){
-            except.printStackTrace();
-        }
 	    
-	    if(username=="" || firstName=="" || nickname=="" || email=="" || password=="" || password2==""){
-			//error
+	    //VALIDATION
+	    if(username=="" || firstName=="" || nickname=="" || email==""){
 			return false;
 		}
-		if(password != password2){
-			//error
+		if(!password.equals(password2)){
 			return false;
 		}
 		
+		//PASSWORD HASHING
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(password.getBytes());
+		byte[] digest = md.digest();
+		StringBuffer sb = new StringBuffer();
+		for (byte b : digest) {
+			sb.append(String.format("%02x", b & 0xff));
+		}
+		String hashedPassword = sb.toString();
 		
+		//INSERT TO DATABASE
+		Connection conn= DBConnectionFactory.getConnection();
+		Statement stmt = conn.createStatement();
+		stmt.execute("INSERT INTO users VALUES (DEFAULT,'"+username+"','"+firstName+"+','"+lastName+"','"+nickname+"','"+email+"','"+hashedPassword+"','user')");
+	
 		
 	
 		

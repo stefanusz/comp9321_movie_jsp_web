@@ -44,10 +44,16 @@ public class ControlServlet extends HttpServlet {
 			
 			String message = "a fail";
 			Command command = commandMap.get("register");
-			boolean registered = command.execute(request,response);
-			
+			boolean registered = false;
+			try {
+				registered = command.execute(request,response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 			System.out.println(registered);
+			
+			
 			if(registered){
 				message = "";
 				request.getSession().setAttribute("message", message);
