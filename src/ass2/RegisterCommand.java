@@ -3,6 +3,7 @@ package ass2;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -14,6 +15,8 @@ public class RegisterCommand implements Command{
 
 	@Override
 	public boolean execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		conn = DBConnectionFactory.getConnection();
+		stmt = conn.createStatement();
 		
 		String username = (String) request.getParameter("username");
 		String firstName = (String) request.getParameter("firstName");
@@ -31,11 +34,18 @@ public class RegisterCommand implements Command{
 		
 	    
 	    //VALIDATION
-	    if(username=="" || firstName=="" || nickname=="" || email==""){
+	    /*if(username=="" || firstName=="" || nickname=="" || email==""){
 			return false;
 		}
 		if(!password.equals(password2)){
 			return false;
+		}*/
+		
+		
+		ResultSet result = 	stmt.executeQuery("SELECT USERNAME FROM users WHERE USERNAME = '"+username+"'");
+		while (result.next()){
+			String name = result.getString("USERNAME");
+			System.out.println(name);
 		}
 		
 		//PASSWORD HASHING
@@ -48,17 +58,17 @@ public class RegisterCommand implements Command{
 		}
 		String hashedPassword = sb.toString();
 		
-		//INSERT TO DATABASE
-		Connection conn= DBConnectionFactory.getConnection();
-		Statement stmt = conn.createStatement();
+		//INSERT INTO DATABASE
+		
 		stmt.execute("INSERT INTO users VALUES (DEFAULT,'"+username+"','"+firstName+"+','"+lastName+"','"+nickname+"','"+email+"','"+hashedPassword+"','user')");
 	
 		
 	
-		
+		conn.close();
 		return true;
 		
 	   
 	}
-
+	private Connection conn;
+	private Statement stmt;
 }
