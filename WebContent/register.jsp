@@ -20,8 +20,8 @@
 <tr><td>Last name: <td><input type='text' name='lastName'>
 <tr><td>Nickname: <td><input type='text' name='nickname'>
 <tr><td>E-mail: <td><input type='text' name='email'>
-<tr><td>Password: <td><input type='text' name='password'>
-<tr><td>Re-type password: <td><input type='text' name='password2'>
+<tr><td>Password: <td><input type='password' name='password'>
+<tr><td>Re-type password: <td><input type='password' name='password2'>
 </table>
 <input type='submit' value='Register' name='register'>
 

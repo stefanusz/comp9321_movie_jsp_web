@@ -14,12 +14,12 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/Users/Stefanus/Documents/db-derby-10.9.1.0-bin/lib/derbyclient.jar"/>
+	<classpathentry kind="lib" path="C:/db-derby-10.9.1.0-bin/lib/derbyclient.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/Users/Stefanus/Dropbox/UNSW/COMP9321/CastExercise/WebContent/WEB-INF/lib/commons-collections.jar"/>
-	<classpathentry kind="lib" path="/Users/Stefanus/Dropbox/UNSW/COMP9321/CastExercise/WebContent/WEB-INF/lib/commons-dbcp.jar"/>
-	<classpathentry kind="lib" path="/Users/Stefanus/Dropbox/UNSW/COMP9321/CastExercise/WebContent/WEB-INF/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="/Users/Stefanus/Dropbox/UNSW/COMP9321/CastExercise/WebContent/WEB-INF/lib/commons-pool.jar"/>
-	<classpathentry kind="lib" path="/Users/Stefanus/Documents/apache-tomcat-7.0.42/bin/tomcat-juli.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Andrew Gosali/Downloads/Commons/commons-collections.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Andrew Gosali/Downloads/Commons/commons-dbcp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Andrew Gosali/Downloads/Commons/commons-logging.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Andrew Gosali/Downloads/Commons/commons-pool.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/bin/tomcat-juli.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
