@@ -29,6 +29,8 @@ public class AddCommand implements Command {
 
 			String addMovies= (String) request.getParameter("addMovies");
 			String addCinema= (String) request.getParameter("addCinema");
+			String addAmenities= (String) request.getParameter("addAmenities");
+			String addActor= (String) request.getParameter("addActor");
 			//System.out.println("AAAAAAAAAAAAAA");
 			if(addMovies != null){
 
@@ -129,6 +131,19 @@ public class AddCommand implements Command {
 					return false;
 				}
 			}
+			else if(addAmenities != null){
+				String amenitiesName = request.getParameter("amenitiesName");
+				String insertQuery = "INSERT INTO amenities VALUES (DEFAULT,'"+amenitiesName+"')";
+				stmt.execute(insertQuery);
+			}
+			else if(addActor != null){
+				String actorName = request.getParameter("actorName");
+				String gender = request.getParameter("gender");
+				String dob = request.getParameter("dob");
+				String insertQuery = "INSERT INTO actor VALUES (DEFAULT,'"+actorName+"','"+gender+"','"+dob+")";
+				stmt.execute(insertQuery);
+			}
+			
 
 			conn.close();
 			return true;

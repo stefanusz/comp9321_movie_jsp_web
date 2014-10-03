@@ -42,7 +42,12 @@ public class ControlServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String register  =  request.getParameter("register");
 		String addMovies =  request.getParameter("addMovies");
+		//MultipartFormDataRequest mrequest = new MultipartFormDataRequest(request);
+		//String todo = mrequest.getParameter("todo");
+		
 		String addCinema =  request.getParameter("addCinema");
+		String addAmenities =  request.getParameter("addAmenities");
+		String addActor =  request.getParameter("addActor");
 		String doLogin   = 	request.getParameter("login");
 		
 		String nextPage = "index.jsp";
@@ -73,6 +78,16 @@ public class ControlServlet extends HttpServlet {
 		else if(addCinema != null){
 			System.out.println("BBBBBBBB");
 			prevPage = "addCinema.jsp";
+			Command command = commandMap.get("add");
+			isSuccess = command.execute(request,response);
+		}
+		else if(addAmenities != null){
+			prevPage = "addAmenities.jsp";
+			Command command = commandMap.get("add");
+			isSuccess = command.execute(request,response);
+		}
+		else if(addActor != null){
+			prevPage = "addActor.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
 		}
