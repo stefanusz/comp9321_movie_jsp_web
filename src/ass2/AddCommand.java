@@ -29,7 +29,7 @@ public class AddCommand implements Command {
 
 			String addMovies= (String) request.getParameter("addMovies");
 			String addCinema= (String) request.getParameter("addCinema");
-			System.out.println("AAAAAAAAAAAAAA");
+			//System.out.println("AAAAAAAAAAAAAA");
 			if(addMovies != null){
 
 				String movieTitle = request.getParameter("movieTitle");
