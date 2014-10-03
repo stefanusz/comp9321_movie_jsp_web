@@ -48,13 +48,14 @@ public class ControlServlet extends HttpServlet {
 		String message = "";
 		boolean isSuccess = true;
 		
-		
+		System.out.println("AAAAAAAAAAAAAA");
 		if(register != null){
 			prevPage = "register.jsp";
 			Command command = commandMap.get("register");
 			isSuccess = command.execute(request,response);
 		}
 		else if(addMovies != null){
+			
 			prevPage = "addMovies.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);

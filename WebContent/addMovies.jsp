@@ -11,7 +11,7 @@
 <%@ include file="header.html"%>
 <h1>Add New Movies</h1>
 
-<form action="control" method="POST">
+<form action="control" method="POST" enctype="multipart/form-data">
 
 
 <table>
