@@ -27,15 +27,34 @@ public class Login implements Command {
 			if (login != null) {
 
 				String username = request.getParameter("username");
-				String password = (String) request.getParameter("password");
+				String password = request.getParameter("password");
 				
 				String hashedPassword = hashing(password);
 				
-				String sqlQuery = "SELECT username, password, role FROM movie WHERE username = '" +username+"'";
+				String sqlQuery = "SELECT * FROM users WHERE username = '" +username+"'";
 				
 				ResultSet result = stmt.executeQuery(sqlQuery);
 				
 				while (result.next()){
+					
+					String dbUsername = result.getString("username");
+					String dbPassword = result.getString("password");
+					String dbFirstName = result.getString("first_name");
+					String dbLastName = result.getString("last_name");
+					String dbRole = result.getString("role");
+					String dbNickName = result.getString("nickname");
+					
+					if(username.equalsIgnoreCase(dbUsername)){
+						
+						if(hashedPassword.equals(dbPassword)){
+							request.getSession().setAttribute("username", username);
+							request.getSession().setAttribute("first_name", dbFirstName);
+							request.getSession().setAttribute("last_name", dbLastName);
+							request.getSession().setAttribute("role", dbRole);
+							request.getSession().setAttribute("nickname", dbNickName);
+						}
+						
+					}
 					
 				}
 			}

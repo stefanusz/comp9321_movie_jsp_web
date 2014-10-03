@@ -26,6 +26,7 @@ public class ControlServlet extends HttpServlet {
         commandMap = new HashMap<String,Command>();
         commandMap.put("register", new RegisterCommand());
         commandMap.put("add", new AddCommand());
+        commandMap.put("doLogin", new Login());
     }
 
 	/**
@@ -39,16 +40,25 @@ public class ControlServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String register = (String) request.getParameter("register");
-		String addMovies= (String) request.getParameter("addMovies");
-		String addCinema= (String) request.getParameter("addCinema");
+		String register  =  request.getParameter("register");
+		String addMovies =  request.getParameter("addMovies");
+		String addCinema =  request.getParameter("addCinema");
+		String doLogin   = 	request.getParameter("login");
 		
 		String nextPage = "index.jsp";
 		String prevPage = "";
 		String message = "";
 		boolean isSuccess = true;
+
 		
-		System.out.println("AAAAAAAAAAAAAA");
+		
+		if(doLogin != null){
+			
+			Command command = commandMap.get("doLogin");
+			nextPage = "index.jsp";
+		}
+		
+
 		if(register != null){
 			prevPage = "register.jsp";
 			Command command = commandMap.get("register");
