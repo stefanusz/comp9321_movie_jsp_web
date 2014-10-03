@@ -19,40 +19,42 @@ public class AddCommand implements Command {
 	
 			if(addMovies != null){
 	
-				String movieTitle = (String) request.getParameter("movieTitle");
-				String poster = (String) request.getParameter("poster");
-				String actor = (String) request.getParameter("actor");
+				String movieTitle = request.getParameter("movieTitle");
+				String poster = request.getParameter("poster");
+				String actor = request.getParameter("actor");
 				//TO DO
 				String[] genres = request.getParameterValues("genre");
-				String director = (String) request.getParameter("director");
-				String sypnosis = (String) request.getParameter("sypnosis");
-				String ageRating = (String) request.getParameter("ageRating");
+				String director = request.getParameter("director");
+				String sypnosis = request.getParameter("sypnosis");
+				String ageRating = request.getParameter("ageRating");
 				
 				
 				
 			}
 			else if(addCinema != null){
-				String cinemaName = (String) request.getParameter("cinemaName");
-				String location = (String) request.getParameter("location");
-				String capacity = (String) request.getParameter("capacity");
+				String cinemaName = request.getParameter("cinemaName");
+				String location = request.getParameter("location");
+				String capacity = request.getParameter("capacity");
 				int capacityInt;
 				
 				//CHECK IF ITS INTEGER
 				try { 
 					capacityInt = Integer.parseInt(capacity);
+					String insertQuery = "INSERT INTO cinema VALUES (DEFAULT,'"+cinemaName+"','"+location+"',"+capacityInt+")";
+					stmt.execute(insertQuery);
 			    } catch(NumberFormatException e) { 
-			        return false; 
+			        return false;
 			    }
-				stmt.execute("INSERT INTO cinema VALUES (DEFAULT,'"+cinemaName+"','"+location+"+','"+capacityInt+"')");
 			}
 			
-			
-			
+			conn.close();
+			return true;
 		
 		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}
+
 		
 		return true;
 	}
