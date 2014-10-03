@@ -9,8 +9,15 @@
 <body>
 
 <%@ include file="header.html"%>
+<table>
+<form action="control" method="POST">
+<tr><td>Email: <td><input type='text' name='email'></td></tr>
+<tr><td>Password: <td><input type='password' name='password'></td></tr>
+<tr><td><input type='submit' value='Login' name='login'></td></tr>
+</form>
+</table>
 
-<a href='login.jsp'>Log in</a>
+
 <br>
 Not a member yet? <a href='register.jsp'>Register!</a>
 <br>

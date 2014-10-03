@@ -65,7 +65,7 @@ public class RegisterCommand implements Command{
 			String hashedPassword = sb.toString();
 			
 			//INSERT INTO DATABASE
-			stmt.execute("INSERT INTO users VALUES (DEFAULT,'"+username+"','"+firstName+"+','"+lastName+"','"+nickname+"','"+email+"','"+hashedPassword+"','user')");
+			stmt.execute("INSERT INTO users VALUES (DEFAULT,'"+username+"','"+firstName+"','"+lastName+"','"+nickname+"','"+email+"','"+hashedPassword+"','user')");
 		
 			
 			conn.close();
