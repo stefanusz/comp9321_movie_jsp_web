@@ -44,8 +44,6 @@ public class ControlServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String register  =  request.getParameter("register");
 		String addMovies =  request.getParameter("addMovies");
-		//MultipartFormDataRequest mrequest = new MultipartFormDataRequest(request);
-		//String todo = mrequest.getParameter("todo");
 		
 		String addCinema =  request.getParameter("addCinema");
 		String addAmenities =  request.getParameter("addAmenities");
@@ -60,7 +58,6 @@ public class ControlServlet extends HttpServlet {
 		
 		
 		if(doLogin != null){
-			System.out.println("LOGING ING");
 			Command command = commandMap.get("doLogin");
 			isSuccess = command.execute(request,response);
 			nextPage = "index.jsp";
