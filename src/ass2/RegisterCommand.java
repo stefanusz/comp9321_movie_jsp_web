@@ -40,7 +40,7 @@ public class RegisterCommand implements Command{
 		    email = email.toLowerCase();
 		    
 		    //VALIDATION
-		    if(username=="" || firstName=="" || nickname=="" || email==""){
+		    if(username.equals("") || firstName.equals("") || nickname.equals("") || email.equals("")){
 				return false;
 			}
 			if(!password.equals(password2)){

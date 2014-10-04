@@ -29,6 +29,7 @@ public class ControlServlet extends HttpServlet {
         commandMap.put("register", new RegisterCommand());
         commandMap.put("add", new AddCommand());
         commandMap.put("doLogin", new Login());
+        commandMap.put("edit", new EditCommand());
     }
 
 	/**
@@ -49,6 +50,7 @@ public class ControlServlet extends HttpServlet {
 		String addAmenities =  request.getParameter("addAmenities");
 		String addActor =  request.getParameter("addActor");
 		String doLogin   = 	request.getParameter("login");
+		String editProfile =  request.getParameter("editProfile");
 		
 		String nextPage = "index.jsp";
 		String prevPage = "";
@@ -91,10 +93,15 @@ public class ControlServlet extends HttpServlet {
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
 		}
+		else if(editProfile != null){
+			prevPage = "editProfile.jsp";
+			Command command = commandMap.get("edit");
+			isSuccess = command.execute(request,response);
+		}
 		
 		
 		if(isSuccess){
-			message = "Successfully registered";
+			message = "Success!";
 			request.getSession().setAttribute("message", message);
 			nextPage = "successPage.jsp";
 		}

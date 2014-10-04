@@ -27,7 +27,7 @@
 	</c:when>
 	
 	<c:otherwise>
-		Welcome back, ${username}! <a href='editProfile.jsp'>(edit you profile)</a>
+		Welcome back, ${username}! <a href='editProfile.jsp'>(edit your profile)</a>
 	</c:otherwise>
 </c:choose>
 
