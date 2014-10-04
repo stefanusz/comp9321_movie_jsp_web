@@ -69,7 +69,7 @@ public class RegisterCommand implements Command{
 		
 			
 			conn.close();
-			return true;
+			
 			
 		} catch (Exception e) {
 			

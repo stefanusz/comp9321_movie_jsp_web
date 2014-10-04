@@ -61,6 +61,7 @@ public class AddCommand implements Command {
 				
 				System.out.println("the file name is "+ fileName);
 				
+				
 				System.out.println(System.getProperty("user.dir"));
 				// END OF TESTING UPLOAD OF FILE.
 

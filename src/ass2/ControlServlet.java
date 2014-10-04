@@ -60,8 +60,9 @@ public class ControlServlet extends HttpServlet {
 		
 		
 		if(doLogin != null){
-			
+			System.out.println("LOGING ING");
 			Command command = commandMap.get("doLogin");
+			isSuccess = command.execute(request,response);
 			nextPage = "index.jsp";
 		}
 		

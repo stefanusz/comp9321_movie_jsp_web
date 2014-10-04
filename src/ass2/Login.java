@@ -18,25 +18,25 @@ public class Login implements Command {
 	public boolean execute(HttpServletRequest request,
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
-
+		
 		try {
 			conn = DBConnectionFactory.getConnection();
 			stmt = conn.createStatement();
 
-			String login = request.getParameter("login");
-			if (login != null) {
+			System.out.println("COMES IN333");
 
-				String username = request.getParameter("username");
+				String email = request.getParameter("email");
 				String password = request.getParameter("password");
 				
 				String hashedPassword = hashing(password);
 				
-				String sqlQuery = "SELECT * FROM users WHERE username = '" +username+"'";
+				String sqlQuery = "SELECT * FROM users WHERE email = '" +email+"'";
 				
 				ResultSet result = stmt.executeQuery(sqlQuery);
 				
 				while (result.next()){
 					
+					String dbEmail = result.getString("email");
 					String dbUsername = result.getString("username");
 					String dbPassword = result.getString("password");
 					String dbFirstName = result.getString("first_name");
@@ -44,20 +44,28 @@ public class Login implements Command {
 					String dbRole = result.getString("role");
 					String dbNickName = result.getString("nickname");
 					
-					if(username.equalsIgnoreCase(dbUsername)){
+					System.out.println(dbUsername);
+					System.out.println(dbPassword);
+					System.out.println(dbFirstName);
+
+					
+					if(dbEmail.equalsIgnoreCase(email)){
 						
 						if(hashedPassword.equals(dbPassword)){
-							request.getSession().setAttribute("username", username);
+							System.out.println("COMES In");
+							request.getSession().setAttribute("username", dbUsername);
 							request.getSession().setAttribute("first_name", dbFirstName);
 							request.getSession().setAttribute("last_name", dbLastName);
 							request.getSession().setAttribute("role", dbRole);
 							request.getSession().setAttribute("nickname", dbNickName);
+							request.getSession().setAttribute("email", dbEmail);
+							return true;
 						}
 						
 					}
 					
 				}
-			}
+			
 
 			
 			
@@ -67,7 +75,7 @@ public class Login implements Command {
 			e.printStackTrace();
 		}
 
-		return true;
+		return false;
 
 	}
 
