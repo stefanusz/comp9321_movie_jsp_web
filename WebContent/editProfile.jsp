@@ -29,7 +29,7 @@ request.getSession().setAttribute("message", message);
 <tr><td>New Password: <td><input type='password' name='newPassword'>
 <tr><td>Re-type password: <td><input type='password' name='newPassword2'>
 </table>
-<input type='submit' value='Register' name='editProfile'>
+<input type='submit' value='Edit' name='editProfile'>
 
 </form>
 
