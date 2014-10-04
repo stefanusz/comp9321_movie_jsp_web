@@ -17,7 +17,7 @@
 	<c:when test='${empty username}'>
 		<form action="control" method="POST">
 		<table>
-			<tr><td>Email: <td><input type='text' name='email'></td></tr>
+			<tr><td>Username: <td><input type='text' name='username'></td></tr>
 			<tr><td>Password: <td><input type='password' name='password'></td></tr>
 			<tr><td><input type='submit' value='Login' name='login'></td></tr>
 		</table>
@@ -27,7 +27,7 @@
 	</c:when>
 	
 	<c:otherwise>
-		Welcome back, ${username}!
+		Welcome back, ${username}! <a href='editProfile.jsp'>(edit you profile)</a>
 	</c:otherwise>
 </c:choose>
 

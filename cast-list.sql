@@ -7,3 +7,5 @@ SELECT * from cinema;
 SELECT * from amenities;
 
 SELECT * FROM users WHERE username = 'ste';
+
+DELETE from users;

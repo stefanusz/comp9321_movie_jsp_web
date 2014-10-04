@@ -23,8 +23,6 @@ public class Login implements Command {
 			conn = DBConnectionFactory.getConnection();
 			stmt = conn.createStatement();
 
-			System.out.println("COMES IN333");
-
 				String username = request.getParameter("username");
 				String password = request.getParameter("password");
 				
@@ -43,16 +41,10 @@ public class Login implements Command {
 					String dbLastName = result.getString("last_name");
 					String dbRole = result.getString("role");
 					String dbNickName = result.getString("nickname");
-					
-					System.out.println(dbUsername);
-					System.out.println(dbPassword);
-					System.out.println(dbFirstName);
 
-					
 					if(dbUsername.equalsIgnoreCase(username)){
 						
 						if(hashedPassword.equals(dbPassword)){
-							System.out.println("COMES In");
 							request.getSession().setAttribute("username", dbUsername);
 							request.getSession().setAttribute("first_name", dbFirstName);
 							request.getSession().setAttribute("last_name", dbLastName);
