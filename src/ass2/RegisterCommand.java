@@ -1,6 +1,7 @@
 package ass2;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,13 +24,13 @@ public class RegisterCommand implements Command{
 			stmt = conn.createStatement();
 			
 			//GET ALL PARAMETER
-			String username = (String) request.getParameter("username");
-			String firstName = (String) request.getParameter("firstName");
-			String lastName = (String) request.getParameter("lastName");
-			String nickname = (String) request.getParameter("nickname");
-			String email = (String) request.getParameter("email");
-			String password = (String) request.getParameter("password");
-			String password2 = (String) request.getParameter("password2");
+			String username = request.getParameter("username");
+			String firstName = request.getParameter("firstName");
+			String lastName = request.getParameter("lastName");
+			String nickname = request.getParameter("nickname");
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			String password2 = request.getParameter("password2");
 			
 			//CONVERT TO LOWER CASE
 			username = username.toLowerCase();
@@ -54,15 +55,7 @@ public class RegisterCommand implements Command{
 				return false;
 			}
 			
-			//PASSWORD HASHING
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(password.getBytes());
-			byte[] digest = md.digest();
-			StringBuffer sb = new StringBuffer();
-			for (byte b : digest) {
-				sb.append(String.format("%02x", b & 0xff));
-			}
-			String hashedPassword = sb.toString();
+			String hashedPassword = hashing(password);
 			
 			//INSERT INTO DATABASE
 			stmt.execute("INSERT INTO users VALUES (DEFAULT,'"+username+"','"+firstName+"','"+lastName+"','"+nickname+"','"+email+"','"+hashedPassword+"','user')");
@@ -80,6 +73,29 @@ public class RegisterCommand implements Command{
 		return true;
 		
 	}
+	
+	
+	public String hashing(String password) {
+		String hashedPassword = null;
+
+		MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("MD5");
+			md.update(password.getBytes());
+			byte[] digest = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (byte b : digest) {
+				sb.append(String.format("%02x", b & 0xff));
+			}
+			hashedPassword = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
+		return hashedPassword;
+	}
+	
+	
 	private Connection conn;
 	private Statement stmt;
 }
