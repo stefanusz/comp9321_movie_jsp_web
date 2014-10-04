@@ -72,13 +72,11 @@ public class ControlServlet extends HttpServlet {
 			isSuccess = command.execute(request,response);
 		}
 		else if(addMovies != null){
-			System.out.println("AAAAAAAAAAA");
 			prevPage = "addMovies.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
 		}
 		else if(addCinema != null){
-			System.out.println("BBBBBBBB");
 			prevPage = "addCinema.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);

@@ -64,9 +64,21 @@ public class EditCommand implements Command{
 		    }
 		    
 		    
+		    
+		    
+		    
+		    /*System.out.println(oldPassword);
+		    System.out.println(newPassword);
+		    System.out.println(newPassword2);*/
+		    
+		    
+		    
 		    //UPDATE PASSWORD
-		    if(!oldPassword.equals("") && !newPassword.equals("") && !newPassword2.equals("")){
-		    	if(dbPassword.equals(hashing(oldPassword))){
+		 
+		    if(!oldPassword.equals("") || !newPassword.equals("") || !newPassword2.equals("")){ //if any of them is not empty
+		    	
+		    	
+	    		if(dbPassword.equals(hashing(oldPassword))){
 		    		if(newPassword.equals(newPassword2)){
 		    			String updateQuery = "UPDATE users SET password='"+hashing(newPassword)+"' WHERE username='"+username+"'"; 
 		    			stmt.executeUpdate(updateQuery);
@@ -78,6 +90,8 @@ public class EditCommand implements Command{
 		    	else{
 		    		return false;
 		    	}
+		    	
+		    	
 		    }
 			
 		    
