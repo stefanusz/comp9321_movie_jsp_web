@@ -28,7 +28,7 @@ public class ControlServlet extends HttpServlet {
         commandMap = new HashMap<String,Command>();
         commandMap.put("register", new RegisterCommand());
         commandMap.put("add", new AddCommand());
-        commandMap.put("doLogin", new Login());
+        commandMap.put("authenticate", new Authenticate());
         commandMap.put("edit", new EditCommand());
     }
 
@@ -49,7 +49,8 @@ public class ControlServlet extends HttpServlet {
 		String addCinema =  request.getParameter("addCinema");
 		String addAmenities =  request.getParameter("addAmenities");
 		String addActor =  request.getParameter("addActor");
-		String doLogin   = 	request.getParameter("login");
+		String logout   = 	request.getParameter("logout");
+		String login   = 	request.getParameter("login");
 		String editProfile =  request.getParameter("editProfile");
 		
 		String nextPage = "index.jsp";
@@ -59,8 +60,8 @@ public class ControlServlet extends HttpServlet {
 
 		
 		
-		if(doLogin != null){
-			Command command = commandMap.get("doLogin");
+		if((login != null) || (logout != null)){
+			Command command = commandMap.get("authenticate");
 			isSuccess = command.execute(request,response);
 			nextPage = "index.jsp";
 		}

@@ -28,6 +28,7 @@
 	
 	<c:otherwise>
 		Welcome back, ${username}! <a href='editProfile.jsp'>(edit your profile)</a>
+		<form action="control" method="POST" ><input type='submit' value='Logout' name='logout'></td></form>
 	</c:otherwise>
 </c:choose>
 
