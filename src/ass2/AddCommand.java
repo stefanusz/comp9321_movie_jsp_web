@@ -60,6 +60,7 @@ public class AddCommand implements Command {
 			
 				FileUtils.copyInputStreamToFile(fileContent, targetFile);
 				
+				String imagePath = "poster/"+fileName;
 
 				System.out.println(System.getProperty("user.dir"));
 				// END OF TESTING UPLOAD OF FILE.
@@ -76,10 +77,10 @@ public class AddCommand implements Command {
 				// END OF GETTING THE DIFFERENT VARIABLE FOR THE FORM.
 				
 
-//				String insertQuery = "INSERT INTO movies VALUES (DEFAULT,'"
-//						+ movieTitle + "','" + poster + "','" + director
-//						+ "','" + sypnosis + "','" + ageRating + "')";
-				// stmt.execute(insertQuery);
+				String insertQuery = "INSERT INTO movies VALUES (DEFAULT,'"
+						+ movieTitle + "','" + imagePath + "','" + director
+						+ "','" + sypnosis + "','" + ageRating + "')";
+				 stmt.execute(insertQuery);
 
 			}
 
