@@ -46,6 +46,9 @@ public class AddCommand implements Command {
 
 			if (addMovies != null) {
 
+				
+				
+				
 				// TESTING UPLOAD OF FILE.
 
 				Part filePart = request.getPart("poster");
@@ -59,7 +62,7 @@ public class AddCommand implements Command {
 				FileUtils.copyInputStreamToFile(fileContent, targetFile);
 				
 				
-				System.out.println("the file name is "+ fileName);
+//				System.out.println("the file name is "+ fileName);
 				
 				
 				System.out.println(System.getProperty("user.dir"));

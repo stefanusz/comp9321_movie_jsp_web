@@ -25,12 +25,12 @@ public class Login implements Command {
 
 			System.out.println("COMES IN333");
 
-				String email = request.getParameter("email");
+				String username = request.getParameter("username");
 				String password = request.getParameter("password");
 				
 				String hashedPassword = hashing(password);
 				
-				String sqlQuery = "SELECT * FROM users WHERE email = '" +email+"'";
+				String sqlQuery = "SELECT * FROM users WHERE username = '" +username+"'";
 				
 				ResultSet result = stmt.executeQuery(sqlQuery);
 				
@@ -49,7 +49,7 @@ public class Login implements Command {
 					System.out.println(dbFirstName);
 
 					
-					if(dbEmail.equalsIgnoreCase(email)){
+					if(dbUsername.equalsIgnoreCase(username)){
 						
 						if(hashedPassword.equals(dbPassword)){
 							System.out.println("COMES In");
