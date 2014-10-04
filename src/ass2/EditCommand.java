@@ -82,7 +82,7 @@ public class EditCommand implements Command{
 			
 		    
 		    //UPDATE OTHER DATA
-		    System.out.print(firstName);
+
 			String updateQuery = "UPDATE users SET first_name='"+firstName+"',last_name='"+lastName+"',nickname='"+nickname+"',email='"+email+"' WHERE username='"+username+"'"; 
 			stmt.execute(updateQuery);
 			

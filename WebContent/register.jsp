@@ -11,9 +11,14 @@
 <%@ include file="header.html"%>
 <h1>Registration Page</h1>
 
+<c:out value=" ${message} " />
+<% 
+String message = "";
+request.getSession().setAttribute("message", message);
+%>
+
 <form action="control" method="POST">
 
-<c:out value=" ${message} " />
 <table>
 <tr><td>Username: <td><input type='text' name='username'> 
 <tr><td>First name: <td><input type='text' name='firstName'>

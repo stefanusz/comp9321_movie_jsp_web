@@ -11,9 +11,14 @@
 <%@ include file="header.html"%>
 <h1>Add New Amenities</h1>
 
+<c:out value=" ${message} " />
+<% 
+String message = "";
+request.getSession().setAttribute("message", message);
+%>
+
+
 <form action="control" method="POST">
-
-
 <table>
 <tr><td>Amenities Name: <td><input type='text' name='amenitiesName'> 
 
