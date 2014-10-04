@@ -11,8 +11,13 @@
 <%@ include file="header.html"%>
 <h1>Edit Profile</h1>
 
-<form action="control" method="POST">
+<c:out value=" ${message} " />
+<% 
+String message = "";
+request.getSession().setAttribute("message", message);
+%>
 
+<form action="control" method="POST">
 <table>
 <tr><td>Username: <td><input type='hidden' name='username' value='${username}'>${username}
 <tr><td>First name: <td><input type='text' name='firstName' value='${first_name}'>

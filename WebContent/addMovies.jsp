@@ -11,8 +11,13 @@
 <%@ include file="header.html"%>
 <h1>Add New Movies</h1>
 
-<form action="control" method="POST" enctype="multipart/form-data">
+<c:out value=" ${message} " />
+<% 
+String message = "";
+request.getSession().setAttribute("message", message);
+%>
 
+<form action="control" method="POST" enctype="multipart/form-data">
 
 <table>
 <tr><td>Movie Title: <td><input type='text' name='movieTitle'> 
