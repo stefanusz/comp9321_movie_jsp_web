@@ -1,37 +1,21 @@
 package ass2;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Writer;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Statement;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.taglibs.standard.extra.spath.Path;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 @MultipartConfig
 public class AddCommand implements Command {
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean execute(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -46,36 +30,26 @@ public class AddCommand implements Command {
 
 			if (addMovies != null) {
 
-				
-				
-				
 				// TESTING UPLOAD OF FILE.
 
 				Part filePart = request.getPart("poster");
 				String fileName = getFileName(filePart);
 				InputStream fileContent = filePart.getInputStream();
-				
 				File targetFile = new File ("poster/"+fileName);
-
-			
 				FileUtils.copyInputStreamToFile(fileContent, targetFile);
-				
 				String imagePath = "poster/"+fileName;
 
-				System.out.println(System.getProperty("user.dir"));
+				//System.out.println(System.getProperty("user.dir"));
 				// END OF TESTING UPLOAD OF FILE.
 
 				// START OF GETTING THE DIFFERENT VARIABLE FOR THE NORMAL FORM. 
-
 				String movieTitle = request.getParameter("movieTitle");
 				String[] genres = request.getParameterValues("genre");
 				String director = request.getParameter("director");
 				String sypnosis = request.getParameter("sypnosis");
 				String ageRating = request.getParameter("ageRating");
 				String actor = request.getParameter("actor");
-
 				// END OF GETTING THE DIFFERENT VARIABLE FOR THE FORM.
-				
 
 				String insertQuery = "INSERT INTO movies VALUES (DEFAULT,'"
 						+ movieTitle + "','" + imagePath + "','" + director
@@ -106,11 +80,19 @@ public class AddCommand implements Command {
 						+ amenitiesName + "')";
 				stmt.execute(insertQuery);
 			} else if (addActor != null) {
+				System.out.println("MASUKKKK");
 				String actorName = request.getParameter("actorName");
 				String gender = request.getParameter("gender");
-				String dob = request.getParameter("dob");
+				String dob_day= request.getParameter("dob_day");
+				String dob_month= request.getParameter("dob_month");
+				String dob_year= request.getParameter("dob_year");
+				int dob_day_int = Integer.parseInt(dob_day);
+				int dob_month_int = Integer.parseInt(dob_month);
+				int dob_year_int = Integer.parseInt(dob_year);
+				Date dob = new Date(dob_day_int,dob_month_int,dob_year_int);
+				
 				String insertQuery = "INSERT INTO actor VALUES (DEFAULT,'"
-						+ actorName + "','" + gender + "','" + dob + ")";
+						+ actorName + "','" + gender + "'," + dob + ")";
 				stmt.execute(insertQuery);
 			}
 

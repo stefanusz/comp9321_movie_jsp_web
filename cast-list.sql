@@ -5,6 +5,7 @@ SELECT username from USERS WHERE username = 'ste' ;
 SELECT * from users;
 SELECT * from cinema;
 SELECT * from amenities;
+SELECT * from actor;
 
 SELECT * FROM users WHERE username = 'ste';
 
