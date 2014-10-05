@@ -21,13 +21,27 @@
 	  <option value='male'>Male</option>
 	  <option value='female'>Female</option>
 	</select>
-<tr><td>DOB: <td> <input type="date" name="dob">	  
-	  
-	
- 
+<tr><td>DOB: <td>
+
+	<select name='dob_day'>
+		<c:forEach var="i" begin="1" end="31">
+		   <option value='${i}'>${i}</option>
+		</c:forEach>
+	</select>
+	<select name='dob_month'>
+		<c:forEach var="i" begin="1" end="12">
+		   <option value='${i}'>${i}</option>
+		</c:forEach>
+	</select>
+	<select name='dob_year'>
+		<c:forEach var="i" begin="1900" end="2014">
+		   <option value='${i}'>${i}</option>
+		</c:forEach>
+	</select>
+
 
 </table>
-<input type='submit' value='Add' name='addAmenities'>
+<input type='submit' value='Add' name='addActor'>
 
 </form>
 
