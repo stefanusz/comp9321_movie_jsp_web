@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<script> $(function() {
+    $( "#dialog" ).dialog();
+});</script>
 
 <head>
 
@@ -52,6 +55,7 @@
                     </li>
                     <li>
                         <a href="#">Login</a>
+                        <a href="#">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -73,6 +77,9 @@
 
         <hr>
 
+<div id="dialog" title="Basic dialog">
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
         <!-- Title -->
         <div class="row">
             <div class="col-lg-12">

@@ -80,6 +80,7 @@ public class AddCommand implements Command {
 				String insertQuery = "INSERT INTO movies VALUES (DEFAULT,'"
 						+ movieTitle + "','" + imagePath + "','" + director
 						+ "','" + sypnosis + "','" + ageRating + "')";
+				
 				 stmt.execute(insertQuery);
 
 			}
