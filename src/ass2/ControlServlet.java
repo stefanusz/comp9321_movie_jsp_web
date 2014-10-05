@@ -30,13 +30,24 @@ public class ControlServlet extends HttpServlet {
         commandMap.put("add", new AddCommand());
         commandMap.put("authenticate", new Authenticate());
         commandMap.put("edit", new EditCommand());
+        commandMap.put("view", new ViewCommand());
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String viewAllMovies = request.getParameter("viewAllMovies");
 		
+		String nextPage = "index.jsp";
+		
+		if(viewAllMovies != null){
+			Command command = commandMap.get("view");
+			command.execute(request, response);
+			nextPage = "viewAllMovies.jsp";
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("/"+nextPage);
+		rd.forward(request, response);
 	}
 
 	/**
