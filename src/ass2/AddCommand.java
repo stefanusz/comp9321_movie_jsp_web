@@ -136,7 +136,6 @@ public class AddCommand implements Command {
 				stmt.execute(insertQuery);
 			}
 			else if (addGenre != null) {
-//				System.out.println("MASUK");
 				String genreName = request.getParameter("genreName");
 				genreName = genreName.toLowerCase();
 				

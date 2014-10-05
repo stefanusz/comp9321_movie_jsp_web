@@ -70,7 +70,8 @@ CREATE TABLE  movies (
   poster VARCHAR(45) NOT NULL,
   director VARCHAR(45) NOT NULL,
   sypnosis VARCHAR(45) NOT NULL,
-  rating DECIMAL(2,2) NOT NULL,
+  ageRating VARCHAR(10) NOT NULL,
+  releaseDate DATE NOT NULL,
   PRIMARY KEY (movieID));
 
 
@@ -79,7 +80,6 @@ CREATE TABLE  movies (
 
 CREATE TABLE  resolveMovies (
   resolveMoviesID VARCHAR(45) NOT NULL,
-  releaseDate VARCHAR(45) NOT NULL,
   cinemaID INT NOT NULL,
   movieID INT NOT NULL,
   PRIMARY KEY (resolveMoviesID),
@@ -152,7 +152,7 @@ CREATE TABLE  comment (
   movieID INT NOT NULL,
   userID INT NOT NULL,
   comment VARCHAR(45) NOT NULL,
-  rating INT NOT NULL,
+  rating DECIMAL(2,2) NOT NULL,
   PRIMARY KEY (commentID),
   CONSTRAINT fk_comment_movies1
     FOREIGN KEY (movieID)
