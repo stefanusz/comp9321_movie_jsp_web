@@ -8,6 +8,8 @@ SELECT * from amenities;
 SELECT * from actor;
 SELECT * from movies;
 SELECT * from genre;
+SELECT * from resolvegenre;
+
 
 SELECT * FROM users WHERE username = 'ste';
 
