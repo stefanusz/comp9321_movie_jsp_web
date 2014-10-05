@@ -49,6 +49,7 @@ public class ControlServlet extends HttpServlet {
 		String addCinema =  request.getParameter("addCinema");
 		String addAmenities =  request.getParameter("addAmenities");
 		String addActor =  request.getParameter("addActor");
+		String addGenre=  request.getParameter("addGenre");
 		String logout   = 	request.getParameter("logout");
 		String login   = 	request.getParameter("login");
 		String editProfile =  request.getParameter("editProfile");
@@ -95,6 +96,11 @@ public class ControlServlet extends HttpServlet {
 		else if(editProfile != null){
 			prevPage = "editProfile.jsp";
 			Command command = commandMap.get("edit");
+			isSuccess = command.execute(request,response);
+		}
+		else if(addGenre != null){
+			prevPage = "addGenre.jsp";
+			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
 		}
 		

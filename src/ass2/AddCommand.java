@@ -27,6 +27,8 @@ public class AddCommand implements Command {
 			String addCinema = request.getParameter("addCinema");
 			String addAmenities = request.getParameter("addAmenities");
 			String addActor =  request.getParameter("addActor");
+			String addGenre=  request.getParameter("addGenre");
+			
 
 			if (addMovies != null) {
 
@@ -46,8 +48,12 @@ public class AddCommand implements Command {
 				String director = request.getParameter("director");
 				String sypnosis = request.getParameter("sypnosis");
 				String ageRating = request.getParameter("ageRating");
-				String actor = request.getParameter("actor");
 				// END OF GETTING THE DIFFERENT VARIABLE FOR THE FORM.
+				
+				movieTitle = movieTitle.toLowerCase();
+				director = director.toLowerCase();
+				sypnosis = sypnosis.toLowerCase();
+				ageRating = ageRating.toLowerCase();
 
 				String insertQuery = "INSERT INTO movies VALUES (DEFAULT,'"
 						+ movieTitle + "','" + imagePath + "','" + director
@@ -61,6 +67,11 @@ public class AddCommand implements Command {
 				String cinemaName = request.getParameter("cinemaName");
 				String location = request.getParameter("location");
 				String capacity = request.getParameter("capacity");
+				 
+				cinemaName = cinemaName.toLowerCase();
+				location = location.toLowerCase();
+				capacity = capacity.toLowerCase();
+				
 				int capacityInt;
 				
 				//VALIDATION
@@ -78,8 +89,10 @@ public class AddCommand implements Command {
 				} catch (NumberFormatException e) {
 					return false;
 				}
-			} else if (addAmenities != null) {
+			}
+			else if (addAmenities != null) {
 				String amenitiesName = request.getParameter("amenitiesName");
+				amenitiesName = amenitiesName.toLowerCase();
 				
 				//VALIDATION
 			    if(amenitiesName.equals("")){
@@ -88,12 +101,19 @@ public class AddCommand implements Command {
 				String insertQuery = "INSERT INTO amenities VALUES (DEFAULT,'"
 						+ amenitiesName + "')";
 				stmt.execute(insertQuery);
-			} else if (addActor != null) {
+			}
+			else if (addActor != null) {
 				String actorName = request.getParameter("actorName");
 				String gender = request.getParameter("gender");
 				String dob_day= request.getParameter("dob_day");
 				String dob_month= request.getParameter("dob_month");
 				String dob_year= request.getParameter("dob_year");
+				
+				actorName = actorName.toLowerCase();
+				gender = gender.toLowerCase();
+				dob_day = dob_day.toLowerCase();
+				dob_month = dob_month.toLowerCase();
+				dob_year = dob_year.toLowerCase();
 				
 				//VALIDATION
 			    if(actorName.equals("") || gender.equals("") || dob_day.equals("") || dob_month.equals("")||dob_year.equals("")){
@@ -113,6 +133,19 @@ public class AddCommand implements Command {
 				String dob = dob_year + "-" + dob_month + "-" + dob_day;
 				String insertQuery = "INSERT INTO actor VALUES (DEFAULT,'"
 						+ actorName + "','" + gender + "','"+dob+"')";
+				stmt.execute(insertQuery);
+			}
+			else if (addGenre != null) {
+//				System.out.println("MASUK");
+				String genreName = request.getParameter("genreName");
+				genreName = genreName.toLowerCase();
+				
+				//VALIDATION
+			    if(genreName.equals("")){
+					return false;
+				}
+				String insertQuery = "INSERT INTO genre VALUES (DEFAULT,'"
+						+ genreName + "')";
 				stmt.execute(insertQuery);
 			}
 

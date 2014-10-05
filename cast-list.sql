@@ -6,6 +6,8 @@ SELECT * from users;
 SELECT * from cinema;
 SELECT * from amenities;
 SELECT * from actor;
+SELECT * from movies;
+SELECT * from genre;
 
 SELECT * FROM users WHERE username = 'ste';
 
