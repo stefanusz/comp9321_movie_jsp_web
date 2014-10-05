@@ -35,7 +35,7 @@
 <br>
 <br>
 <a href='control?viewAllMovies=1'>View All Movies</a>
-
+<br>
 
 Now Showing:(order by rating)
 <table>

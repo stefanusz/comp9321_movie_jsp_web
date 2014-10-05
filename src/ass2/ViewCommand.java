@@ -1,10 +1,13 @@
 package ass2;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+//import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,50 +21,53 @@ public class ViewCommand implements Command{
 		try {
 			conn = DBConnectionFactory.getConnection();
 			stmt = conn.createStatement();
+			ArrayList<MovieBean> allMovies = new ArrayList<MovieBean>(); 
 			
-			ResultSet allMovies = stmt.executeQuery("SELECT * FROM movies");
-			if(allMovies.next()){
-				return false;
+			ResultSet resultMovies= stmt.executeQuery("SELECT * FROM movies");
+			
+			while(resultMovies.next()){
+				System.out.println("haha");
+				MovieBean newBean = new MovieBean();
+				
+				//GET ALL THE VALUES
+				String dbID = resultMovies.getString("movieid");
+				String dbPoster = resultMovies.getString("poster");
+				String dbDirector = resultMovies.getString("director");
+				String dbSypnosis = resultMovies.getString("sypnosis");
+				String dbAgeRating = resultMovies.getString("agerating");
+				String dbReleaseDate = resultMovies.getString("releasedate");
+				
+				//CONVERT SEVERAL VALUES
+				int intID = Integer.parseInt(dbID);
+				
+		        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		        Date parsed = format.parse(dbReleaseDate);
+		        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
+		        
+		        
+		        //GET THE GENRES & SET TO THE BEAN
+		        ArrayList<String> dbGenre = new ArrayList<String>();
+		        String getGenreQuery = "SELECT name from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
+		        ResultSet resultGenre= stmt.executeQuery(getGenreQuery);
+		        while(resultGenre.next()){
+		        	newBean.setGenre(resultGenre.getString("name"));
+		        }
+		        
+		        //SET INTO THE NEWBEAN
+				newBean.setBeanID(intID);
+				newBean.setPoster(dbPoster);
+				newBean.setDirector(dbDirector);
+				newBean.setSypnosis(dbSypnosis);
+				newBean.setAgeRating(dbAgeRating);
+				newBean.setReleaseDate(convertedDate);
+				
+				//ADD THE BEAN TO THE LIST
+				allMovies.add(newBean);
 			}
 			
 			
-			//GET ALL PARAMETER
-			String username = request.getParameter("username");
-			String firstName = request.getParameter("firstName");
-			String lastName = request.getParameter("lastName");
-			String nickname = request.getParameter("nickname");
-			String email = request.getParameter("email");
-			String password = request.getParameter("password");
-			String password2 = request.getParameter("password2");
+			request.getSession().setAttribute("allMovies", allMovies);
 			
-			//CONVERT TO LOWER CASE
-			username = username.toLowerCase();
-		    firstName = firstName.toLowerCase();
-		    lastName = lastName.toLowerCase();
-		    nickname = nickname.toLowerCase();
-		    email = email.toLowerCase();
-		    
-		    //VALIDATION
-		    if(username.equals("") || firstName.equals("") || nickname.equals("") || email.equals("")){
-				return false;
-			}
-			if(!password.equals(password2)){
-				return false;
-			}
-			ResultSet result = stmt.executeQuery("SELECT USERNAME FROM users WHERE USERNAME = '"+username+"'");
-			if(result.next()){
-				return false;
-			}
-			result = stmt.executeQuery("SELECT EMAIL FROM users WHERE EMAIL = '"+email+"'");
-			if(result.next()){
-				return false;
-			}
-			
-			String hashedPassword = hashing(password);
-			
-			//INSERT INTO DATABASE
-			stmt.execute("INSERT INTO users VALUES (DEFAULT,'"+username+"','"+firstName+"','"+lastName+"','"+nickname+"','"+email+"','"+hashedPassword+"','user')");
-		
 			
 			conn.close();
 			

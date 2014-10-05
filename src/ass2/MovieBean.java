@@ -44,7 +44,7 @@ public class MovieBean implements Serializable {
 	public void setAgeRating(String ageRating){
 		this.ageRating = ageRating;
 	}
-	public void setDate(Date date){
+	public void setReleaseDate(Date date){
 		this.releaseDate = date;
 	}
 	public void setGenre(String genre){
