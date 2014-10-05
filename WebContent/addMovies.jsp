@@ -11,6 +11,14 @@
 <%@ include file="header.html"%>
 <h1>Add New Movies</h1>
 
+
+<c:if test = "${role != 'admin'}">
+<% response.sendRedirect("index.jsp"); %>
+</c:if>
+
+
+
+
 <c:out value=" ${message} " />
 <%
 	String message = "";

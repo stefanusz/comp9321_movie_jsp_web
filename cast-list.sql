@@ -14,3 +14,8 @@ SELECT * from resolvegenre;
 SELECT * FROM users WHERE username = 'ste';
 
 DELETE from users;
+
+SELECT HashBytes('MD5','admin');
+
+
+UPDATE users SET role = 'admin' WHERE username = 'admin'; 
