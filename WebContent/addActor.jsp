@@ -41,7 +41,7 @@
 
 
 </table>
-<input type='submit' value='Add' name='addAmenities'>
+<input type='submit' value='Add' name='addActor'>
 
 </form>
 

@@ -31,14 +31,12 @@ public class AddCommand implements Command {
 			if (addMovies != null) {
 
 				// TESTING UPLOAD OF FILE.
-
 				Part filePart = request.getPart("poster");
 				String fileName = getFileName(filePart);
 				InputStream fileContent = filePart.getInputStream();
 				File targetFile = new File ("poster/"+fileName);
 				FileUtils.copyInputStreamToFile(fileContent, targetFile);
 				String imagePath = "poster/"+fileName;
-
 				//System.out.println(System.getProperty("user.dir"));
 				// END OF TESTING UPLOAD OF FILE.
 
@@ -63,6 +61,11 @@ public class AddCommand implements Command {
 				String location = request.getParameter("location");
 				String capacity = request.getParameter("capacity");
 				int capacityInt;
+				
+				//VALIDATION
+			    if(cinemaName.equals("") || location.equals("") || capacity.equals("")){
+					return false;
+				}
 
 				// CHECK IF ITS INTEGER
 				try {
@@ -76,23 +79,39 @@ public class AddCommand implements Command {
 				}
 			} else if (addAmenities != null) {
 				String amenitiesName = request.getParameter("amenitiesName");
+				
+				//VALIDATION
+			    if(amenitiesName.equals("")){
+					return false;
+				}
 				String insertQuery = "INSERT INTO amenities VALUES (DEFAULT,'"
 						+ amenitiesName + "')";
 				stmt.execute(insertQuery);
 			} else if (addActor != null) {
-				System.out.println("MASUKKKK");
 				String actorName = request.getParameter("actorName");
 				String gender = request.getParameter("gender");
 				String dob_day= request.getParameter("dob_day");
 				String dob_month= request.getParameter("dob_month");
 				String dob_year= request.getParameter("dob_year");
-				int dob_day_int = Integer.parseInt(dob_day);
-				int dob_month_int = Integer.parseInt(dob_month);
-				int dob_year_int = Integer.parseInt(dob_year);
-				Date dob = new Date(dob_day_int,dob_month_int,dob_year_int);
 				
+				//VALIDATION
+			    if(actorName.equals("") || gender.equals("") || dob_day.equals("") || dob_month.equals("")||dob_year.equals("")){
+					return false;
+				}
+			    if(dob_month == "4"||dob_month == "6"||dob_month == "9"||dob_month == "11"){
+			    	if(Integer.parseInt(dob_day) > 30){
+			    		return false;
+			    	}
+			    }
+			    if(dob_month == "2"){
+			    	if(Integer.parseInt(dob_day) > 28){
+			    		return false;
+			    	}
+			    }
+				
+				String dob = dob_year + "-" + dob_month + "-" + dob_day;
 				String insertQuery = "INSERT INTO actor VALUES (DEFAULT,'"
-						+ actorName + "','" + gender + "'," + dob + ")";
+						+ actorName + "','" + gender + "','"+dob+"')";
 				stmt.execute(insertQuery);
 			}
 
