@@ -26,16 +26,18 @@ public class ViewCommand implements Command{
 			ResultSet resultMovies= stmt.executeQuery("SELECT * FROM movies");
 			
 			while(resultMovies.next()){
-				System.out.println("haha");
 				MovieBean newBean = new MovieBean();
 				
 				//GET ALL THE VALUES
 				String dbID = resultMovies.getString("movieid");
+				String dbTitle = resultMovies.getString("title");
 				String dbPoster = resultMovies.getString("poster");
 				String dbDirector = resultMovies.getString("director");
 				String dbSypnosis = resultMovies.getString("sypnosis");
 				String dbAgeRating = resultMovies.getString("agerating");
 				String dbReleaseDate = resultMovies.getString("releasedate");
+				
+				System.out.println(dbPoster);
 				
 				//CONVERT SEVERAL VALUES
 				int intID = Integer.parseInt(dbID);
@@ -44,17 +46,17 @@ public class ViewCommand implements Command{
 		        Date parsed = format.parse(dbReleaseDate);
 		        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
 		        
-		        
 		        //GET THE GENRES & SET TO THE BEAN
-		        ArrayList<String> dbGenre = new ArrayList<String>();
-		        String getGenreQuery = "SELECT name from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
-		        ResultSet resultGenre= stmt.executeQuery(getGenreQuery);
+		        Statement stmt2 = conn.createStatement();
+		        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
+		        ResultSet resultGenre= stmt2.executeQuery(getGenreQuery);
 		        while(resultGenre.next()){
-		        	newBean.setGenre(resultGenre.getString("name"));
+		        	newBean.setGenre(resultGenre.getString("genreName"));
 		        }
 		        
 		        //SET INTO THE NEWBEAN
 				newBean.setBeanID(intID);
+				newBean.setTitle(dbTitle);
 				newBean.setPoster(dbPoster);
 				newBean.setDirector(dbDirector);
 				newBean.setSypnosis(dbSypnosis);

@@ -18,7 +18,12 @@
 <tr><th>Poster<th>Title<th>Genre<th>Actors<th>Rating<th>Link
 
 <c:forEach var="data" items="${allMovies}">
-	<tr><td><img src="${data.poster}"><td>${data.title}<td>genre<td>actors<td>${data.ageRating}<td>detail
+	<tr><td><img src="poster/Capture.JPG"><td>${data.title}<td>
+		<c:forEach var="genre" items="${data.genre}">
+			${genre} 
+		</c:forEach>		
+	<td>[actors]<td>${data.ageRating}<td> <a href='control?viewDetail=1'>></a>
+	
 </c:forEach>
 
 
