@@ -21,55 +21,103 @@ public class ViewCommand implements Command{
 		try {
 			conn = DBConnectionFactory.getConnection();
 			stmt = conn.createStatement();
-			ArrayList<MovieBean> allMovies = new ArrayList<MovieBean>(); 
 			
-			ResultSet resultMovies= stmt.executeQuery("SELECT * FROM movies");
+			String viewAllMovies =  request.getParameter("viewAllMovies");
+			String viewDetail =  request.getParameter("viewDetail");
 			
-			while(resultMovies.next()){
+
+			if (viewAllMovies != null) {
+				ArrayList<MovieBean> allMovies = new ArrayList<MovieBean>(); 
+				
+				ResultSet resultMovies= stmt.executeQuery("SELECT * FROM movies");
+				
+				while(resultMovies.next()){
+					MovieBean newBean = new MovieBean();
+					
+					//GET ALL THE VALUES
+					String dbID = resultMovies.getString("movieid");
+					String dbTitle = resultMovies.getString("title");
+					String dbPoster = resultMovies.getString("poster");
+					String dbDirector = resultMovies.getString("director");
+					String dbSypnosis = resultMovies.getString("sypnosis");
+					String dbAgeRating = resultMovies.getString("agerating");
+					String dbReleaseDate = resultMovies.getString("releasedate");
+					
+					//CONVERT SEVERAL VALUES
+					int intID = Integer.parseInt(dbID);
+					
+			        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			        Date parsed = format.parse(dbReleaseDate);
+			        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
+			        
+			        //GET THE GENRES & SET TO THE BEAN
+			        Statement stmt2 = conn.createStatement();
+			        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
+			        ResultSet resultGenre= stmt2.executeQuery(getGenreQuery);
+			        while(resultGenre.next()){
+			        	newBean.setGenre(resultGenre.getString("genreName"));
+			        }
+			        
+			        //SET INTO THE NEWBEAN
+					newBean.setMovieID(intID);
+					newBean.setTitle(dbTitle);
+					newBean.setPoster(dbPoster);
+					newBean.setDirector(dbDirector);
+					newBean.setSypnosis(dbSypnosis);
+					newBean.setAgeRating(dbAgeRating);
+					newBean.setReleaseDate(convertedDate);
+					
+					//ADD THE BEAN TO THE LIST
+					allMovies.add(newBean);
+				}
+				
+				
+				request.getSession().setAttribute("allMovies", allMovies);
+			}
+			else if(viewDetail != null){
+				String movieID = request.getParameter("movieid");
 				MovieBean newBean = new MovieBean();
 				
-				//GET ALL THE VALUES
-				String dbID = resultMovies.getString("movieid");
-				String dbTitle = resultMovies.getString("title");
-				String dbPoster = resultMovies.getString("poster");
-				String dbDirector = resultMovies.getString("director");
-				String dbSypnosis = resultMovies.getString("sypnosis");
-				String dbAgeRating = resultMovies.getString("agerating");
-				String dbReleaseDate = resultMovies.getString("releasedate");
+				ResultSet resultDetail= stmt.executeQuery("SELECT * FROM movies WHERE movieid = "+ movieID);
 				
-				System.out.println(dbPoster);
-				
-				//CONVERT SEVERAL VALUES
-				int intID = Integer.parseInt(dbID);
-				
-		        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		        Date parsed = format.parse(dbReleaseDate);
-		        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
-		        
-		        //GET THE GENRES & SET TO THE BEAN
-		        Statement stmt2 = conn.createStatement();
-		        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
-		        ResultSet resultGenre= stmt2.executeQuery(getGenreQuery);
-		        while(resultGenre.next()){
-		        	newBean.setGenre(resultGenre.getString("genreName"));
-		        }
-		        
-		        //SET INTO THE NEWBEAN
-				newBean.setBeanID(intID);
-				newBean.setTitle(dbTitle);
-				newBean.setPoster(dbPoster);
-				newBean.setDirector(dbDirector);
-				newBean.setSypnosis(dbSypnosis);
-				newBean.setAgeRating(dbAgeRating);
-				newBean.setReleaseDate(convertedDate);
-				
-				//ADD THE BEAN TO THE LIST
-				allMovies.add(newBean);
+				if(resultDetail.next()){
+					
+					//GET ALL THE VALUES
+					String dbID = resultDetail.getString("movieid");
+					String dbTitle = resultDetail.getString("title");
+					String dbPoster = resultDetail.getString("poster");
+					String dbDirector = resultDetail.getString("director");
+					String dbSypnosis = resultDetail.getString("sypnosis");
+					String dbAgeRating = resultDetail.getString("agerating");
+					String dbReleaseDate = resultDetail.getString("releasedate");
+					
+					//CONVERT SEVERAL VALUES
+					int intID = Integer.parseInt(dbID);
+					
+			        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			        Date parsed = format.parse(dbReleaseDate);
+			        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
+			        
+			        //GET THE GENRES & SET TO THE BEAN
+			        Statement stmt2 = conn.createStatement();
+			        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
+			        ResultSet resultGenre= stmt2.executeQuery(getGenreQuery);
+			        while(resultGenre.next()){
+			        	newBean.setGenre(resultGenre.getString("genreName"));
+			        }
+			        
+			        //SET INTO THE NEWBEAN
+					newBean.setMovieID(intID);
+					newBean.setTitle(dbTitle);
+					newBean.setPoster(dbPoster);
+					newBean.setDirector(dbDirector);
+					newBean.setSypnosis(dbSypnosis);
+					newBean.setAgeRating(dbAgeRating);
+					newBean.setReleaseDate(convertedDate);
+					
+					request.getSession().setAttribute("movieDetail", newBean);
+				}
 			}
-			
-			
-			request.getSession().setAttribute("allMovies", allMovies);
-			
 			
 			conn.close();
 			

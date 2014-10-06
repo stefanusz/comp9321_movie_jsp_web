@@ -22,7 +22,7 @@
 		<c:forEach var="genre" items="${data.genre}">
 			${genre} 
 		</c:forEach>		
-	<td>[actors]<td>${data.ageRating}<td> <a href='control?viewDetail=1'>></a>
+	<td>[actors]<td>${data.ageRating}<td> <a href='control?viewDetail=1&movieid=${data.movieID}'>></a>
 	
 </c:forEach>
 

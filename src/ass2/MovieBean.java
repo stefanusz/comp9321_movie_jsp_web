@@ -26,7 +26,7 @@ public class MovieBean implements Serializable {
 		genres = new ArrayList<String>();
 		//actors = "";
 	}
-	public void setBeanID(int id){
+	public void setMovieID(int id){
 		this.movieID = id;
 	}
 	public void setTitle(String title){
@@ -53,7 +53,7 @@ public class MovieBean implements Serializable {
 	
 	
 	
-	public int getBeanID(){
+	public int getMovieID(){
 		return this.movieID;
 	}
 	public String getTitle(){
