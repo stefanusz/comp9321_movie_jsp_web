@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -117,6 +118,10 @@ public class ViewCommand implements Command{
 					
 					request.getSession().setAttribute("movieDetail", newBean);
 				}
+				
+				
+				Date date = new Date();
+				request.getSession().setAttribute("currentDate", date);
 			}
 			
 			conn.close();

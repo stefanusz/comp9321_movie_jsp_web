@@ -74,7 +74,7 @@
 		</c:forEach>
 	</select>
 	<select name='release_year'>
-		<c:forEach var="i" begin="1900" end="2014">
+		<c:forEach var="i" begin="1950" end="2020">
 		   <option value='${i}'>${i}</option>
 		</c:forEach>
 	</select>

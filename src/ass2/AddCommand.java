@@ -2,16 +2,20 @@ package ass2;
 
 import java.io.File;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
+
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.derby.client.am.Decimal;
 
 @MultipartConfig
 public class AddCommand implements Command {
@@ -29,6 +33,7 @@ public class AddCommand implements Command {
 			String addAmenities = request.getParameter("addAmenities");
 			String addActor =  request.getParameter("addActor");
 			String addGenre=  request.getParameter("addGenre");
+			String addComment =  request.getParameter("addComment");
 			
 
 			if (addMovies != null) {
@@ -203,6 +208,36 @@ public class AddCommand implements Command {
 						+ genreName + "')";
 				stmt.execute(insertQuery);
 			}
+			else if (addComment != null) {
+				
+				String userID = (String) request.getSession().getAttribute("userid");
+				String movieID = request.getParameter("movieid");
+				String rating = request.getParameter("rating");
+				String comment = request.getParameter("comment");
+				
+				int intRating = Integer.parseInt(rating);
+				//BigDecimal decimalRating = new BigDecimal(rating);
+				//DecimalFormat decimalRating = new DecimalFormat(rating);
+				
+				int intUserID = Integer.parseInt(userID);
+				int intMovieID = Integer.parseInt(movieID);
+				
+				comment = comment.toLowerCase();
+				
+				System.out.println(intRating +" "+intUserID+" "+intMovieID+" "+comment);
+				
+				//VALIDATION
+			    if(rating.equals("")){
+					return false;
+				}
+				
+				String insertQuery = "INSERT INTO comment VALUES (DEFAULT,"+intMovieID+","+intUserID+",'"+comment+"',"+rating+".0)";
+				System.out.println(insertQuery);
+				stmt.execute(insertQuery);
+				
+				
+			}
+
 
 			conn.close();
 			return true;

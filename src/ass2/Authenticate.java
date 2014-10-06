@@ -40,17 +40,19 @@ public class Authenticate implements Command {
 					
 					while (result.next()){
 						
-						String dbEmail = result.getString("email");
+						String dbUserID= result.getString("userid");
 						String dbUsername = result.getString("username");
 						String dbPassword = result.getString("password");
 						String dbFirstName = result.getString("first_name");
 						String dbLastName = result.getString("last_name");
 						String dbRole = result.getString("role");
 						String dbNickName = result.getString("nickname");
+						String dbEmail = result.getString("email");
 
 						if(dbUsername.equalsIgnoreCase(username)){
 							
 							if(hashedPassword.equals(dbPassword)){
+								request.getSession().setAttribute("userid", dbUserID);
 								request.getSession().setAttribute("username", dbUsername);
 								request.getSession().setAttribute("first_name", dbFirstName);
 								request.getSession().setAttribute("last_name", dbLastName);
@@ -63,8 +65,6 @@ public class Authenticate implements Command {
 						}
 						
 					}
-				
-
 				
 				
 

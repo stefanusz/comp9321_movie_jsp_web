@@ -61,14 +61,17 @@ public class ControlServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String register  =  request.getParameter("register");
-		String addMovies =  request.getParameter("addMovies");
 		
+		String addMovies =  request.getParameter("addMovies");
 		String addCinema =  request.getParameter("addCinema");
 		String addAmenities =  request.getParameter("addAmenities");
 		String addActor =  request.getParameter("addActor");
 		String addGenre=  request.getParameter("addGenre");
+		String addComment=  request.getParameter("addComment");
+		
 		String logout   = 	request.getParameter("logout");
 		String login   = 	request.getParameter("login");
+		
 		String editProfile =  request.getParameter("editProfile");
 		
 		String nextPage = "index.jsp";
@@ -120,7 +123,11 @@ public class ControlServlet extends HttpServlet {
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
 		}
-		
+		else if(addComment != null){
+			prevPage = "viewDetail.jsp";
+			Command command = commandMap.get("add");
+			isSuccess = command.execute(request,response);
+		}
 		
 		if(isSuccess){
 			message = "Success!";

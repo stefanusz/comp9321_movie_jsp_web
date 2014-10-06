@@ -32,9 +32,43 @@
 <br>
 [booking?]
 <br>
-[input comment]
+<br>
+<br>
+
+
+<c:if test = "${movieDetail.releaseDate < currentDate}">
+	
+	<c:choose>
+		<c:when test='${empty username}'>
+			You need to login first before comment.<br>
+		</c:when>
+		
+		<c:otherwise>
+			
+			<form action="control" method="POST" > 
+				Comment & Rate:    
+				<input type="radio" name="rating" value="1">1
+				<input type="radio" name="rating" value="2">2
+				<input type="radio" name="rating" value="3">3
+				<input type="radio" name="rating" value="4">4
+				<input type="radio" name="rating" value="5">5
+				<br>
+				<textarea name="comment" cols="30" rows="7"></textarea>
+				<br>
+				<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
+				<input type='submit' value='Comment' name='addComment'>
+			</form>
+		</c:otherwise>
+	</c:choose>
+	
+
+
+
+
 <br>
 [list of comments/ratings]
 
+
+</c:if>
 </body>
 </html>
