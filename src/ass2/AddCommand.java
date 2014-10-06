@@ -216,8 +216,6 @@ public class AddCommand implements Command {
 				String comment = request.getParameter("comment");
 				
 				int intRating = Integer.parseInt(rating);
-				//BigDecimal decimalRating = new BigDecimal(rating);
-				//DecimalFormat decimalRating = new DecimalFormat(rating);
 				
 				int intUserID = Integer.parseInt(userID);
 				int intMovieID = Integer.parseInt(movieID);
@@ -231,7 +229,7 @@ public class AddCommand implements Command {
 					return false;
 				}
 				
-				String insertQuery = "INSERT INTO comment VALUES (DEFAULT,"+intMovieID+","+intUserID+",'"+comment+"',"+rating+".0)";
+				String insertQuery = "INSERT INTO comment VALUES (DEFAULT,"+intMovieID+","+intUserID+",'"+comment+"',"+intRating+".0)";
 				System.out.println(insertQuery);
 				stmt.execute(insertQuery);
 				

@@ -152,7 +152,7 @@ CREATE TABLE  comment (
   movieID INT NOT NULL,
   userID INT NOT NULL,
   comment VARCHAR(45) NOT NULL,
-  rating DECIMAL(2,2) NOT NULL,
+  rating DECIMAL(4,2) NOT NULL,
   PRIMARY KEY (commentID),
   CONSTRAINT fk_comment_movies1
     FOREIGN KEY (movieID)
