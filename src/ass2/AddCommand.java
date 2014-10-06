@@ -106,6 +106,8 @@ public class AddCommand implements Command {
 				String cinemaName = request.getParameter("cinemaName");
 				String location = request.getParameter("location");
 				String capacity = request.getParameter("capacity");
+				String[] amenities = request.getParameterValues("amenitiesid");
+
 				 
 				cinemaName = cinemaName.toLowerCase();
 				location = location.toLowerCase();
@@ -128,6 +130,21 @@ public class AddCommand implements Command {
 				} catch (NumberFormatException e) {
 					return false;
 				}
+				
+				//GET THE NEWEST cinemaID
+				ResultSet cinemaSet = stmt.executeQuery("SELECT * FROM cinema WHERE name='"+cinemaName+"'");
+				int cinemaID = 0;
+				while(cinemaSet.next()){
+					 cinemaID = cinemaSet.getInt("cinemaid");
+				}
+				
+				//INSERT INTO RESOLVEAMENITIES
+				for(String amenity : amenities){
+					int amenitiesID = Integer.parseInt(amenity);
+					String insertQuery = "INSERT INTO resolveamenities VALUES (" + cinemaID + "," + amenitiesID + ")";
+					stmt.execute(insertQuery);
+				}
+				
 			}
 			else if (addAmenities != null) {
 				String amenitiesName = request.getParameter("amenitiesName");

@@ -9,6 +9,7 @@ SELECT * from actor;
 SELECT * from movies;
 SELECT * from genre;
 SELECT * from resolvegenre;
+SELECT * from resolveamenities;
 
 
 SELECT * FROM users WHERE username = 'ste';
