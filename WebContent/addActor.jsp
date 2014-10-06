@@ -11,9 +11,10 @@
 <%@ include file="header.html"%>
 <h1>Add New Actor</h1>
 
+<%@ include file="headerForm.jsp"%>
+
+
 <form action="control" method="POST">
-
-
 <table>
 <tr><td>Actor Name: <td><input type='text' name='actorName'>
 <tr><td>Gender: <td>

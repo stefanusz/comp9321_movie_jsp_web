@@ -11,11 +11,8 @@
 <%@ include file="header.html"%>
 <h1>Add New Genre</h1>
 
-<c:out value=" ${message} " />
-<% 
-String message = "";
-request.getSession().setAttribute("message", message);
-%>
+<%@ include file="headerForm.jsp"%>
+
 
 
 <form action="control" method="POST">

@@ -12,18 +12,16 @@
 <h1>Add New Movies</h1>
 
 
-<c:if test = "${role != 'admin'}">
-<% response.sendRedirect("index.jsp"); %>
-</c:if>
-
+<%@ include file="headerForm.jsp"%>
 
 
 
 <c:out value=" ${message} " />
-<%
-	String message = "";
-	request.getSession().setAttribute("message", message);
+<% 
+	request.getSession().setAttribute("message", "");
 %>
+
+
 
 <%@ page import="java.sql.*" %>
 <%@ page import="ass2.*" %>

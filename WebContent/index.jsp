@@ -12,6 +12,13 @@
 
 <%@ include file="header.html"%>
 
+<c:out value="${message}" />
+<% 
+	request.getSession().setAttribute("message", "");
+%>
+
+<br>
+<br>
 
 <c:choose>
 	<c:when test='${empty username}'>
@@ -32,9 +39,11 @@
 	</c:otherwise>
 </c:choose>
 
+
 <br>
 <br>
 <a href='control?viewAllMovies=1'>View All Movies</a>
+<br>
 <br>
 
 Now Showing:(order by rating)

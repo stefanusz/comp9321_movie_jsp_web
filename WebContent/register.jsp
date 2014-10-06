@@ -13,8 +13,7 @@
 
 <c:out value=" ${message} " />
 <% 
-String message = "";
-request.getSession().setAttribute("message", message);
+	request.getSession().setAttribute("message", "");
 %>
 
 <form action="control" method="POST">
