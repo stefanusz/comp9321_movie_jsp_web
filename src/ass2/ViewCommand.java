@@ -38,7 +38,7 @@ public class ViewCommand implements Command{
 					//GET ALL THE VALUES
 					String dbID = resultMovies.getString("movieid");
 					String dbTitle = resultMovies.getString("title");
-					String dbPoster = resultMovies.getString("poster");
+					String dbPoster = request.getContextPath()+"/"+resultMovies.getString("poster");
 					String dbDirector = resultMovies.getString("director");
 					String dbSypnosis = resultMovies.getString("sypnosis");
 					String dbAgeRating = resultMovies.getString("agerating");
@@ -59,6 +59,7 @@ public class ViewCommand implements Command{
 			        	newBean.setGenre(resultGenre.getString("genreName"));
 			        }
 			        
+			        System.out.println(dbPoster);
 			        //SET INTO THE NEWBEAN
 					newBean.setMovieID(intID);
 					newBean.setTitle(dbTitle);
@@ -122,6 +123,15 @@ public class ViewCommand implements Command{
 				
 				Date date = new Date();
 				request.getSession().setAttribute("currentDate", date);
+			}
+			else{ //VIEW NOW SHOWING AND COMING SOON IN THE INDEX PAGE
+				MovieBean newBean = new MovieBean();
+				ArrayList<MovieBean> nowShowing = new ArrayList<MovieBean>();
+				
+				Date date = new Date();
+				request.getSession().setAttribute("currentDate", date);
+				
+				//ResultSet resultDetail= stmt.executeQuery("SELECT * FROM movies WHERE DATE = "+ movieID);
 			}
 			
 			conn.close();

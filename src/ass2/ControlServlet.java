@@ -52,6 +52,11 @@ public class ControlServlet extends HttpServlet {
 			command.execute(request, response);
 			nextPage = "viewDetail.jsp";
 		}
+		else{ //TO INDEX PAGE AT THE BEGINNING
+			Command command = commandMap.get("view");
+			command.execute(request, response);
+			
+		}
 		RequestDispatcher rd = request.getRequestDispatcher("/"+nextPage);
 		rd.forward(request, response);
 	}

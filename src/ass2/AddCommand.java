@@ -42,7 +42,7 @@ public class AddCommand implements Command {
 				Part filePart = request.getPart("poster");
 				String fileName = getFileName(filePart);
 				InputStream fileContent = filePart.getInputStream();
-				File targetFile = new File ("poster/"+fileName);
+				File targetFile = new File ("WebContent/poster/"+fileName);
 				FileUtils.copyInputStreamToFile(fileContent, targetFile);
 				String imagePath = "poster/"+fileName;
 				//System.out.println(System.getProperty("user.dir"));
