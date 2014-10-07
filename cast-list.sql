@@ -23,3 +23,8 @@ SELECT HashBytes('MD5','admin');
 UPDATE users SET role = 'admin' WHERE username = 'admin';
 
 SELECT name from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = 7;
+
+
+SELECT AVG(rating) AS averageRating FROM comment WHERE movieid = 2;
+
+SELECT * FROM movies WHERE releasedate < '2001-01-01' ORDER BY movieid DESC;

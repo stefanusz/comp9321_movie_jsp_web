@@ -20,13 +20,11 @@
 <tr><th>Poster<th>Title<th>Genre<th>Actors<th>Rating<th>Link
 
 <c:forEach var="data" items="${allMovies}">
-	<%--<tr><td><img src="<%=request.getContextPath()%>/poster/Capture.JPG" alt="capture_test" height="42" width="42"><td>${data.title}<td> --%>
 	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td>${data.title}<td>
 		<c:forEach var="genre" items="${data.genre}">
 			${genre} 
 		</c:forEach>		
 	<td>[actors]<td>${data.ageRating}<td> <a href='control?viewDetail=1&movieid=${data.movieID}'>></a>
-	
 </c:forEach>
 
 
