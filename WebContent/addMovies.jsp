@@ -39,7 +39,7 @@
 <table>
 <tr><td>Movie Title: <td><input type='text' name='movieTitle'> 
 <tr><td>Poster: <td><input type="file" name="poster" size="50"/>
-<tr><td>Actors: <td>
+<tr><td>Actors(use ',' for multiple actors): <td><input type='text' name='actor'>
 <tr><td>Genre:<td>
 <% while(genreSet.next()){
 		String genre = genreSet.getString("name");

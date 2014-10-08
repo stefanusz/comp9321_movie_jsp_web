@@ -50,6 +50,7 @@ public class AddCommand implements Command {
 
 				// START OF GETTING THE DIFFERENT VARIABLE FOR THE NORMAL FORM. 
 				String movieTitle = request.getParameter("movieTitle");
+				String actor = request.getParameter("actor");
 				String[] genres = request.getParameterValues("genreid");
 				String director = request.getParameter("director");
 				String sypnosis = request.getParameter("sypnosis");
@@ -58,6 +59,9 @@ public class AddCommand implements Command {
 				String release_month= request.getParameter("release_month");
 				String release_year= request.getParameter("release_year");
 				// END OF GETTING THE DIFFERENT VARIABLE FOR THE FORM.
+				
+				
+				
 				
 				movieTitle = movieTitle.toLowerCase();
 				director = director.toLowerCase();
@@ -104,6 +108,32 @@ public class AddCommand implements Command {
 					stmt.execute(insertQuery);
 				}
 				
+				//INSERT INTO RESOLVEACTOR
+				String[] actors = actor.split(",");
+				for(String name : actors){
+					name = name.toLowerCase();
+					Statement stmtActor = conn.createStatement();
+					ResultSet getActor = stmtActor.executeQuery("SELECT * FROM actor WHERE name='"+name+"'");
+					int actorID = 0;
+					
+					if(!getActor.next()){
+						stmt.execute("INSERT INTO actor VALUES (DEFAULT,'"+name+"')");
+		
+						//GET THE NEWEST actorID
+						Statement stmtActor2 = conn.createStatement();
+						ResultSet getActorID = stmtActor2.executeQuery("SELECT * FROM actor WHERE name='"+name+"'");
+						
+						while(getActorID.next()){
+							 actorID = getActorID.getInt("actorid");
+						}
+					}
+					else{
+						actorID = getActor.getInt("actorid");
+					}
+					
+					stmt.execute("INSERT INTO resolveactor VALUES ("+movieID+","+actorID+")");
+					
+				}
 
 			}
 
@@ -150,6 +180,8 @@ public class AddCommand implements Command {
 					stmt.execute(insertQuery);
 				}
 				
+				
+				
 			}
 			else if (addAmenities != null) {
 				String amenitiesName = request.getParameter("amenitiesName");
@@ -165,35 +197,15 @@ public class AddCommand implements Command {
 			}
 			else if (addActor != null) {
 				String actorName = request.getParameter("actorName");
-				String gender = request.getParameter("gender");
-				String dob_day= request.getParameter("dob_day");
-				String dob_month= request.getParameter("dob_month");
-				String dob_year= request.getParameter("dob_year");
-				
+								
 				actorName = actorName.toLowerCase();
-				gender = gender.toLowerCase();
-				dob_day = dob_day.toLowerCase();
-				dob_month = dob_month.toLowerCase();
-				dob_year = dob_year.toLowerCase();
 				
 				//VALIDATION
-			    if(actorName.equals("") || gender.equals("") || dob_day.equals("") || dob_month.equals("")||dob_year.equals("")){
+			    if(actorName.equals("")){
 					return false;
 				}
-			    if(dob_month == "4"||dob_month == "6"||dob_month == "9"||dob_month == "11"){
-			    	if(Integer.parseInt(dob_day) > 30){
-			    		return false;
-			    	}
-			    }
-			    if(dob_month == "2"){
-			    	if(Integer.parseInt(dob_day) > 28){
-			    		return false;
-			    	}
-			    }
-				
-				String dob = dob_year + "-" + dob_month + "-" + dob_day;
 				String insertQuery = "INSERT INTO actor VALUES (DEFAULT,'"
-						+ actorName + "','" + gender + "','"+dob+"')";
+						+ actorName +"')";
 				stmt.execute(insertQuery);
 			}
 			else if (addGenre != null) {

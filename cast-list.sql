@@ -11,6 +11,7 @@ SELECT * from genre;
 SELECT * from resolvegenre;
 SELECT * from resolveamenities;
 SELECT * from comment;
+SELECT * from resolveactor;
 
 
 SELECT * FROM users WHERE username = 'ste';
@@ -34,3 +35,5 @@ SELECT title,username,comment,rating FROM comment c
 JOIN movies m ON c.movieid = m.movieid
 JOIN users u ON c.userid = u.userid
 WHERE m.movieid = 2;
+
+INSERT INTO actor VALUES (DEFAULT,'cat');
