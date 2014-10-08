@@ -28,3 +28,9 @@ SELECT name from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movi
 SELECT AVG(rating) AS averageRating FROM comment WHERE movieid = 2;
 
 SELECT * FROM movies WHERE releasedate < '2001-01-01' ORDER BY movieid DESC;
+SELECT * FROM movies WHERE releasedate > '2014-10-08' ORDER BY movieid DESC;
+
+SELECT title,username,comment,rating FROM comment c
+JOIN movies m ON c.movieid = m.movieid
+JOIN users u ON c.userid = u.userid
+WHERE m.movieid = 2;

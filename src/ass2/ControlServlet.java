@@ -53,7 +53,6 @@ public class ControlServlet extends HttpServlet {
 			nextPage = "viewDetail.jsp";
 		}
 		else{ //TO INDEX PAGE AT THE BEGINNING
-			System.out.println("MASUK");
 			Command command = commandMap.get("view");
 			command.execute(request, response);
 			

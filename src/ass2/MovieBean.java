@@ -24,7 +24,7 @@ public class MovieBean implements Serializable {
 		ageRating = "";
 		releaseDate = new Date();
 		genres = new ArrayList<String>();
-		rating = 0;
+		rating = "";
 		//actors = "";
 	}
 	public void setMovieID(int id){
@@ -51,7 +51,7 @@ public class MovieBean implements Serializable {
 	public void setGenre(String genre){
 		this.genres.add(genre);
 	}
-	public void setRating(double rating){
+	public void setRating(String rating){
 		this.rating = rating;
 	}
 	
@@ -81,7 +81,7 @@ public class MovieBean implements Serializable {
 	public ArrayList<String> getGenre() {
 		return this.genres;
 	}
-	public double getRating() {
+	public String getRating() {
 		return this.rating;
 	}
 	
@@ -95,7 +95,7 @@ public class MovieBean implements Serializable {
 	private String ageRating;
 	private Date releaseDate;
 	private ArrayList<String> genres;
-	private double rating;
+	private String rating;
 	//private String actors;
 
 	

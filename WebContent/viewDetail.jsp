@@ -66,8 +66,13 @@
 
 
 <br>
-[list of comments/ratings]
-
+Comments:
+<c:forEach var="data" items="${movieComment}">
+	<table>
+		<tr><td>${data.user} -> <td>${data.rating}/5.0
+		<tr><td colspan='2'>${data.comment}
+	</table>
+</c:forEach>
 
 </c:if>
 </body>

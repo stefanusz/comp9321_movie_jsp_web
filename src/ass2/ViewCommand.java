@@ -79,7 +79,9 @@ public class ViewCommand implements Command{
 			}
 			else if(viewDetail != null){
 				String movieID = request.getParameter("movieid");
-				MovieBean newBean = new MovieBean();
+				MovieBean newMovieBean = new MovieBean();
+				ArrayList<CommentBean> movieComment = new ArrayList<CommentBean>();
+				
 				
 				ResultSet resultDetail= stmt.executeQuery("SELECT * FROM movies WHERE movieid = "+ movieID);
 				
@@ -106,19 +108,34 @@ public class ViewCommand implements Command{
 			        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
 			        ResultSet resultGenre= stmt2.executeQuery(getGenreQuery);
 			        while(resultGenre.next()){
-			        	newBean.setGenre(resultGenre.getString("genreName"));
+			        	newMovieBean.setGenre(resultGenre.getString("genreName"));
 			        }
 			        
 			        //SET INTO THE NEWBEAN
-					newBean.setMovieID(intID);
-					newBean.setTitle(dbTitle);
-					newBean.setPoster(dbPoster);
-					newBean.setDirector(dbDirector);
-					newBean.setSypnosis(dbSypnosis);
-					newBean.setAgeRating(dbAgeRating);
-					newBean.setReleaseDate(convertedDate);
+			        newMovieBean.setMovieID(intID);
+			        newMovieBean.setTitle(dbTitle);
+			        newMovieBean.setPoster(dbPoster);
+			        newMovieBean.setDirector(dbDirector);
+			        newMovieBean.setSypnosis(dbSypnosis);
+			        newMovieBean.setAgeRating(dbAgeRating);
+			        newMovieBean.setReleaseDate(convertedDate);
 					
-					request.getSession().setAttribute("movieDetail", newBean);
+					//GET THE COMMENTS
+			        Statement stmt3 = conn.createStatement();
+			        String getCommentQuery = "SELECT username,comment,rating FROM comment c JOIN movies m ON c.movieid = m.movieid JOIN users u ON c.userid = u.userid WHERE m.movieid ="+movieID;
+			        ResultSet resultComment= stmt3.executeQuery(getCommentQuery);
+			        while(resultComment.next()){
+			        	CommentBean newCommentBean = new CommentBean();
+			        	newCommentBean.setUser(resultComment.getString("username"));
+			        	newCommentBean.setComment(resultComment.getString("comment"));
+			        	newCommentBean.setRating(resultComment.getDouble("rating"));
+			        	movieComment.add(newCommentBean);
+			        	
+			        }
+					
+					
+					request.getSession().setAttribute("movieDetail", newMovieBean);
+					request.getSession().setAttribute("movieComment", movieComment);
 				}
 				
 				
@@ -134,23 +151,24 @@ public class ViewCommand implements Command{
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");      
 				String currentDate = df.format(date);
 				
+				//GET FOR NOW SHOWING
 				int counter = 4;
 				Statement stmtNowShowing = conn.createStatement();
 				ResultSet resultNowShowing = stmtNowShowing.executeQuery("SELECT * FROM movies WHERE releasedate < '"+ currentDate+"' ORDER BY movieid DESC");
-				//resultNowShowing.afterLast();
+				
 				while(resultNowShowing.next() && counter > 0){
 					MovieBean newBean = new MovieBean();
 					int dbMovieID = resultNowShowing.getInt("movieid");
 					String dbTitle = resultNowShowing.getString("title");
 					String dbPoster = resultNowShowing.getString("poster");
-					double averageRating = 0;
+					String averageRating = "";
 
-					ResultSet resultRating = stmt.executeQuery("SELECT AVG(rating) AS averageRating FROM comment WHERE movieid ="+ dbMovieID);
+					ResultSet resultRating = stmt.executeQuery("SELECT AVG(rating) AS averagerating FROM comment WHERE movieid ="+ dbMovieID);
 					if(resultRating.next()){
-						averageRating = resultRating.getDouble("averageRating");
+						averageRating = resultRating.getString("averagerating");
 				        //DecimalFormat df2 = new DecimalFormat("#.##");
 				        //averageRating = df2.format(averageRating);
-				        //System.out.print(averageRating);
+				        System.out.print(averageRating);
 					}
 					newBean.setMovieID(dbMovieID);
 					newBean.setTitle(dbTitle);
@@ -160,17 +178,21 @@ public class ViewCommand implements Command{
 					nowShowing.add(newBean);
 					counter--;
 				}
-				
+				/*
+				//GET FOR COMING SOON
 				counter = 4;
 				Statement stmtComingSoon = conn.createStatement();
+				//ystem.out.println(currentDate);
 				ResultSet resultComingSoon = stmtComingSoon.executeQuery("SELECT * FROM movies WHERE releasedate > '"+ currentDate+"' ORDER BY movieid DESC");
-				//resultComingSoon.afterLast();
+
 				while(resultComingSoon.next() && counter > 0){
 					MovieBean newBean = new MovieBean();
 					int dbMovieID = resultNowShowing.getInt("movieid");
 					String dbTitle = resultNowShowing.getString("title");
+					//System.out.println(dbTitle);
 					String dbPoster = resultNowShowing.getString("poster");
 					String dbReleaseDate = resultNowShowing.getString("releasedate");
+					//System.out.println(dbReleaseDate);
 					
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				    Date parsed = format.parse(dbReleaseDate);
@@ -181,9 +203,6 @@ public class ViewCommand implements Command{
 					ResultSet resultRating = stmt.executeQuery("SELECT AVG(rating) AS averageRating FROM comment WHERE movieid ="+ dbMovieID);
 					if(resultRating.next()){
 						averageRating = resultRating.getDouble("averageRating");
-				        //DecimalFormat df2 = new DecimalFormat("#.##");
-				        //averageRating = df2.format(averageRating);
-				        //System.out.print(averageRating);
 					}
 					newBean.setMovieID(dbMovieID);
 					newBean.setTitle(dbTitle);
@@ -195,7 +214,7 @@ public class ViewCommand implements Command{
 					comingSoon.add(newBean);
 					counter--;
 				}
-				
+				*/
 				request.getSession().setAttribute("nowShowing", nowShowing);
 				request.getSession().setAttribute("comingSoon", comingSoon);
 			}
