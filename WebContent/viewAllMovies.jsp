@@ -17,14 +17,14 @@
 
 
 <table>
-<tr><th>Poster<th>Title<th>Genre<th>Actors<th>Rating<th>Link
+<tr><th>Poster<th>Title<th>Genre<th>Actors<th>Rating
 
 <c:forEach var="data" items="${allMovies}">
-	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td>${data.title}<td>
+	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>
 		<c:forEach var="genre" items="${data.genre}">
 			${genre} 
 		</c:forEach>		
-	<td>[actors]<td>${data.ageRating}<td> <a href='control?viewDetail=1&movieid=${data.movieID}'>></a>
+	<td>[actors]<td>${data.ageRating}
 </c:forEach>
 
 

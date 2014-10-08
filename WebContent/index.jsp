@@ -42,20 +42,21 @@
 
 <br>
 <br>
-<a href='control?viewAllMovies=1'>View All Movies</a>
-<br>
-<br>
+
 
 
 Now Showing:(order by rating)
 <table>
-<tr><th>No.<th>Poster<th>Title<th>Rating
+<tr><th>Poster<th>Title<th>Rating
 
 <c:forEach var="data" items="${nowShowing}">
-	<tr><td>no.<td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td>${data.title}<td>${data.rating}<td> <a href='control?viewDetail=1&movieid=${data.movieID}'>></a>
+	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.rating}
 </c:forEach>
 
 </table>
+<a href='control?viewAllMovies=1'>View All</a>
+<br>
+<br>
 
 <br>
 
