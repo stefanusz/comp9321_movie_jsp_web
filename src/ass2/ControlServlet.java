@@ -71,8 +71,9 @@ public class ControlServlet extends HttpServlet {
 		String addCinema =  request.getParameter("addCinema");
 		String addAmenities =  request.getParameter("addAmenities");
 		String addActor =  request.getParameter("addActor");
-		String addGenre=  request.getParameter("addGenre");
-		String addComment=  request.getParameter("addComment");
+		String addGenre =  request.getParameter("addGenre");
+		String addComment =  request.getParameter("addComment");
+		String addShowTimes =  request.getParameter("addShowTimes");
 		
 		String logout   = 	request.getParameter("logout");
 		String login   = 	request.getParameter("login");
@@ -152,6 +153,17 @@ public class ControlServlet extends HttpServlet {
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
 			request.getSession().setAttribute("message", "Comment successfully added");
+			nextPage = "viewDetail.jsp";
+			
+			//REFRESH VIEWING DETAIL AND NOWSHOWING
+			command = commandMap.get("view");
+			isSuccess = command.execute(request,response);
+		}
+		else if(addShowTimes != null){
+			prevPage = "viewDetail.jsp";
+			Command command = commandMap.get("add");
+			isSuccess = command.execute(request,response);
+			request.getSession().setAttribute("message", "ShowTimes successfully added");
 			nextPage = "viewDetail.jsp";
 			
 			//REFRESH VIEWING DETAIL AND NOWSHOWING
