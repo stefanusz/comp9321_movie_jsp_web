@@ -78,6 +78,7 @@ public class Authenticate implements Command {
 			
 			HttpSession session = request.getSession(false);
 			session.invalidate();
+			return true;
 		}
 		
 		

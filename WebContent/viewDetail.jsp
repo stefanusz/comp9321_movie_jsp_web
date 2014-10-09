@@ -15,7 +15,9 @@
 <h2>${movieDetail.title}</h2>
 <img src="${movieDetail.poster}">
 <table>
-<tr><td><b>Actors:</b><td>
+<tr><td><b>Actors:</b><td><c:forEach var="actor" items="${movieDetail.actor}">
+							${actor}  
+						</c:forEach>
 <tr><td><b>Genre:</b><td><c:forEach var="genre" items="${movieDetail.genre}">
 							${genre} 
 						</c:forEach>	
@@ -56,6 +58,7 @@
 				<textarea name="comment" cols="30" rows="7"></textarea>
 				<br>
 				<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
+				<input type='hidden' name ='viewDetail' value='notNull'>
 				<input type='submit' value='Comment' name='addComment'>
 			</form>
 		</c:otherwise>
