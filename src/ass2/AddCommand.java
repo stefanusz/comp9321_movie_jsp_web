@@ -256,33 +256,44 @@ public class AddCommand implements Command {
 		        	String cinemaID = resultCinema.getString("cinemaid");
 		        	String cinemaName = resultCinema.getString("name");
 		        	
-		        	String[] showTimes = request.getParameterValues(cinemaName);
-		        	String movieID = request.getParameter("movieID");
-		        	int resolveMoviesID = 0;
+		        	String[] showTimes = request.getParameterValues(cinemaID);
+		        	if(showTimes == null){
+		        		continue;
+		        	}
 		        	
+		        	String movieID = request.getParameter("movieID");
+		        	String resolveMoviesID = "";
+		        	
+
 		        	//GET THE RESOLVEMOVIESID
 		        	Statement stmtResolveMovies = conn.createStatement();
 		        	String getResolveMoviesIDQuery = "SELECT * FROM resolvemovies WHERE movieID="+movieID+"AND cinemaID ="+cinemaID;
 			        ResultSet resultResolveMovies= stmtResolveMovies.executeQuery(getResolveMoviesIDQuery);
+			        
+			        /*
 			        if(resultResolveMovies.next()){ //IF EXISTS
-			        	resolveMoviesID = resultResolveMovies.getInt("resolveMoviesID");
+			        	resolveMoviesID = resultResolveMovies.getString("resolveMoviesID");
 			        }
-			        else{
+			        System.out.println(resolveMoviesID);
+			        if(resolveMoviesID.equals(null)){
 			        	//IF NOT, INSERT
 			        	String insertQuery = "INSERT INTO resolvemovies VALUES (DEFAULT,"+cinemaID+","+movieID+")";
 						stmt.execute(insertQuery);
 						//THEN GET THE NEWEST RESOLVEMOVIESID
-						/*resultResolveMovies= stmtResolveMovies.executeQuery(getResolveMoviesIDQuery);
+						resultResolveMovies= stmtResolveMovies.executeQuery(getResolveMoviesIDQuery);
 				        if(resultResolveMovies.next()){
-				        	resolveMoviesID = resultResolveMovies.getInt("resolveMoviesID");
-						}*/
+				        	resolveMoviesID = resultResolveMovies.getString("resolveMoviesID");
+						}
 			        }
+			        //System.out.println(resolveMoviesID);
 			        
 			        
 			        for(String time : showTimes){
-			        	String insertQuery = "INSERT INTO showtimes VALUES ("+resolveMoviesID+","+time+")";
-						stmt.execute(insertQuery);
-		        	}
+			        	System.out.println(time);
+			        	//String insertQuery = "INSERT INTO showtimes VALUES ("+resolveMoviesID+","+time+")";
+						//stmt.execute(insertQuery);
+			        	//System.out.println(time);
+		        	}*/
 			        
 			        
 		        }
