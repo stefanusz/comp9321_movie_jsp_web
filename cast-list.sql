@@ -12,6 +12,8 @@ SELECT * from resolvegenre;
 SELECT * from resolveamenities;
 SELECT * from comment;
 SELECT * from resolveactor;
+SELECT * FROM SHOWTIMES;
+SELECT * FROM resolvemovies;
 
 
 SELECT * FROM users WHERE username = 'ste';

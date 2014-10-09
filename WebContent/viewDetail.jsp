@@ -41,20 +41,23 @@
 
 
 	<c:if test = "${role == 'admin'}">
-		<table>
 		<form action="control" method="POST">
+		<table>
 			<c:forEach var="bean" items="${movieTimes}">
-				<tr><td><input type='checkbox' name='${bean.cinemaID}'>${bean.name} :</td>
+				<tr><td>${bean.name} :</td>
 				<c:forEach var="time" items="${bean.showTimes}">
-					<td><input type='checkbox' name='${time}'>${time}.00</td>
+					<td><input type='checkbox' name='${bean.cinemaID}' value='${time}'>${time}.00</td>
 				</c:forEach>
 				</tr>
 				<br>
 			</c:forEach>
 			
-			<input type='submit' name='addShowTimes' value='Process'>
-		</form>
+			
+		
 		</table>
+		<input type='hidden' name='movieID' value='${movieDetail.movieID}'>
+		<input type='submit' name='addShowTimes' value='Process'>
+		</form>
 	</c:if>
 <br>
 <br>
