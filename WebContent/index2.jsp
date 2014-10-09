@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <script> $(function() {
     $( "#dialog" ).dialog();
@@ -11,8 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Heroic Features - Start Bootstrap Template</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	
+    <title>9321 Movie Website</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -30,6 +35,12 @@
 </head>
 
 <body>
+
+<c:out value="${message}" />
+<% 
+	request.getSession().setAttribute("message", "");
+%>
+
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -53,10 +64,28 @@
                     <li>
                         <a href="#">Services</a>
                     </li>
+                    
                     <li>
-                        <a href="#">Login</a>
-                        <a href="#">Logout</a>
+                    <c:choose>
+						<c:when test='${empty username}'>
+							<form action="control" method="POST">
+							<table>
+								<tr>Username: <td><input type='text' name='username'>
+								Password: <td><input type='password' name='password'>
+								<input type='submit' value='Login' name='login'></tr>
+							</table>
+							Not a member yet? <a href='register.jsp'>Register!</a>
+							<br>
+							</form>
+						</c:when>
+						
+						<c:otherwise>
+							Welcome back, ${username}! <a href='editProfile.jsp'>(edit your profile)</a>
+							<form action="control" method="POST" ><input type='submit' value='Logout' name='logout'></td></form>
+						</c:otherwise>
+					</c:choose>
                     </li>
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
