@@ -43,7 +43,12 @@
 <br>
 <br>
 
-
+<table>
+<form action ="control" method = "post">
+<tr><td>Search: <td><input type='text' name='search'></td></tr>
+<tr><td><input type='submit' value='Search' name='doSearch'></td></tr>
+</form>
+</table>
 
 Now Showing:
 <table>

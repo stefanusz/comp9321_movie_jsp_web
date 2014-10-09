@@ -31,6 +31,8 @@ public class ControlServlet extends HttpServlet {
         commandMap.put("authenticate", new Authenticate());
         commandMap.put("edit", new EditCommand());
         commandMap.put("view", new ViewCommand());
+        commandMap.put("search", new Search());
+
     }
 
 	/**
@@ -66,6 +68,7 @@ public class ControlServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String register  =  request.getParameter("register");
+		String doSearch = request.getParameter("doSearch");
 		
 		String addMovies =  request.getParameter("addMovies");
 		String addCinema =  request.getParameter("addCinema");
@@ -169,6 +172,11 @@ public class ControlServlet extends HttpServlet {
 			//REFRESH VIEWING DETAIL AND NOWSHOWING
 			command = commandMap.get("view");
 			isSuccess = command.execute(request,response);
+		}else if(doSearch != null){
+			prevPage = "index.jsp";
+			Command command = commandMap.get("search");
+			isSuccess = command.execute(request, response);
+			nextPage = "result.jsp";
 		}
 		
 		
