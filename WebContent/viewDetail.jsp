@@ -32,13 +32,36 @@
 
 <br>
 <br>
-[booking?]
-<br>
-<br>
-<br>
+
 
 
 <c:if test = "${movieDetail.releaseDate < currentDate}">
+
+[booking?]
+
+
+	<c:if test = "${role == 'admin'}">
+		<table>
+		<form action="control" method="POST">
+			<c:forEach var="bean" items="${movieTimes}">
+				<tr><td><input type='checkbox' name='${bean.cinemaID}'>${bean.name} :</td>
+				<c:forEach var="time" items="${bean.showTimes}">
+					<td><input type='checkbox' name='${time}'>${time}.00</td>
+				</c:forEach>
+				</tr>
+				<br>
+			</c:forEach>
+			
+			<input type='submit' name='addShowTimes' value='Process'>
+		</form>
+		</table>
+	</c:if>
+<br>
+<br>
+<br>
+	
+	
+	
 	
 	<c:choose>
 		<c:when test='${empty username}'>

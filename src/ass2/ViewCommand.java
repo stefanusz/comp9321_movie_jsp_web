@@ -89,7 +89,7 @@ public class ViewCommand implements Command{
 			}
 			else if(viewDetail != null){
 				String movieID = request.getParameter("movieid");
-				MovieBean newMovieBean = new MovieBean();
+				MovieBean movieDetail = new MovieBean();
 				ArrayList<CommentBean> movieComment = new ArrayList<CommentBean>();
 				
 				
@@ -118,7 +118,7 @@ public class ViewCommand implements Command{
 			        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
 			        ResultSet resultGenre= stmtGenre.executeQuery(getGenreQuery);
 			        while(resultGenre.next()){
-			        	newMovieBean.setGenre(resultGenre.getString("genreName"));
+			        	movieDetail.setGenre(resultGenre.getString("genreName"));
 			        }
 			        
 			        //GET THE ACTORS & SET TO THE BEAN
@@ -126,22 +126,22 @@ public class ViewCommand implements Command{
 			        String getActorQuery = "SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = "+intID;
 			        ResultSet resultActor= stmtActor.executeQuery(getActorQuery);
 			        while(resultActor.next()){
-			        	newMovieBean.setActor(resultActor.getString("name"));
+			        	movieDetail.setActor(resultActor.getString("name"));
 			        }
 			        
 			        //SET INTO THE NEWBEAN
-			        newMovieBean.setMovieID(intID);
-			        newMovieBean.setTitle(dbTitle);
-			        newMovieBean.setPoster(dbPoster);
-			        newMovieBean.setDirector(dbDirector);
-			        newMovieBean.setSypnosis(dbSypnosis);
-			        newMovieBean.setAgeRating(dbAgeRating);
-			        newMovieBean.setReleaseDate(convertedDate);
+			        movieDetail.setMovieID(intID);
+			        movieDetail.setTitle(dbTitle);
+			        movieDetail.setPoster(dbPoster);
+			        movieDetail.setDirector(dbDirector);
+			        movieDetail.setSypnosis(dbSypnosis);
+			        movieDetail.setAgeRating(dbAgeRating);
+			        movieDetail.setReleaseDate(convertedDate);
 					
 					//GET THE COMMENTS
-			        Statement stmt3 = conn.createStatement();
+			        Statement stmtComment = conn.createStatement();
 			        String getCommentQuery = "SELECT username,comment,rating FROM comment c JOIN movies m ON c.movieid = m.movieid JOIN users u ON c.userid = u.userid WHERE m.movieid ="+movieID;
-			        ResultSet resultComment= stmt3.executeQuery(getCommentQuery);
+			        ResultSet resultComment= stmtComment.executeQuery(getCommentQuery);
 			        while(resultComment.next()){
 			        	CommentBean newCommentBean = new CommentBean();
 			        	newCommentBean.setUser(resultComment.getString("username"));
@@ -150,10 +150,33 @@ public class ViewCommand implements Command{
 			        	movieComment.add(newCommentBean);
 			        	
 			        }
+			        
+			        //GET CINEMA TIMES
+			        ArrayList<CinemaBean> movieTimes = new ArrayList<CinemaBean>();
+			        Statement stmtCinema = conn.createStatement();
+			        String getCinemaQuery = "SELECT * FROM cinema";
+			        ResultSet resultCinema= stmtCinema.executeQuery(getCinemaQuery);
+			        while(resultCinema.next()){
+			        	CinemaBean newCinemaBean = new CinemaBean();
+			        	int cinemaID = resultCinema.getInt("cinemaid");
+			        	String cinemaName = resultCinema.getString("name");
+			        	newCinemaBean.setCinemaID(cinemaID);
+			        	newCinemaBean.setName(cinemaName);
+			        	
+			        	Statement stmtTimes = conn.createStatement();
+				        String getTimesQuery = "SELECT time FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = "+cinemaID+"AND rm.movieid="+movieID;
+				        ResultSet resultTimes= stmtTimes.executeQuery(getTimesQuery);
+				        while(resultTimes.next()){
+				        	String time = resultTimes.getString("time");
+				        	newCinemaBean.removeShowTimes(time);
+				        }
+				        movieTimes.add(newCinemaBean);
+			        }
 					
 					
-					request.getSession().setAttribute("movieDetail", newMovieBean);
+					request.getSession().setAttribute("movieDetail", movieDetail);
 					request.getSession().setAttribute("movieComment", movieComment);
+					request.getSession().setAttribute("movieTimes", movieTimes);
 				}
 				
 				
