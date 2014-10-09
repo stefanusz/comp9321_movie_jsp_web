@@ -39,3 +39,10 @@ WHERE m.movieid = 2;
 INSERT INTO actor VALUES (DEFAULT,'cat');
 
 SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = 15;
+
+SELECT AVG(rating) AS averagerating FROM comment WHERE movieid =11;
+
+SELECT * FROM movies WHERE releasedate < '2014-10-10' ORDER BY movieid ,releaseDate DESC;
+
+
+SELECT * FROM movies WHERE releasedate > '2014-10-09' ORDER BY movieid DESC

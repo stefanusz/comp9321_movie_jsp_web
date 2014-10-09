@@ -52,11 +52,11 @@ public class ControlServlet extends HttpServlet {
 			command.execute(request, response);
 			nextPage = "viewDetail.jsp";
 		}
-		else{ //TO INDEX PAGE AT THE BEGINNING
+		//else{ //TO INDEX PAGE AT THE BEGINNING
 			Command command = commandMap.get("view");
 			command.execute(request, response);
 			
-		}
+		//}
 		RequestDispatcher rd = request.getRequestDispatcher("/"+nextPage);
 		rd.forward(request, response);
 	}
@@ -97,55 +97,81 @@ public class ControlServlet extends HttpServlet {
 			prevPage = "register.jsp";
 			Command command = commandMap.get("register");
 			isSuccess = command.execute(request,response);
+			request.getSession().setAttribute("message", "Successfully registered");
+			nextPage = "index.jsp";
 		}
 		else if(addMovies != null){
 			prevPage = "addMovies.jsp";
 			Command command = commandMap.get("add");
+			isSuccess = command.execute(request,response);
+			request.getSession().setAttribute("message", "Movies successfully added");
+			nextPage = "viewAllMovies.jsp";
+			
+			//REFRESH VIEWING ALL MOVIES
+			command = commandMap.get("view");
 			isSuccess = command.execute(request,response);
 		}
 		else if(addCinema != null){
 			prevPage = "addCinema.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
+			request.getSession().setAttribute("message", "Cinema successfully added");
+			nextPage = "index.jsp";
 		}
 		else if(addAmenities != null){
 			prevPage = "addAmenities.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
+			request.getSession().setAttribute("message", "Amenities successfully added");
+			nextPage = "index.jsp";
+			
 		}
 		else if(addActor != null){
 			prevPage = "addActor.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
+			request.getSession().setAttribute("message", "Actor successfully added");
+			nextPage = "index.jsp";
 		}
 		else if(editProfile != null){
 			prevPage = "editProfile.jsp";
 			Command command = commandMap.get("edit");
 			isSuccess = command.execute(request,response);
+			request.getSession().setAttribute("message", "Profile successfully edited");
+			nextPage = "editProfile.jsp";
 		}
 		else if(addGenre != null){
 			prevPage = "addGenre.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
+			request.getSession().setAttribute("message", "Genre successfully added");
+			nextPage = "index.jsp";
 		}
 		else if(addComment != null){
 			prevPage = "viewDetail.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
+			request.getSession().setAttribute("message", "Comment successfully added");
+			nextPage = "viewDetail.jsp";
+			
+			//REFRESH VIEWING DETAIL AND NOWSHOWING
+			command = commandMap.get("view");
+			isSuccess = command.execute(request,response);
 		}
 		
-		if(isSuccess){
-			message = "Success!";
-			request.getSession().setAttribute("message", message);
-			nextPage = "successPage.jsp";
-		}
-		else{
+		
+		if(!isSuccess){
 			message = "An error occurred!";
 			request.getSession().setAttribute("message", message);
 			nextPage = prevPage;
 		}
 		
 		response.sendRedirect(nextPage);
+		
+	}
+	
+	
+	public void checkSuccess(){
 		
 	}
 	

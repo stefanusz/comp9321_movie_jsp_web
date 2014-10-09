@@ -50,7 +50,7 @@ Now Showing:(order by rating)
 <tr><th>Poster<th>Title<th>Rating
 
 <c:forEach var="data" items="${nowShowing}">
-	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.rating}
+	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}
 </c:forEach>
 
 </table>
@@ -69,7 +69,7 @@ Coming Soon: (order by release date)
 <tr><th>Poster<th>Title<th>Rating<th>Release date
 
 <c:forEach var="data" items="${comingSoon}">
-	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.rating}<td>${data.releaseDate}
+	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}<td>${data.releaseDate}
 </c:forEach>
 
 </table>

@@ -58,6 +58,7 @@
 				<textarea name="comment" cols="30" rows="7"></textarea>
 				<br>
 				<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
+				<input type='hidden' name ='viewDetail' value='notNull'>
 				<input type='submit' value='Comment' name='addComment'>
 			</form>
 		</c:otherwise>

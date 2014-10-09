@@ -81,6 +81,7 @@
 
 
 </table>
+<input type='hidden' value='notNull' name='viewAllMovies'>
 <input type='submit' value='Add' name='addMovies'>
 
 </form>
