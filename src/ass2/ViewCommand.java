@@ -219,11 +219,11 @@ public class ViewCommand implements Command{
 			System.out.println(currentDate);
 			while(resultComingSoon.next() && counter > 0){
 				MovieBean newBean = new MovieBean();
-				int dbMovieID = resultNowShowing.getInt("movieid");
-				String dbTitle = resultNowShowing.getString("title");
+				int dbMovieID = resultComingSoon.getInt("movieid");
+				String dbTitle = resultComingSoon.getString("title");
 
-				String dbPoster = resultNowShowing.getString("poster");
-				String dbReleaseDate = resultNowShowing.getString("releasedate");
+				String dbPoster = resultComingSoon.getString("poster");
+				String dbReleaseDate = resultComingSoon.getString("releasedate");
 				System.out.println(dbReleaseDate);
 
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

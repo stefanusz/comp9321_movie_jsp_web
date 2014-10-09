@@ -45,4 +45,4 @@ SELECT AVG(rating) AS averagerating FROM comment WHERE movieid =11;
 SELECT * FROM movies WHERE releasedate < '2014-10-10' ORDER BY movieid ,releaseDate DESC;
 
 
-SELECT * FROM movies WHERE releasedate > '2014-10-09' ORDER BY movieid DESC
+SELECT * FROM movies WHERE releasedate > '2014-10-09' ORDER BY movieid DESC;
