@@ -134,15 +134,26 @@ public class ControlServlet extends HttpServlet {
 			isSuccess = command.execute(request,response);
 		}
 		
+		
 		if(isSuccess){
+			
+			
 			message = "Success!";
 			request.getSession().setAttribute("message", message);
 			nextPage = "successPage.jsp";
+			
+			if(login != null || logout != null){
+				nextPage = "index.jsp";
+			}
 		}
 		else{
 			message = "An error occurred!";
 			request.getSession().setAttribute("message", message);
 			nextPage = prevPage;
+			
+			if(login != null || logout != null){
+				nextPage = "index.jsp";
+			}
 		}
 		
 		response.sendRedirect(nextPage);

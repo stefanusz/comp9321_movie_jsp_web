@@ -68,15 +68,7 @@
                     <li>
                     <c:choose>
 						<c:when test='${empty username}'>
-							<form action="control" method="POST">
-							<table>
-								<tr>Username: <td><input type='text' name='username'>
-								Password: <td><input type='password' name='password'>
-								<input type='submit' value='Login' name='login'></tr>
-							</table>
-							Not a member yet? <a href='register.jsp'>Register!</a>
-							<br>
-							</form>
+							<a href="#">Login</a>
 						</c:when>
 						
 						<c:otherwise>
@@ -85,6 +77,12 @@
 						</c:otherwise>
 					</c:choose>
                     </li>
+                    
+                    <li>
+                    <form action="control" method="POST">
+					Search:<input type='text' name='search'>
+					</form>
+                    <li>
                     
                 </ul>
             </div>
