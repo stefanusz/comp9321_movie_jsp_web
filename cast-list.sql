@@ -54,5 +54,6 @@ SELECT * FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolv
 
 SELECT * FROM resolvemovies WHERE cinemaid = 1;
 
-SELECT * FROM 
+SELECT title FROM MOVIES WHERE title = "hayabusa";
 
+SELECT DISTINCT m.title, g.name FROM (SELECT * from movies) as m, (SELECT * FROM genre) as g, (SELECT * FROM resolveGenre) as rg WHERE m.title = 'a' OR g.name = 'comedy';
