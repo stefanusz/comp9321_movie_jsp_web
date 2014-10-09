@@ -45,7 +45,7 @@
 
 
 
-Now Showing:(order by rating)
+Now Showing:
 <table>
 <tr><th>Poster<th>Title<th>Rating
 
@@ -60,7 +60,7 @@ Now Showing:(order by rating)
 
 <br>
 
-Coming Soon: (order by release date)
+Coming Soon:
 <table>
 
 </table>

@@ -216,7 +216,6 @@ public class ViewCommand implements Command{
 			Statement stmtComingSoon = conn.createStatement();
 			
 			ResultSet resultComingSoon = stmtComingSoon.executeQuery("SELECT * FROM movies WHERE releasedate > '"+ currentDate+"' ORDER BY movieid DESC");
-			System.out.println(currentDate);
 			while(resultComingSoon.next() && counter > 0){
 				MovieBean newBean = new MovieBean();
 				int dbMovieID = resultComingSoon.getInt("movieid");
@@ -224,7 +223,6 @@ public class ViewCommand implements Command{
 
 				String dbPoster = resultComingSoon.getString("poster");
 				String dbReleaseDate = resultComingSoon.getString("releasedate");
-				System.out.println(dbReleaseDate);
 
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			    Date parsed = format.parse(dbReleaseDate);
