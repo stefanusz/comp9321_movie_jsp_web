@@ -53,14 +53,22 @@ public class ViewCommand implements Command{
 			        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
 			        
 			        //GET THE GENRES & SET TO THE BEAN
-			        Statement stmt2 = conn.createStatement();
+			        Statement stmtGenre = conn.createStatement();
 			        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
-			        ResultSet resultGenre= stmt2.executeQuery(getGenreQuery);
+			        ResultSet resultGenre= stmtGenre.executeQuery(getGenreQuery);
 			        while(resultGenre.next()){
 			        	newBean.setGenre(resultGenre.getString("genreName"));
 			        }
 			        
-			        System.out.println(dbPoster);
+			        //GET THE ACTORS & SET TO THE BEAN
+			        Statement stmtActor = conn.createStatement();
+			        String getActorQuery = "SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = "+intID;
+			        ResultSet resultActor= stmtActor.executeQuery(getActorQuery);
+			        while(resultActor.next()){
+			        	newBean.setActor(resultActor.getString("name"));
+			        }
+			        
+
 			        //SET INTO THE NEWBEAN
 					newBean.setMovieID(intID);
 					newBean.setTitle(dbTitle);
@@ -104,11 +112,19 @@ public class ViewCommand implements Command{
 			        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
 			        
 			        //GET THE GENRES & SET TO THE BEAN
-			        Statement stmt2 = conn.createStatement();
+			        Statement stmtGenre = conn.createStatement();
 			        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
-			        ResultSet resultGenre= stmt2.executeQuery(getGenreQuery);
+			        ResultSet resultGenre= stmtGenre.executeQuery(getGenreQuery);
 			        while(resultGenre.next()){
 			        	newMovieBean.setGenre(resultGenre.getString("genreName"));
+			        }
+			        
+			        //GET THE ACTORS & SET TO THE BEAN
+			        Statement stmtActor = conn.createStatement();
+			        String getActorQuery = "SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = "+intID;
+			        ResultSet resultActor= stmtActor.executeQuery(getActorQuery);
+			        while(resultActor.next()){
+			        	newMovieBean.setActor(resultActor.getString("name"));
 			        }
 			        
 			        //SET INTO THE NEWBEAN

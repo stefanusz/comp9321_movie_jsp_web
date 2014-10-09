@@ -15,7 +15,9 @@
 <h2>${movieDetail.title}</h2>
 <img src="${movieDetail.poster}">
 <table>
-<tr><td><b>Actors:</b><td>
+<tr><td><b>Actors:</b><td><c:forEach var="actor" items="${movieDetail.actor}">
+							${actor}  
+						</c:forEach>
 <tr><td><b>Genre:</b><td><c:forEach var="genre" items="${movieDetail.genre}">
 							${genre} 
 						</c:forEach>	

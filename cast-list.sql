@@ -37,3 +37,5 @@ JOIN users u ON c.userid = u.userid
 WHERE m.movieid = 2;
 
 INSERT INTO actor VALUES (DEFAULT,'cat');
+
+SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = 15;
