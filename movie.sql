@@ -167,16 +167,13 @@ CREATE TABLE  booking (
   userID INT NOT NULL,
   noOfTicket INT NOT NULL,
   showTimeID INT NOT NULL,
-  resolveMoviesID INT NOT NULL,
+  bookingDate DATE NOT NULL,
   PRIMARY KEY (bookingID),
   CONSTRAINT fk_booking_user1
     FOREIGN KEY (userID)
     REFERENCES users (userID),
   CONSTRAINT fk_booking_showTimes1
     FOREIGN KEY (showTimeID)
-    REFERENCES showTimes (showTimeID),
-  CONSTRAINT fk_booking_resolveMovies1
-    FOREIGN KEY (resolveMoviesID)
-    REFERENCES resolveMovies (resolveMoviesID));
+    REFERENCES showTimes (showTimeID));
 
 
