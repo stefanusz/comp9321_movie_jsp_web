@@ -5,6 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script>
+	$(function() {
+	  $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' }).val();
+	  
+	});
+	</script>
 <title>Movie Detail</title>
 </head>
 <body>
@@ -38,6 +48,13 @@
 <c:if test = "${movieDetail.releaseDate < currentDate}">
 
 [booking?]
+<form action="control" method="GET">
+	<input type="text" name='bookingDate' id="datepicker">
+	
+	<input type='hidden' name='movieid' value='${movieDetail.movieID}'>
+	<input type='hidden' name='viewDetail' value='notNull'>
+	<input type="submit" name='getShowTimes' value='Go'>
+</form>
 <br>
 <br>
 <br>

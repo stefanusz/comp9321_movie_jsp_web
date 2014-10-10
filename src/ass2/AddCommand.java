@@ -57,39 +57,20 @@ public class AddCommand implements Command {
 				String director = request.getParameter("director");
 				String sypnosis = request.getParameter("sypnosis");
 				String ageRating = request.getParameter("ageRating");
-				String release_day= request.getParameter("release_day");
-				String release_month= request.getParameter("release_month");
-				String release_year= request.getParameter("release_year");
+				String releaseDate= request.getParameter("releaseDate");
 				// END OF GETTING THE DIFFERENT VARIABLE FOR THE FORM.
-				
-				
-				
 				
 				movieTitle = movieTitle.toLowerCase();
 				director = director.toLowerCase();
 				sypnosis = sypnosis.toLowerCase();
 				ageRating = ageRating.toLowerCase();
-				release_day = release_day.toLowerCase();
-				release_month = release_month.toLowerCase();
-				release_year = release_year.toLowerCase();
 				
 				//VALIDATION
-			    if(movieTitle.equals("") || director.equals("") || sypnosis.equals("") || ageRating.equals("")||release_day.equals("")||release_month.equals("")||release_year.equals("")){
+			    if(movieTitle.equals("") || director.equals("") || sypnosis.equals("") || ageRating.equals("")||releaseDate.equals("")){
 					return false;
 				}
-			    if(release_month == "4"||release_month == "6"||release_month == "9"||release_month == "11"){
-			    	if(Integer.parseInt(release_day) > 30){
-			    		return false;
-			    	}
-			    }
-			    if(release_month == "2"){
-			    	if(Integer.parseInt(release_day) > 28){
-			    		return false;
-			    	}
-			    }
-				
+
 			    //INSERT INTO TABLE MOVIES
-			    String releaseDate = release_year + "-" + release_month + "-" + release_day;
 				String insertQuery = "INSERT INTO movies VALUES (DEFAULT,'"
 						+ movieTitle + "','" + imagePath + "','" + director
 						+ "','" + sypnosis + "','" + ageRating + "','"+releaseDate+"')";
