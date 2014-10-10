@@ -92,7 +92,6 @@ public class ViewCommand implements Command{
 				MovieBean movieDetail = new MovieBean();
 				ArrayList<CommentBean> movieComment = new ArrayList<CommentBean>();
 				
-				
 				ResultSet resultDetail= stmt.executeQuery("SELECT * FROM movies WHERE movieid = "+ movieID);
 				
 				if(resultDetail.next()){

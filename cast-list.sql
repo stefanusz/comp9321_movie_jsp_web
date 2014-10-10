@@ -64,3 +64,6 @@ SELECT DISTINCT m.title, g.name FROM (SELECT * from movies) as m, (SELECT * FROM
 
 
 INSERT INTO resolvemovies VALUES (DEFAULT,100,100);
+
+
+SELECT * FROM resolvemovies WHERE movieID=1 AND cinemaid =2;

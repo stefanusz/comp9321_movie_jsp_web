@@ -13,8 +13,13 @@
 
 
 <%@ include file="header.html"%>
-<h2>All Movies:</h2>
 
+<c:out value=" ${message} " />
+<% 
+	request.getSession().setAttribute("message", "");
+%>
+
+<h2>All Movies:</h2>
 
 <table>
 <tr><th>Poster<th>Title<th>Genre<th>Actors<th>Age Rating
@@ -35,6 +40,8 @@
 
 
 </table>
+
+<a href='index.jsp'>HOME</a>
 
 
 </body>

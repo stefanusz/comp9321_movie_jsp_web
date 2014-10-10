@@ -55,7 +55,8 @@
 			
 		
 		</table>
-		<input type='hidden' name='movieID' value='${movieDetail.movieID}'>
+		<input type='hidden' name='viewDetail' value='notNull'>
+		<input type='hidden' name='movieid' value='${movieDetail.movieID}'>
 		<input type='submit' name='addShowTimes' value='Process'>
 		</form>
 	</c:if>
