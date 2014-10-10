@@ -270,23 +270,26 @@ public class AddCommand implements Command {
 		        	String getResolveMoviesIDQuery = "SELECT * FROM resolvemovies WHERE movieID="+movieID+"AND cinemaID ="+cinemaID;
 			        ResultSet resultResolveMovies= stmtResolveMovies.executeQuery(getResolveMoviesIDQuery);
 			        
-			        /*
+			        
 			        if(resultResolveMovies.next()){ //IF EXISTS
 			        	resolveMoviesID = resultResolveMovies.getString("resolveMoviesID");
 			        }
-			        System.out.println(resolveMoviesID);
-			        if(resolveMoviesID.equals(null)){
+			        System.out.println("1..."+resolveMoviesID);
+			        
+			        
+			        if(resolveMoviesID.equals("")){
+			        	System.out.println("MASUK");
 			        	//IF NOT, INSERT
 			        	String insertQuery = "INSERT INTO resolvemovies VALUES (DEFAULT,"+cinemaID+","+movieID+")";
 						stmt.execute(insertQuery);
 						//THEN GET THE NEWEST RESOLVEMOVIESID
-						resultResolveMovies= stmtResolveMovies.executeQuery(getResolveMoviesIDQuery);
+						/*resultResolveMovies= stmtResolveMovies.executeQuery(getResolveMoviesIDQuery);
 				        if(resultResolveMovies.next()){
 				        	resolveMoviesID = resultResolveMovies.getString("resolveMoviesID");
-						}
+						}*/
 			        }
-			        //System.out.println(resolveMoviesID);
-			        
+			        System.out.println("2..."+resolveMoviesID);
+			        /*
 			        
 			        for(String time : showTimes){
 			        	System.out.println(time);

@@ -180,16 +180,17 @@ public class ControlServlet extends HttpServlet {
 		}
 		
 		
-
+		if(!isSuccess){
 			message = "An error occurred!";
 			request.getSession().setAttribute("message", message);
 			nextPage = prevPage;
-			
-			if(login != null || logout != null){
-				nextPage = "index.jsp";
-			}
 		
+		}
 		
+		if(login != null || logout != null){
+			nextPage = "index.jsp";
+		}
+	
 		response.sendRedirect(nextPage);
 		
 	}

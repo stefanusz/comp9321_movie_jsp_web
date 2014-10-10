@@ -54,8 +54,13 @@ SELECT * FROM movies WHERE releasedate > '2014-10-09' ORDER BY movieid DESC;
 
 SELECT * FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = 1;
 
-SELECT * FROM resolvemovies WHERE cinemaid = 1;
+SELECT * FROM resolvemovies;
 
 SELECT title FROM MOVIES WHERE title = "hayabusa";
 
 SELECT DISTINCT m.title, g.name FROM (SELECT * from movies) as m, (SELECT * FROM genre) as g, (SELECT * FROM resolveGenre) as rg WHERE m.title = 'a' OR g.name = 'comedy';
+
+
+
+
+INSERT INTO resolvemovies VALUES (DEFAULT,100,100);
