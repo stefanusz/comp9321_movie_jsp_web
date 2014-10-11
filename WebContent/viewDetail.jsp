@@ -45,25 +45,44 @@
 
 
 
-<c:if test = "${movieDetail.releaseDate < currentDate}">
-
-[booking?]
-<form action="control" method="GET">
-	<input type="text" name='bookingDate' id="datepicker">
+<c:if test = "${movieDetail.releaseDate < currentDate && not empty username}">
 	
-	<input type='hidden' name='movieid' value='${movieDetail.movieID}'>
-	<input type='hidden' name='viewDetail' value='notNull'>
-	<input type="submit" name='getShowTimes' value='Go'>
-</form>
-<br>
-<br>
-<br>
+	[booking?]
+	<form action="control" method="GET">
+		<input type="text" name='bookingDate' id="datepicker">
+		
+		<input type='hidden' name='movieid' value='${movieDetail.movieID}'>
+		<input type='hidden' name='viewDetail' value='notNull'>
+		<input type="submit" name='getShowTimes' value='Go'>
+	</form>
+	<br>
+	<c:if test = "${not empty bookingTimes}">
+		<form action="control" method="GET">
+			<table>
+				<c:forEach var="bean" items="${bookingTimes}">
+					<tr><td>${bean.name} :</td>
+					<c:forEach var="time" items="${bean.showTimes}">
+						<td><a href='control?doBook=1&movieid=${movieDetail.movieID}&cinemaid=${bean.cinemaID}&bookingdate=${bookingDate}&time=${time}'>${time}.00</a></td>
+					</c:forEach>
+					</tr>
+				</c:forEach>
+			</table>
+		
+			<input type="hidden" name='bookingDate' value='${bookingDate}'>
+			<input type="hidden" name='movieid' value='${movieDetail.movieID}'>
+		</form>
+		<%request.getSession().removeAttribute("bookingTimes");%>
+	</c:if>
+	
+	
+	<br>
+	<br>
 
 	<c:if test = "${role == 'admin'}">
 		Add Show Times (<b>${movieDetail.title}</b>):
 		<form action="control" method="POST">
 		<table>
-			<c:forEach var="bean" items="${movieTimes}">
+			<c:forEach var="bean" items="${movieEmptyTimes}">
 				<tr><td>${bean.name} :</td>
 				<c:forEach var="time" items="${bean.showTimes}">
 					<td><input type='checkbox' name='${bean.cinemaID}' value='${time}'>${time}.00</td>
@@ -110,16 +129,16 @@
 	
 
 
-
-
-<br>
-Comments:
-<c:forEach var="data" items="${movieComment}">
-	<table>
-		<tr><td>${data.user} -> <td>${data.rating}/5.0
-		<tr><td colspan='2'>${data.comment}
-	</table>
-</c:forEach>
+	
+	
+	<br>
+	Comments:
+	<c:forEach var="data" items="${movieComment}">
+		<table>
+			<tr><td>${data.user} -> <td>${data.rating}/5.0
+			<tr><td colspan='2'>${data.comment}
+		</table>
+	</c:forEach>
 
 </c:if>
 </body>

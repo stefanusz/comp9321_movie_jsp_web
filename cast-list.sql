@@ -54,6 +54,9 @@ SELECT * FROM movies WHERE releasedate > '2014-10-09' ORDER BY movieid DESC;
 
 SELECT * FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = 1;
 
+
+SELECT time FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = 1 AND rm.movieid=1;
+
 SELECT * FROM resolvemovies;
 
 SELECT title FROM MOVIES WHERE title = "hayabusa";
