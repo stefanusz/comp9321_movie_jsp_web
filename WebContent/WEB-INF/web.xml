@@ -3,6 +3,7 @@
   <display-name>Assignment2</display-name>
   <welcome-file-list>
     <welcome-file>control</welcome-file>
+    
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
@@ -16,16 +17,7 @@
     <url-pattern>/ControlServlet</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-    <description></description>
-    <display-name>MailServlet</display-name>
-    <servlet-name>MailSenderServlet</servlet-name>
-    <servlet-class>ass2.MailSenderServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MailSenderServlet</servlet-name>
-    <url-pattern>/mail/*</url-pattern>
-  </servlet-mapping>
+  
   
   <context-param> 
     <description>Location to store uploaded poster</description> 
@@ -35,7 +27,19 @@
      </param-value> 
    </context-param>
    
-   <resource-ref>
+<servlet>
+		<description>
+		</description>
+		<display-name>MailSenderServlet</display-name>
+		<servlet-name>MailSenderServlet</servlet-name>
+		<servlet-class>
+		ass2.MailSenderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MailSenderServlet</servlet-name>
+		<url-pattern>/MailSender</url-pattern>
+	</servlet-mapping>
+	<resource-ref>
 		<description>
    			 Resource reference to a factory for javax.mail.Session
    			 instances that may be used for sending electronic mail

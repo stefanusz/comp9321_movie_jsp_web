@@ -14,7 +14,7 @@
 </head>
 <body>
 <center><h1>Welcome to Joke Mail!</h1></center>
-<form action="mail" method="post">
+<form action="MailSender" method="post">
 <p><b>From:</b><input type="text" name="from" maxlength="40"/></p>
 <p><b>To:</b><input type="text" name="to" maxlength="40"/></p>
 <p><b>Subject</b><input type="text" name="subject" maxlength="40"/></p>

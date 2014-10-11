@@ -17,7 +17,7 @@ import mail_exceptions.ServiceLocatorException;
  * Servlet implementation class MailSenderServlet
  * @author srikumarv
  */
-@WebServlet({ "/MailServlet", "/mail" })
+
 public class MailSenderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static Logger logger = Logger.getLogger(MailSenderServlet.class.getName());
@@ -47,6 +47,7 @@ public class MailSenderServlet extends HttpServlet {
 	private void handleMail(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		MailSender sender = null;
+		System.out.print("COMES HERE");
 		RequestDispatcher disp;
 		String target="";
 		try{
