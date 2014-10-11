@@ -12,24 +12,31 @@
 
 <%@ include file="header.html"%>
 <h2>Search Results:</h2>
-
-<table>
-<tr><th>Poster<th>Title<th>Genre<th>Actors<th>Rating<th>Link
-
-<c:forEach var="result" items="${searchResult}">
-	<tr><td><img src="${result.poster}" alt="${result.poster}" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${result.movieID}'>${result.title}</a><td>
-		<c:forEach var="genre" items="${result.genre}">
-			${genre} <br>
-		</c:forEach>	
-	<td>
-		<c:forEach var="actor" items="${result.actor}">
-			${actor} <br> 
+<c:choose>
+	<c:when test="${not empty searchResult}">
+		<table>
+		<tr><th>Poster<th>Title<th>Genre<th>Actors<th>Rating<th>Link
+		
+		<c:forEach var="result" items="${searchResult}">
+			<tr><td><img src="${result.poster}" alt="${result.poster}" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${result.movieID}'>${result.title}</a><td>
+				<c:forEach var="genre" items="${result.genre}">
+					${genre} <br>
+				</c:forEach>	
+			<td>
+				<c:forEach var="actor" items="${result.actor}">
+					${actor} <br> 
+				</c:forEach>
+			<td>${result.ageRating}
 		</c:forEach>
-	<td>${result.ageRating}
-</c:forEach>
+		
+		</table>
+	</c:when>
+	<c:otherwise>
+		0 results found.<br>
+	</c:otherwise>
+</c:choose>
 
-</table>
 
-
+<a href='index.jsp'>HOME</a>
 </body>
 </html>
