@@ -151,8 +151,8 @@ public class ViewCommand implements Command{
 			        	movieComment.add(newCommentBean);
 			        }
 			        
-			        //GET CINEMA TIMES
-			        ArrayList<CinemaBean> movieTimes = new ArrayList<CinemaBean>();
+			        //GET CINEMA TIMES FOR ADMIN
+			        ArrayList<CinemaBean> movieEmptyTimes = new ArrayList<CinemaBean>();
 			        Statement stmtCinema = conn.createStatement();
 			        String getCinemaQuery = "SELECT * FROM cinema";
 			        ResultSet resultCinema= stmtCinema.executeQuery(getCinemaQuery);
@@ -170,21 +170,46 @@ public class ViewCommand implements Command{
 				        	String time = resultTimes.getString("time");
 				        	newCinemaBean.removeShowTimes(time);
 				        }
-				        movieTimes.add(newCinemaBean);
+				        movieEmptyTimes.add(newCinemaBean);
 			        }
 					
 			        
 			        //BOOKING
 			        if(getShowTimes != null){
 			        	String bookingDate = request.getParameter("bookingDate");
-			        	//bookingDate = bookingDate.replace('/','-');
-				        System.out.println(bookingDate);
+			        	ArrayList<CinemaBean> bookingTimes = new ArrayList<CinemaBean>();
+			        	
+			        	//GET CINEMA AND AVAILABLE TIMES
+				        stmtCinema = conn.createStatement();
+				        getCinemaQuery = "SELECT * FROM cinema";
+				        resultCinema= stmtCinema.executeQuery(getCinemaQuery);
+				        while(resultCinema.next()){
+				        	CinemaBean newCinemaBean = new CinemaBean();
+				        	newCinemaBean.clearShowTimes();
+				        	
+				        	int cinemaID = resultCinema.getInt("cinemaid");
+				        	String cinemaName = resultCinema.getString("name");
+				        	
+				        	newCinemaBean.setCinemaID(cinemaID);
+				        	newCinemaBean.setName(cinemaName);
+				        	
+				        	Statement stmtTimes = conn.createStatement();
+					        String getTimesQuery = "SELECT time FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = "+cinemaID+"AND rm.movieid="+movieID;
+					        ResultSet resultTimes= stmtTimes.executeQuery(getTimesQuery);
+					        while(resultTimes.next()){
+					        	String time = resultTimes.getString("time");
+					        	newCinemaBean.setShowTimes(time);
+					        }
+					        bookingTimes.add(newCinemaBean);
+				        }
+				        request.getSession().setAttribute("bookingTimes", bookingTimes);
+				        request.getSession().setAttribute("bookingDate", bookingDate);
 			        }
 			        
-					
 					request.getSession().setAttribute("movieDetail", movieDetail);
 					request.getSession().setAttribute("movieComment", movieComment);
-					request.getSession().setAttribute("movieTimes", movieTimes);
+					request.getSession().setAttribute("movieEmptyTimes", movieEmptyTimes);
+					
 				}
 				
 				

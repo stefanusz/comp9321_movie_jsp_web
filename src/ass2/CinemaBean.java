@@ -26,6 +26,7 @@ public class CinemaBean implements Serializable {
 	}
 	public void setShowTimes(String time){
 		this.showTimes.add(time);
+		Collections.sort(showTimes);
 	}
 	
 	public int getCinemaID(){
@@ -42,7 +43,9 @@ public class CinemaBean implements Serializable {
 	public void removeShowTimes(String time){
 		showTimes.remove(time);
 	}
-
+	public void clearShowTimes(){
+		showTimes.clear();
+	}
 
 	private int cinemaID;
 	private String name;
