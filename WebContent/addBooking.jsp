@@ -12,27 +12,35 @@
 
 <%@ include file="header.html"%>
 
-<h2>Booking for <b>${movieTitle}</b></h2>
 
-<form action='control' method='post'>
-<table>
-<tr><td><b>Cinema:</b></td><td>${cinemaName}</td></tr>
-<tr><td><b>Date:</b></td><td>${bookingDate}</td></tr>
-<tr><td><b>Time:</b></td><td>${time}</td></tr>
-<tr><td><b>No of tickets:</b></td><td>
-								<select name='nooftickets'>
-								<c:forEach var='i' begin='1' end='${availableTickets}'><option value="${i}">${i}</option></c:forEach> 
-								</select></td></tr>
-</table>
+<c:choose>
+	<c:when test="${not empty availableTickets}">
+		<h2>Booking for <b>${movieTitle}</b></h2>
+		<form action='control' method='post'>
+			<table>
+			<tr><td><b>Cinema:</b></td><td>${cinemaName}</td></tr>
+			<tr><td><b>Date:</b></td><td>${bookingDate}</td></tr>
+			<tr><td><b>Time:</b></td><td>${time}</td></tr>
+			<tr><td><b>No of tickets:</b></td><td>
+											<select name='nooftickets'>
+											<c:forEach var='i' begin='1' end='${availableTickets}'><option value="${i}">${i}</option></c:forEach> 
+											</select></td></tr>
+			</table>
+			
+			<input type='hidden' name='bookingdate' value='${bookingDate}'>
+			<input type='hidden' name='showtimeid' value='${showTimeID}'>
+			<input type='submit' name='addBooking' value='Book'>
+		</form>
+	</c:when>
+	<c:otherwise>
+		Sorry, Tickets sold out.<br>
+	</c:otherwise>
+</c:choose>
 
-<input type='hidden' name='bookingdate' value='${bookingDate}'>
-<input type='hidden' name='showtimeid' value='${showTimeID}'>
-<input type='submit' name='addBooking' value='Book'>
-</form>
 
 <br>
 <br>
-
+<a href='viewDetail.jsp'>Back</a>
 
 </body>
 </html>

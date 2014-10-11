@@ -57,20 +57,16 @@ Book your ticket:
 	</form>
 	<br>
 	<c:if test = "${not empty bookingTimes}">
-		<form action="control" method="GET">
-			<table>
-				<c:forEach var="bean" items="${bookingTimes}">
-					<tr><td>${bean.name} :</td>
-					<c:forEach var="time" items="${bean.showTimes}">
-						<td><a href='control?doBooking=1&movieid=${movieDetail.movieID}&movietitle=${movieDetail.title}&cinemaid=${bean.cinemaID}&cinemaname=${bean.name}&bookingdate=${bookingDate}&time=${time}'>${time}.00</a></td>
-					</c:forEach>
-					</tr>
+		<table>
+			<c:forEach var="bean" items="${bookingTimes}">
+				<tr><td>${bean.name} :</td>
+				<c:forEach var="time" items="${bean.showTimes}">
+					<td><a href='control?doBooking=1&movieid=${movieDetail.movieID}&movietitle=${movieDetail.title}&cinemaid=${bean.cinemaID}&cinemaname=${bean.name}&bookingdate=${bookingDate}&time=${time}'>${time}.00</a></td>
 				</c:forEach>
-			</table>
-		
-			<input type="hidden" name='bookingDate' value='${bookingDate}'>
-			<input type="hidden" name='movieid' value='${movieDetail.movieID}'>
-		</form>
+				</tr>
+			</c:forEach>
+		</table>
+	
 		<%request.getSession().removeAttribute("bookingTimes");%>
 	</c:if>
 	

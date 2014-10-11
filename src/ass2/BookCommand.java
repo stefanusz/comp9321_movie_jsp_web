@@ -65,9 +65,7 @@ public class BookCommand implements Command{
 				
 				
 				int availableTickets = capacity - boughtTickets;
-				
 				if(availableTickets == 0){
-					request.setAttribute("message", "Ticket sold out.");
 					return false;
 				}
 				

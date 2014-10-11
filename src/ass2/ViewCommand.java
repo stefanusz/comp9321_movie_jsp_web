@@ -177,33 +177,36 @@ public class ViewCommand implements Command{
 			        //BOOKING
 			        if(getShowTimes != null){
 			        	String bookingDate = request.getParameter("bookingDate");
-			        	ArrayList<CinemaBean> bookingTimes = new ArrayList<CinemaBean>();
-			        	
-			        	//GET CINEMA AND AVAILABLE TIMES
-				        stmtCinema = conn.createStatement();
-				        getCinemaQuery = "SELECT * FROM cinema";
-				        resultCinema= stmtCinema.executeQuery(getCinemaQuery);
-				        while(resultCinema.next()){
-				        	CinemaBean newCinemaBean = new CinemaBean();
-				        	newCinemaBean.clearShowTimes();
+			        	if(!bookingDate.equals("")){
+			        		ArrayList<CinemaBean> bookingTimes = new ArrayList<CinemaBean>();
 				        	
-				        	int cinemaID = resultCinema.getInt("cinemaid");
-				        	String cinemaName = resultCinema.getString("name");
-				        	
-				        	newCinemaBean.setCinemaID(cinemaID);
-				        	newCinemaBean.setName(cinemaName);
-				        	
-				        	Statement stmtTimes = conn.createStatement();
-					        String getTimesQuery = "SELECT time FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = "+cinemaID+"AND rm.movieid="+movieID;
-					        ResultSet resultTimes= stmtTimes.executeQuery(getTimesQuery);
-					        while(resultTimes.next()){
-					        	String time = resultTimes.getString("time");
-					        	newCinemaBean.setShowTimes(time);
+				        	//GET CINEMA AND AVAILABLE TIMES
+					        stmtCinema = conn.createStatement();
+					        getCinemaQuery = "SELECT * FROM cinema";
+					        resultCinema= stmtCinema.executeQuery(getCinemaQuery);
+					        while(resultCinema.next()){
+					        	CinemaBean newCinemaBean = new CinemaBean();
+					        	newCinemaBean.clearShowTimes();
+					        	
+					        	int cinemaID = resultCinema.getInt("cinemaid");
+					        	String cinemaName = resultCinema.getString("name");
+					        	
+					        	newCinemaBean.setCinemaID(cinemaID);
+					        	newCinemaBean.setName(cinemaName);
+					        	
+					        	Statement stmtTimes = conn.createStatement();
+						        String getTimesQuery = "SELECT time FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = "+cinemaID+"AND rm.movieid="+movieID;
+						        ResultSet resultTimes= stmtTimes.executeQuery(getTimesQuery);
+						        while(resultTimes.next()){
+						        	String time = resultTimes.getString("time");
+						        	newCinemaBean.setShowTimes(time);
+						        }
+						        bookingTimes.add(newCinemaBean);
 					        }
-					        bookingTimes.add(newCinemaBean);
-				        }
-				        request.getSession().setAttribute("bookingTimes", bookingTimes);
-				        request.getSession().setAttribute("bookingDate", bookingDate);
+					        request.setAttribute("bookingTimes", bookingTimes);
+					        request.setAttribute("bookingDate", bookingDate);
+			        	}
+			        	
 			        }
 			        
 					request.getSession().setAttribute("movieDetail", movieDetail);
