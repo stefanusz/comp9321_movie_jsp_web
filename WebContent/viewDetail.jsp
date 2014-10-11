@@ -97,45 +97,57 @@ Book your ticket:
 <br>
 	
 	
+</c:if>	
+
+<c:choose>
+	<c:when test='${empty username}'>
+		You need to login first before comment.<br>
+	</c:when>
 	
-	
-	<c:choose>
-		<c:when test='${empty username}'>
-			You need to login first before comment.<br>
-		</c:when>
+	<c:otherwise>
 		
-		<c:otherwise>
-			
-			<form action="control" method="POST" > 
-				Comment & Rate:    
-				<input type="radio" name="rating" value="1">1
-				<input type="radio" name="rating" value="2">2
-				<input type="radio" name="rating" value="3">3
-				<input type="radio" name="rating" value="4">4
-				<input type="radio" name="rating" value="5">5
-				<br>
-				<textarea name="comment" cols="30" rows="7"></textarea>
-				<br>
-				<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
-				<input type='hidden' name ='viewDetail' value='notNull'>
-				<input type='submit' value='Comment' name='addComment'>
-			</form>
-		</c:otherwise>
-	</c:choose>
-	
+		<form action="control" method="POST" > 
+			Comment & Rate:    
+			<input type="radio" name="rating" value="1">1
+			<input type="radio" name="rating" value="2">2
+			<input type="radio" name="rating" value="3">3
+			<input type="radio" name="rating" value="4">4
+			<input type="radio" name="rating" value="5">5
+			<br>
+			<textarea name="comment" cols="30" rows="7"></textarea>
+			<br>
+			<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
+			<input type='hidden' name ='viewDetail' value='notNull'>
+			<input type='submit' value='Comment' name='addComment'>
+		</form>
+	</c:otherwise>
+</c:choose>
 
 
-	
-	
-	<br>
-	Comments:
-	<c:forEach var="data" items="${movieComment}">
-		<table>
-			<tr><td>${data.user} -> <td>${data.rating}/5.0
-			<tr><td colspan='2'>${data.comment}
-		</table>
-	</c:forEach>
 
-</c:if>
+
+
+<br>
+Comments:
+
+
+
+<c:choose>
+	<c:when test='${empty movieComment}'>
+		No comment on this movies yet.
+	</c:when>
+	
+	<c:otherwise>
+		
+		<c:forEach var="data" items="${movieComment}">
+			<table>
+				<tr><td>${data.user} -> <td>${data.rating}/5.0
+				<tr><td colspan='2'>${data.comment}
+			</table>
+		</c:forEach>
+	</c:otherwise>
+</c:choose>
+
+
 </body>
 </html>

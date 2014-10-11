@@ -24,7 +24,15 @@ public class ViewCommand implements Command{
 		
 		try {
 			conn = DBConnectionFactory.getConnection();
-			stmt = conn.createStatement();
+			stmtGenre = conn.createStatement();
+			stmtMovies = conn.createStatement();
+			stmtActor = conn.createStatement();
+			stmtComment = conn.createStatement();
+			stmtCinema = conn.createStatement();
+			stmtTimes = conn.createStatement();
+			stmtNowShowing = conn.createStatement();
+			stmtComingSoon = conn.createStatement();
+			stmtRating = conn.createStatement();
 			
 			String viewAllMovies =  request.getParameter("viewAllMovies");
 			String viewDetail =  request.getParameter("viewDetail");
@@ -34,7 +42,7 @@ public class ViewCommand implements Command{
 			if (viewAllMovies != null) {
 				ArrayList<MovieBean> allMovies = new ArrayList<MovieBean>(); 
 				
-				ResultSet resultMovies= stmt.executeQuery("SELECT * FROM movies");
+				ResultSet resultMovies= stmtMovies.executeQuery("SELECT * FROM movies");
 				
 				while(resultMovies.next()){
 					MovieBean newBean = new MovieBean();
@@ -56,7 +64,7 @@ public class ViewCommand implements Command{
 			        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
 			        
 			        //GET THE GENRES & SET TO THE BEAN
-			        Statement stmtGenre = conn.createStatement();
+			        stmtGenre = conn.createStatement();
 			        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
 			        ResultSet resultGenre= stmtGenre.executeQuery(getGenreQuery);
 			        while(resultGenre.next()){
@@ -64,7 +72,6 @@ public class ViewCommand implements Command{
 			        }
 			        
 			        //GET THE ACTORS & SET TO THE BEAN
-			        Statement stmtActor = conn.createStatement();
 			        String getActorQuery = "SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = "+intID;
 			        ResultSet resultActor= stmtActor.executeQuery(getActorQuery);
 			        while(resultActor.next()){
@@ -94,7 +101,7 @@ public class ViewCommand implements Command{
 				MovieBean movieDetail = new MovieBean();
 				ArrayList<CommentBean> movieComment = new ArrayList<CommentBean>();
 				
-				ResultSet resultDetail= stmt.executeQuery("SELECT * FROM movies WHERE movieid = "+ movieID);
+				ResultSet resultDetail= stmtMovies.executeQuery("SELECT * FROM movies WHERE movieid = "+ movieID);
 				
 				if(resultDetail.next()){
 					
@@ -115,7 +122,6 @@ public class ViewCommand implements Command{
 			        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
 			        
 			        //GET THE GENRES & SET TO THE BEAN
-			        Statement stmtGenre = conn.createStatement();
 			        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
 			        ResultSet resultGenre= stmtGenre.executeQuery(getGenreQuery);
 			        while(resultGenre.next()){
@@ -123,7 +129,6 @@ public class ViewCommand implements Command{
 			        }
 			        
 			        //GET THE ACTORS & SET TO THE BEAN
-			        Statement stmtActor = conn.createStatement();
 			        String getActorQuery = "SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = "+intID;
 			        ResultSet resultActor= stmtActor.executeQuery(getActorQuery);
 			        while(resultActor.next()){
@@ -140,7 +145,6 @@ public class ViewCommand implements Command{
 			        movieDetail.setReleaseDate(convertedDate);
 					
 					//GET THE COMMENTS
-			        Statement stmtComment = conn.createStatement();
 			        String getCommentQuery = "SELECT username,comment,rating FROM comment c JOIN movies m ON c.movieid = m.movieid JOIN users u ON c.userid = u.userid WHERE m.movieid ="+movieID;
 			        ResultSet resultComment= stmtComment.executeQuery(getCommentQuery);
 			        while(resultComment.next()){
@@ -153,7 +157,6 @@ public class ViewCommand implements Command{
 			        
 			        //GET CINEMA TIMES FOR ADMIN
 			        ArrayList<CinemaBean> movieEmptyTimes = new ArrayList<CinemaBean>();
-			        Statement stmtCinema = conn.createStatement();
 			        String getCinemaQuery = "SELECT * FROM cinema";
 			        ResultSet resultCinema= stmtCinema.executeQuery(getCinemaQuery);
 			        while(resultCinema.next()){
@@ -194,7 +197,6 @@ public class ViewCommand implements Command{
 					        	newCinemaBean.setCinemaID(cinemaID);
 					        	newCinemaBean.setName(cinemaName);
 					        	
-					        	Statement stmtTimes = conn.createStatement();
 						        String getTimesQuery = "SELECT time FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = "+cinemaID+"AND rm.movieid="+movieID;
 						        ResultSet resultTimes= stmtTimes.executeQuery(getTimesQuery);
 						        while(resultTimes.next()){
@@ -231,7 +233,6 @@ public class ViewCommand implements Command{
 			
 			//GET FOR NOW SHOWING
 			int counter = 4;
-			Statement stmtNowShowing = conn.createStatement();
 			ResultSet resultNowShowing = stmtNowShowing.executeQuery("SELECT * FROM movies WHERE releasedate < '"+ currentDate+"' ORDER BY movieid DESC");
 			
 			while(resultNowShowing.next() && counter > 0){
@@ -242,7 +243,7 @@ public class ViewCommand implements Command{
 				String avgRatingString = "";
 				double avgRatingDouble = 0;
 				
-				ResultSet resultRating = stmt.executeQuery("SELECT AVG(rating) AS averagerating FROM comment WHERE movieid ="+ dbMovieID);
+				ResultSet resultRating = stmtRating.executeQuery("SELECT AVG(rating) AS averagerating FROM comment WHERE movieid ="+ dbMovieID);
 				if(resultRating.next()){
 					avgRatingDouble = resultRating.getDouble("averagerating");
 			        DecimalFormat df2 = new DecimalFormat("#.##");
@@ -272,7 +273,6 @@ public class ViewCommand implements Command{
 			
 			//GET FOR COMING SOON
 			counter = 4;
-			Statement stmtComingSoon = conn.createStatement();
 			ResultSet resultComingSoon = stmtComingSoon.executeQuery("SELECT * FROM movies WHERE releasedate > '"+ currentDate+"' ORDER BY movieid DESC");
 			while(resultComingSoon.next() && counter > 0){
 				MovieBean newBean = new MovieBean();
@@ -289,7 +289,7 @@ public class ViewCommand implements Command{
 				String avgRatingString = "";
 				double avgRatingDouble = 0;
 
-				ResultSet resultRating = stmt.executeQuery("SELECT AVG(rating) AS averagerating FROM comment WHERE movieid ="+ dbMovieID);
+				ResultSet resultRating = stmtRating.executeQuery("SELECT AVG(rating) AS averagerating FROM comment WHERE movieid ="+ dbMovieID);
 				if(resultRating.next()){
 					avgRatingDouble = resultRating.getDouble("averagerating");
 			        DecimalFormat df2 = new DecimalFormat("#.##");
@@ -321,6 +321,15 @@ public class ViewCommand implements Command{
 		
 			
 			conn.close();
+			stmtGenre.close();
+			stmtMovies.close();
+			stmtActor.close();
+			stmtComment.close();
+			stmtCinema.close();
+			stmtTimes.close();
+			stmtNowShowing.close();
+			stmtComingSoon.close();
+			stmtRating.close();
 			
 			
 		} catch (Exception e) {
@@ -337,5 +346,13 @@ public class ViewCommand implements Command{
 
 	
 	private Connection conn;
-	private Statement stmt;
+	private Statement stmtGenre;
+	private Statement stmtMovies;
+	private Statement stmtActor;
+	private Statement stmtComment;
+	private Statement stmtCinema; 
+	private Statement stmtTimes;
+	private Statement stmtNowShowing;
+	private Statement stmtComingSoon;
+	private Statement stmtRating;
 }

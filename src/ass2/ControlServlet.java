@@ -102,6 +102,11 @@ public class ControlServlet extends HttpServlet {
 		if((login != null) || (logout != null)){
 			Command command = commandMap.get("authenticate");
 			isSuccess = command.execute(request,response);
+			
+			//REFRESH VIEWING ALL MOVIES
+			command = commandMap.get("view");
+			isSuccess = command.execute(request,response);
+			
 			nextPage = "index.jsp";
 		}
 		
@@ -210,10 +215,6 @@ public class ControlServlet extends HttpServlet {
 		
 	}
 	
-	
-	public void checkSuccess(){
-		
-	}
 	
 	private HashMap<String, Command> commandMap; 
 
