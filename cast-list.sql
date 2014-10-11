@@ -70,4 +70,5 @@ INSERT INTO resolvemovies VALUES (DEFAULT,100,100);
 
 
 SELECT * FROM resolvemovies WHERE movieID=1 AND cinemaid =2;
->>>>>>> f40c057a6164d46de1b6d0360e933df38b3c9770
+
+SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = 15;
