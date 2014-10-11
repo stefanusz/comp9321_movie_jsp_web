@@ -58,4 +58,7 @@ SELECT * FROM resolvemovies WHERE cinemaid = 1;
 
 SELECT title FROM MOVIES WHERE title = "hayabusa";
 
-SELECT DISTINCT m.title, g.name FROM (SELECT * from movies) as m, (SELECT * FROM genre) as g, (SELECT * FROM resolveGenre) as rg WHERE m.title = 'a' OR g.name = 'comedy';
+SELECT DISTINCT m.movieID, m.title, g.name, m.poster, m.sypnosis FROM (SELECT * from movies) as m, (SELECT * FROM genre) as g, (SELECT * FROM resolveGenre) as rg WHERE m.title LIKE '%horror%' OR g.name LIKE 'horror%';
+
+
+SELECT DISTINCT m.title, g.name FROM (SELECT * from movies) as m, (SELECT * FROM genre) as g, (SELECT * FROM resolveGenre) as rg WHERE MATCH (m.title,g.name) AGAINST ('+a* +comedy*' IN BOOLEAN MODE);
