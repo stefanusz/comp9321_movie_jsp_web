@@ -36,6 +36,7 @@ public class AddCommand implements Command {
 			String addGenre=  request.getParameter("addGenre");
 			String addComment =  request.getParameter("addComment");
 			String addShowTimes =  request.getParameter("addShowTimes");
+			String addBooking =  request.getParameter("addBooking");
 			
 
 			if (addMovies != null) {
@@ -251,14 +252,11 @@ public class AddCommand implements Command {
 		        	String getResolveMoviesIDQuery = "SELECT * FROM resolvemovies WHERE movieID="+movieID+" AND cinemaid ="+cinemaID;
 			        ResultSet resultResolveMovies= stmtResolveMovies.executeQuery(getResolveMoviesIDQuery);
 			        
-			        
 			        if(resultResolveMovies.next()){ //IF EXISTS
 			        	resolveMoviesID = resultResolveMovies.getInt("resolveMoviesID");
 			        }
 			        
-			        
 			        if(resolveMoviesID == 0){
-			        	//System.out.println("MASUK");
 			        	//IF NOT, INSERT
 			        	String insertQuery = "INSERT INTO resolvemovies VALUES (DEFAULT,"+cinemaID+","+movieID+")";
 						stmt.execute(insertQuery);
@@ -268,20 +266,26 @@ public class AddCommand implements Command {
 				        	resolveMoviesID = resultResolveMovies.getInt("resolveMoviesID");
 						}
 			        }
-			        //System.out.println("2..."+resolveMoviesID);
-			        
 			        
 			        for(String time : showTimes){
-			        	//System.out.println(time);
 			        	String insertQuery = "INSERT INTO showtimes VALUES (DEFAULT,"+resolveMoviesID+",'"+time+"')";
 						stmt.execute(insertQuery);
-			        	//System.out.println(time);
 		        	}
 			        
-			        
 		        }
-				
+		    	
 			}
+			else if (addBooking != null) {
+				String bookingDate = request.getParameter("bookingdate");
+				String showTimeID = request.getParameter("showtimeid");
+				String noOfTickets = request.getParameter("nooftickets");
+				String userID = (String) request.getSession().getAttribute("userid");
+				System.out.println(bookingDate);
+				
+				String insertQuery = "INSERT INTO booking VALUES (DEFAULT,"+userID+","+noOfTickets+","+showTimeID+",'"+bookingDate+"')";
+				stmt.execute(insertQuery);
+				
+	        }
 
 
 			conn.close();

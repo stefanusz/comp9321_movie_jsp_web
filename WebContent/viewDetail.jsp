@@ -47,7 +47,7 @@
 
 <c:if test = "${movieDetail.releaseDate < currentDate && not empty username}">
 	
-	[booking?]
+Book your ticket:
 	<form action="control" method="GET">
 		<input type="text" name='bookingDate' id="datepicker">
 		
@@ -62,7 +62,7 @@
 				<c:forEach var="bean" items="${bookingTimes}">
 					<tr><td>${bean.name} :</td>
 					<c:forEach var="time" items="${bean.showTimes}">
-						<td><a href='control?doBook=1&movieid=${movieDetail.movieID}&cinemaid=${bean.cinemaID}&bookingdate=${bookingDate}&time=${time}'>${time}.00</a></td>
+						<td><a href='control?doBooking=1&movieid=${movieDetail.movieID}&movietitle=${movieDetail.title}&cinemaid=${bean.cinemaID}&cinemaname=${bean.name}&bookingdate=${bookingDate}&time=${time}'>${time}.00</a></td>
 					</c:forEach>
 					</tr>
 				</c:forEach>
