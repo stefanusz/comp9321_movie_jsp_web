@@ -64,7 +64,6 @@ public class ViewCommand implements Command{
 			        java.sql.Date convertedDate = new java.sql.Date(parsed.getTime());
 			        
 			        //GET THE GENRES & SET TO THE BEAN
-			        stmtGenre = conn.createStatement();
 			        String getGenreQuery = "SELECT name AS genreName from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = "+intID;
 			        ResultSet resultGenre= stmtGenre.executeQuery(getGenreQuery);
 			        while(resultGenre.next()){
@@ -166,7 +165,6 @@ public class ViewCommand implements Command{
 			        	newCinemaBean.setCinemaID(cinemaID);
 			        	newCinemaBean.setName(cinemaName);
 			        	
-			        	Statement stmtTimes = conn.createStatement();
 				        String getTimesQuery = "SELECT time FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = "+cinemaID+"AND rm.movieid="+movieID;
 				        ResultSet resultTimes= stmtTimes.executeQuery(getTimesQuery);
 				        while(resultTimes.next()){
@@ -184,7 +182,6 @@ public class ViewCommand implements Command{
 			        		ArrayList<CinemaBean> bookingTimes = new ArrayList<CinemaBean>();
 				        	
 				        	//GET CINEMA AND AVAILABLE TIMES
-					        stmtCinema = conn.createStatement();
 					        getCinemaQuery = "SELECT * FROM cinema";
 					        resultCinema= stmtCinema.executeQuery(getCinemaQuery);
 					        while(resultCinema.next()){

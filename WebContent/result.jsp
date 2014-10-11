@@ -15,7 +15,7 @@
 <c:choose>
 	<c:when test="${not empty searchResult}">
 		<table>
-		<tr><th>Poster<th>Title<th>Genre<th>Actors<th>Rating<th>Link
+		<tr><th>Poster<th>Title<th>Genre<th>Actors<th>Rating
 		
 		<c:forEach var="result" items="${searchResult}">
 			<tr><td><img src="${result.poster}" alt="${result.poster}" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${result.movieID}'>${result.title}</a><td>

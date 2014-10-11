@@ -69,12 +69,10 @@ CREATE TABLE  movies (
   title VARCHAR(45) NOT NULL,
   poster VARCHAR(45) NOT NULL,
   director VARCHAR(45) NOT NULL,
-  sypnosis VARCHAR(45) NOT NULL,
+  sypnosis VARCHAR(1000) NOT NULL,
   ageRating VARCHAR(10) NOT NULL,
   releaseDate DATE NOT NULL,
   PRIMARY KEY (movieID));
-
-
 
 
 

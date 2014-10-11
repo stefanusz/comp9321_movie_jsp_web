@@ -19,12 +19,13 @@ SELECT * FROM booking;
 
 SELECT * FROM users WHERE username = 'ste';
 
-DELETE from users;
+DELETE from users WHERE username ='mike';
 
 SELECT HashBytes('MD5','admin');
 
 
 UPDATE users SET role = 'admin' WHERE username = 'admin';
+UPDATE users SET status = 'active' WHERE username = 'admin';
 
 SELECT name from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = 7;
 

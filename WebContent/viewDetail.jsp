@@ -44,110 +44,111 @@
 <br>
 
 
-
-<c:if test = "${movieDetail.releaseDate < currentDate && not empty username}">
-	
-Book your ticket:
-	<form action="control" method="GET">
-		<input type="text" name='bookingDate' id="datepicker">
+<c:if test = "${movieDetail.releaseDate < currentDate}">
+	<c:if test = "${not empty username && role != 'admin'}">
 		
-		<input type='hidden' name='movieid' value='${movieDetail.movieID}'>
-		<input type='hidden' name='viewDetail' value='notNull'>
-		<input type="submit" name='getShowTimes' value='Go'>
-	</form>
-	<br>
-	<c:if test = "${not empty bookingTimes}">
-		<table>
-			<c:forEach var="bean" items="${bookingTimes}">
-				<tr><td>${bean.name} :</td>
-				<c:forEach var="time" items="${bean.showTimes}">
-					<td><a href='control?doBooking=1&movieid=${movieDetail.movieID}&movietitle=${movieDetail.title}&cinemaid=${bean.cinemaID}&cinemaname=${bean.name}&bookingdate=${bookingDate}&time=${time}'>${time}.00</a></td>
-				</c:forEach>
-				</tr>
-			</c:forEach>
-		</table>
-	
-		<%request.getSession().removeAttribute("bookingTimes");%>
-	</c:if>
-	
-	
-	<br>
-	<br>
-
-	<c:if test = "${role == 'admin'}">
-		Add Show Times (<b>${movieDetail.title}</b>):
-		<form action="control" method="POST">
-		<table>
-			<c:forEach var="bean" items="${movieEmptyTimes}">
-				<tr><td>${bean.name} :</td>
-				<c:forEach var="time" items="${bean.showTimes}">
-					<td><input type='checkbox' name='${bean.cinemaID}' value='${time}'>${time}.00</td>
-				</c:forEach>
-				</tr>
-			</c:forEach>
-		
-		</table>
-		<input type='hidden' name='viewDetail' value='notNull'>
-		<input type='hidden' name='movieid' value='${movieDetail.movieID}'>
-		<input type='submit' name='addShowTimes' value='Process'>
+	Book your ticket:
+		<form action="control" method="GET">
+			<input type="text" name='bookingDate' id="datepicker">
+			
+			<input type='hidden' name='movieid' value='${movieDetail.movieID}'>
+			<input type='hidden' name='viewDetail' value='notNull'>
+			<input type="submit" name='getShowTimes' value='Go'>
 		</form>
-	</c:if>
-<br>
-<br>
-<br>
-	
-	
-</c:if>	
-
-<c:choose>
-	<c:when test='${empty username}'>
-		You need to login first before comment.<br>
-	</c:when>
-	
-	<c:otherwise>
-		
-		<form action="control" method="POST" > 
-			Comment & Rate:    
-			<input type="radio" name="rating" value="1">1
-			<input type="radio" name="rating" value="2">2
-			<input type="radio" name="rating" value="3">3
-			<input type="radio" name="rating" value="4">4
-			<input type="radio" name="rating" value="5">5
-			<br>
-			<textarea name="comment" cols="30" rows="7"></textarea>
-			<br>
-			<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
-			<input type='hidden' name ='viewDetail' value='notNull'>
-			<input type='submit' value='Comment' name='addComment'>
-		</form>
-	</c:otherwise>
-</c:choose>
-
-
-
-
-
-<br>
-Comments:
-
-
-
-<c:choose>
-	<c:when test='${empty movieComment}'>
-		No comment on this movies yet.
-	</c:when>
-	
-	<c:otherwise>
-		
-		<c:forEach var="data" items="${movieComment}">
+		<br>
+		<c:if test = "${not empty bookingTimes}">
 			<table>
-				<tr><td>${data.user} -> <td>${data.rating}/5.0
-				<tr><td colspan='2'>${data.comment}
+				<c:forEach var="bean" items="${bookingTimes}">
+					<tr><td>${bean.name} :</td>
+					<c:forEach var="time" items="${bean.showTimes}">
+						<td><a href='control?doBooking=1&movieid=${movieDetail.movieID}&movietitle=${movieDetail.title}&cinemaid=${bean.cinemaID}&cinemaname=${bean.name}&bookingdate=${bookingDate}&time=${time}'>${time}.00</a></td>
+					</c:forEach>
+					</tr>
+				</c:forEach>
 			</table>
-		</c:forEach>
-	</c:otherwise>
-</c:choose>
+		
+			<%request.getSession().removeAttribute("bookingTimes");%>
+		</c:if>
+	</c:if>	
+		
+		<br>
+		<br>
+	
+		<c:if test = "${not empty username && role == 'admin'}">
+			Add Show Times (<b>${movieDetail.title}</b>):
+			<form action="control" method="POST">
+			<table>
+				<c:forEach var="bean" items="${movieEmptyTimes}">
+					<tr><td>${bean.name} :</td>
+					<c:forEach var="time" items="${bean.showTimes}">
+						<td><input type='checkbox' name='${bean.cinemaID}' value='${time}'>${time}.00</td>
+					</c:forEach>
+					</tr>
+				</c:forEach>
+			
+			</table>
+			<input type='hidden' name='viewDetail' value='notNull'>
+			<input type='hidden' name='movieid' value='${movieDetail.movieID}'>
+			<input type='submit' name='addShowTimes' value='Process'>
+			</form>
+		</c:if>
+	<br>
+	<br>
+	<br>
+		
+		
+	
+	
+	<c:choose>
+		<c:when test='${empty username}'>
+			You need to login first before comment.<br>
+		</c:when>
+		
+		<c:otherwise>
+			
+			<form action="control" method="POST" > 
+				Comment & Rate:    
+				<input type="radio" name="rating" value="1">1
+				<input type="radio" name="rating" value="2">2
+				<input type="radio" name="rating" value="3">3
+				<input type="radio" name="rating" value="4">4
+				<input type="radio" name="rating" value="5">5
+				<br>
+				<textarea name="comment" cols="30" rows="7"></textarea>
+				<br>
+				<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
+				<input type='hidden' name ='viewDetail' value='notNull'>
+				<input type='submit' value='Comment' name='addComment'>
+			</form>
+		</c:otherwise>
+	</c:choose>
+	
+	
+	
+	
+	
+	<br>
+	Comments:
+	
+	
+	
+	<c:choose>
+		<c:when test='${empty movieComment}'>
+			No comment on this movies yet.
+		</c:when>
+		
+		<c:otherwise>
+			
+			<c:forEach var="data" items="${movieComment}">
+				<table>
+					<tr><td>${data.user} -> <td>${data.rating}/5.0
+					<tr><td colspan='2'>${data.comment}
+				</table>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
 
+</c:if>
 
 </body>
 </html>
