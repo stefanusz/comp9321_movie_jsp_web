@@ -54,11 +54,20 @@ SELECT * FROM movies WHERE releasedate > '2014-10-09' ORDER BY movieid DESC;
 
 SELECT * FROM resolvemovies rm JOIN showtimes s ON rm.resolvemoviesid = s.resolvemoviesid WHERE rm.cinemaid = 1;
 
-SELECT * FROM resolvemovies WHERE cinemaid = 1;
+SELECT * FROM resolvemovies;
 
 SELECT title FROM MOVIES WHERE title = "hayabusa";
 
 SELECT DISTINCT m.movieID, m.title, g.name, m.poster, m.sypnosis FROM (SELECT * from movies) as m, (SELECT * FROM genre) as g, (SELECT * FROM resolveGenre) as rg WHERE m.title LIKE '%horror%' OR g.name LIKE 'horror%';
 
 
-SELECT DISTINCT m.title, g.name FROM (SELECT * from movies) as m, (SELECT * FROM genre) as g, (SELECT * FROM resolveGenre) as rg WHERE MATCH (m.title,g.name) AGAINST ('+a* +comedy*' IN BOOLEAN MODE);
+SELECT DISTINCT m.title, g.name FROM (SELECT * from movies) as m, (SELECT * FROM genre) as g, (SELECT * FROM resolveGenre) as rg WHERE m.title = 'a' OR g.name = 'comedy';
+
+
+
+
+INSERT INTO resolvemovies VALUES (DEFAULT,100,100);
+
+
+SELECT * FROM resolvemovies WHERE movieID=1 AND cinemaid =2;
+>>>>>>> f40c057a6164d46de1b6d0360e933df38b3c9770

@@ -1,17 +1,16 @@
-
-DROP TABLE  users;
-DROP TABLE  cinema;
-DROP TABLE  amenities ;
 DROP TABLE  resolveAmenities ;
-DROP TABLE  movies ;
-DROP TABLE  resolveMovies ;
-DROP TABLE  genre ;
 DROP TABLE  resolveGenre ;
-DROP TABLE  actor ;
-DROP TABLE  showTimes ;
 DROP TABLE  resolveActor ;
 DROP TABLE  comment ;
 DROP TABLE  booking ;
+DROP TABLE  users;
+DROP TABLE  amenities ;
+DROP TABLE  genre ;
+DROP TABLE  actor ;
+DROP TABLE  showTimes ;
+DROP TABLE  resolveMovies ;
+DROP TABLE  cinema;
+DROP TABLE  movies ;
 
 CREATE TABLE  users (
   userID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -22,6 +21,7 @@ CREATE TABLE  users (
   email VARCHAR(200) NOT NULL,
   password VARCHAR(200) NOT NULL,
   role VARCHAR(50) NOT NULL,
+  status VARCHAR(300),
   PRIMARY KEY (userID));
 
 
@@ -79,7 +79,7 @@ CREATE TABLE  movies (
 
 
 CREATE TABLE  resolveMovies (
-  resolveMoviesID VARCHAR(45) NOT NULL,
+  resolveMoviesID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
   cinemaID INT NOT NULL,
   movieID INT NOT NULL,
   PRIMARY KEY (resolveMoviesID),
@@ -135,7 +135,7 @@ CREATE TABLE  resolveActor (
 
 CREATE TABLE  showTimes (
   showTimeID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-  resolveMoviesID VARCHAR(45) NOT NULL,
+  resolveMoviesID INT NOT NULL,
   time VARCHAR(50) NOT NULL,
   PRIMARY KEY (showTimeID),
   CONSTRAINT fk_showTimes_resolveMovies1
@@ -167,16 +167,13 @@ CREATE TABLE  booking (
   userID INT NOT NULL,
   noOfTicket INT NOT NULL,
   showTimeID INT NOT NULL,
-  resolveMoviesID VARCHAR(45) NOT NULL,
+  bookingDate DATE NOT NULL,
   PRIMARY KEY (bookingID),
   CONSTRAINT fk_booking_user1
     FOREIGN KEY (userID)
     REFERENCES users (userID),
   CONSTRAINT fk_booking_showTimes1
     FOREIGN KEY (showTimeID)
-    REFERENCES showTimes (showTimeID),
-  CONSTRAINT fk_booking_resolveMovies1
-    FOREIGN KEY (resolveMoviesID)
-    REFERENCES resolveMovies (resolveMoviesID));
+    REFERENCES showTimes (showTimeID));
 
 

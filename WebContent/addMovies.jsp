@@ -5,6 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script>
+	$(function() {
+	  $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' }).val();
+	  
+	});
+	</script>
 <title>Add New Movies</title>
 </head>
 <body>
@@ -62,23 +72,7 @@
 	  <option value='R18+'>R18+</option>
 	</select>
 	
-<tr><td>Release Date: <td>
-	<select name='release_day'>
-		<c:forEach var="i" begin="1" end="31">
-		   <option value='${i}'>${i}</option>
-		</c:forEach>
-	</select>
-	<select name='release_month'>
-		<c:forEach var="i" begin="1" end="12">
-		   <option value='${i}'>${i}</option>
-		</c:forEach>
-	</select>
-	<select name='release_year'>
-		<c:forEach var="i" begin="1950" end="2020">
-		   <option value='${i}'>${i}</option>
-		</c:forEach>
-	</select>
-
+<tr><td>Release Date: <td> <input type="text" name='releaseDate' id="datepicker">
 
 </table>
 <input type='hidden' value='notNull' name='viewAllMovies'>

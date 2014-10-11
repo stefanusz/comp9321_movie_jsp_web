@@ -28,6 +28,7 @@ public class ViewCommand implements Command{
 			
 			String viewAllMovies =  request.getParameter("viewAllMovies");
 			String viewDetail =  request.getParameter("viewDetail");
+			String getShowTimes = request.getParameter("getShowTimes");
 			
 
 			if (viewAllMovies != null) {
@@ -88,10 +89,10 @@ public class ViewCommand implements Command{
 				request.getSession().setAttribute("allMovies", allMovies);
 			}
 			else if(viewDetail != null){
+				
 				String movieID = request.getParameter("movieid");
 				MovieBean movieDetail = new MovieBean();
 				ArrayList<CommentBean> movieComment = new ArrayList<CommentBean>();
-				
 				
 				ResultSet resultDetail= stmt.executeQuery("SELECT * FROM movies WHERE movieid = "+ movieID);
 				
@@ -148,7 +149,6 @@ public class ViewCommand implements Command{
 			        	newCommentBean.setComment(resultComment.getString("comment"));
 			        	newCommentBean.setRating(resultComment.getDouble("rating"));
 			        	movieComment.add(newCommentBean);
-			        	
 			        }
 			        
 			        //GET CINEMA TIMES
@@ -173,6 +173,14 @@ public class ViewCommand implements Command{
 				        movieTimes.add(newCinemaBean);
 			        }
 					
+			        
+			        //BOOKING
+			        if(getShowTimes != null){
+			        	String bookingDate = request.getParameter("bookingDate");
+			        	//bookingDate = bookingDate.replace('/','-');
+				        System.out.println(bookingDate);
+			        }
+			        
 					
 					request.getSession().setAttribute("movieDetail", movieDetail);
 					request.getSession().setAttribute("movieComment", movieComment);
@@ -237,7 +245,6 @@ public class ViewCommand implements Command{
 			//GET FOR COMING SOON
 			counter = 4;
 			Statement stmtComingSoon = conn.createStatement();
-			
 			ResultSet resultComingSoon = stmtComingSoon.executeQuery("SELECT * FROM movies WHERE releasedate > '"+ currentDate+"' ORDER BY movieid DESC");
 			while(resultComingSoon.next() && counter > 0){
 				MovieBean newBean = new MovieBean();
