@@ -41,7 +41,8 @@ public class ControlServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String viewAllMovies = request.getParameter("viewAllMovies");
 		String viewDetail = request.getParameter("viewDetail");
-		
+		String activation = request.getParameter("activation");
+		System.out.println("printed activation"+ activation);
 		String nextPage = "index.jsp";
 		
 		if(viewAllMovies != null){
@@ -53,6 +54,11 @@ public class ControlServlet extends HttpServlet {
 			Command command = commandMap.get("view");
 			command.execute(request, response);
 			nextPage = "viewDetail.jsp";
+		}else if(activation != null){
+			Command command = commandMap.get("authenticate");
+			command.execute(request, response);
+			nextPage = "index.jsp";
+			
 		}
 		//TO INDEX PAGE AT THE BEGINNING
 			Command command = commandMap.get("view");

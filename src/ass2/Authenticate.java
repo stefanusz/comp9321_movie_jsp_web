@@ -14,6 +14,7 @@ public class Authenticate implements Command {
 
 	private Connection conn;
 	private Statement stmt;
+	private Statement stmt2;
 
 	@Override
 	public boolean execute(HttpServletRequest request,
@@ -22,6 +23,7 @@ public class Authenticate implements Command {
 		
 		String login =  request.getParameter("login");
 		String logout = request.getParameter("logout");
+		String activation = request.getParameter("activation");
 		
 
 		if (login != null) {
@@ -48,8 +50,9 @@ public class Authenticate implements Command {
 						String dbRole = result.getString("role");
 						String dbNickName = result.getString("nickname");
 						String dbEmail = result.getString("email");
+						String dbStatus = result.getString("status");
 
-						if(dbUsername.equalsIgnoreCase(username)){
+						if(dbUsername.equalsIgnoreCase(username) && dbStatus.equalsIgnoreCase("active")){
 							
 							if(hashedPassword.equals(dbPassword)){
 								request.getSession().setAttribute("userid", dbUserID);
@@ -62,6 +65,8 @@ public class Authenticate implements Command {
 								return true;
 							}
 							
+						}else{
+							return false;
 						}
 						
 					}
@@ -79,6 +84,39 @@ public class Authenticate implements Command {
 			HttpSession session = request.getSession(false);
 			session.invalidate();
 			return true;
+		}else if(activation != null){
+			
+			String username = request.getParameter("username");
+			
+			try {
+				conn = DBConnectionFactory.getConnection();
+				stmt = conn.createStatement();
+				
+				String sqlQuery = "SELECT status FROM users WHERE username = '" +username+"'";
+				
+				ResultSet result = stmt.executeQuery(sqlQuery);
+				
+				while (result.next()){
+					String status = result.getString("status");
+					
+					if(status.equals(activation)){
+						
+						String updateStatus = "UPDATE users SET status='active' WHERE username='"+username+"'";
+						stmt2 = conn.createStatement();
+						stmt2.executeUpdate(updateStatus);
+						return true;
+					}else{
+						return false;
+					}
+				}
+					
+				
+				
+			}catch (Exception e) {
+
+				e.printStackTrace();
+			}
+			
 		}
 		
 		

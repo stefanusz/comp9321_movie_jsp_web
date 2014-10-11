@@ -47,7 +47,7 @@ public class MailSenderServlet extends HttpServlet {
 	private void handleMail(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		MailSender sender = null;
-		System.out.print("COMES HERE");
+		
 		RequestDispatcher disp;
 		String target="";
 		try{

@@ -54,8 +54,19 @@ public class RegisterCommand implements Command{
 			String hashedPassword = hashing(password);
 			
 			//INSERT INTO DATABASE
-			stmt.execute("INSERT INTO users VALUES (DEFAULT,'"+username+"','"+firstName+"','"+lastName+"','"+nickname+"','"+email+"','"+hashedPassword+"','user','-')");
+			stmt.execute("INSERT INTO users VALUES (DEFAULT,'"+username+"','"+firstName+"','"+lastName+"','"+nickname+"','"+email+"','"+hashedPassword+"','user','"+hashedPassword+"')");
 		
+			
+			//SENDING OF EMAIL STARTS HERE.
+			MailSender sender = null;
+			sender = MailSender.getMailSender();
+			String fromAddress = "shus363@cse.unsw.edu.au";
+			String toAddress = email;
+			String subject = "Mail activation for movie website";
+			StringBuffer mailBody = new StringBuffer();
+			mailBody.append("Please click this link to activate your account: http://localhost:8080/MovieWebsite/control?username="+username+"&activation="+hashedPassword);
+			sender.sendMessage(fromAddress, toAddress, subject, mailBody);
+			//SENDING OF EMAIL ENDS HERE.			
 			
 			conn.close();
 			
@@ -90,7 +101,7 @@ public class RegisterCommand implements Command{
 
 		return hashedPassword;
 	}
-	
+
 	
 	private Connection conn;
 	private Statement stmt;
