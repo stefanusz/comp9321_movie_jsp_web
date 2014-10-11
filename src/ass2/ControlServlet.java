@@ -32,6 +32,7 @@ public class ControlServlet extends HttpServlet {
         commandMap.put("edit", new EditCommand());
         commandMap.put("view", new ViewCommand());
         commandMap.put("search", new Search());
+        commandMap.put("book", new BookCommand());
 
     }
 
@@ -41,8 +42,13 @@ public class ControlServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String viewAllMovies = request.getParameter("viewAllMovies");
 		String viewDetail = request.getParameter("viewDetail");
+
 		String activation = request.getParameter("activation");
 		System.out.println("printed activation"+ activation);
+
+		String doBooking = request.getParameter("doBooking");
+		
+
 		String nextPage = "index.jsp";
 		
 		if(viewAllMovies != null){
@@ -59,6 +65,11 @@ public class ControlServlet extends HttpServlet {
 			command.execute(request, response);
 			nextPage = "index.jsp";
 			
+		}
+		else if(doBooking != null){
+			Command command = commandMap.get("book");
+			command.execute(request, response);
+			nextPage = "addBooking.jsp";
 		}
 		//TO INDEX PAGE AT THE BEGINNING
 			Command command = commandMap.get("view");
@@ -84,6 +95,7 @@ public class ControlServlet extends HttpServlet {
 		String addGenre =  request.getParameter("addGenre");
 		String addComment =  request.getParameter("addComment");
 		String addShowTimes =  request.getParameter("addShowTimes");
+		String addBooking =  request.getParameter("addBooking");
 		
 		String logout   = 	request.getParameter("logout");
 		String login   = 	request.getParameter("login");
@@ -100,6 +112,11 @@ public class ControlServlet extends HttpServlet {
 		if((login != null) || (logout != null)){
 			Command command = commandMap.get("authenticate");
 			isSuccess = command.execute(request,response);
+			
+			//REFRESH VIEWING ALL MOVIES
+			command = commandMap.get("view");
+			isSuccess = command.execute(request,response);
+			
 			nextPage = "index.jsp";
 		}
 		
@@ -185,6 +202,12 @@ public class ControlServlet extends HttpServlet {
 			isSuccess = command.execute(request, response);
 			nextPage = "result.jsp";
 		}
+		else if(addBooking != null){
+			prevPage = "addBooking.jsp";
+			Command command = commandMap.get("add");
+			isSuccess = command.execute(request, response);
+			nextPage = "viewDetail.jsp";
+		}
 		
 		
 		if(!isSuccess){
@@ -202,10 +225,6 @@ public class ControlServlet extends HttpServlet {
 		
 	}
 	
-	
-	public void checkSuccess(){
-		
-	}
 	
 	private HashMap<String, Command> commandMap; 
 

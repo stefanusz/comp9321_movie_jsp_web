@@ -19,25 +19,30 @@
 
 <h2>All Movies:</h2>
 
-<table>
-<tr><th>Poster<th>Title<th>Genre<th>Actors<th>Age Rating
 
-<c:forEach var="data" items="${allMovies}">
-	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>
-		<c:forEach var="genre" items="${data.genre}">
-			${genre} <br>
+<c:choose>
+	<c:when test="${not empty allMovies}">
+		<table>
+		<tr><th>Poster<th>Title<th>Genre<th>Actors<th>Age Rating
+		
+		<c:forEach var="data" items="${allMovies}">
+			<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>
+				<c:forEach var="genre" items="${data.genre}">
+					${genre} <br>
+				</c:forEach>		
+			<td>
+				<c:forEach var="actor" items="${data.actor}">
+					${actor} <br> 
+				</c:forEach>
+			<td>${data.ageRating}
 		</c:forEach>		
-	<td>
-		<c:forEach var="actor" items="${data.actor}">
-			${actor} <br> 
-		</c:forEach>
-	<td>${data.ageRating}
-</c:forEach>
+		</table>
 
-
-
-
-</table>
+	</c:when>
+	<c:otherwise>
+		No movies could be found.<br>
+	</c:otherwise>
+</c:choose>
 
 <a href='index.jsp'>HOME</a>
 

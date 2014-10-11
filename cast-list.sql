@@ -14,6 +14,7 @@ SELECT * from comment;
 SELECT * from resolveactor;
 SELECT * FROM SHOWTIMES;
 SELECT * FROM resolvemovies;
+SELECT * FROM booking;
 
 
 SELECT * FROM users WHERE username = 'ste';
@@ -75,3 +76,9 @@ INSERT INTO resolvemovies VALUES (DEFAULT,100,100);
 SELECT * FROM resolvemovies WHERE movieID=1 AND cinemaid =2;
 
 SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = 15;
+
+
+SELECT SUM(noofticket) FROM booking b JOIN showtimes s ON b.showtimeid = s.showtimeid JOIN resolvemovies rm ON s.resolvemoviesid = rm.resolvemoviesid WHERE rm.cinemaid = 1 AND s.time = 1;
+
+
+SELECT SUM(noofticket) as totalbought FROM booking b JOIN showtimes s ON b.showtimeid = s.showtimeid JOIN resolvemovies rm ON s.resolvemoviesid = rm.resolvemoviesid WHERE rm.cinemaid = 1 AND rm.movieid=1 AND b.bookingdate = '2014-10-10' AND s.time ='1';

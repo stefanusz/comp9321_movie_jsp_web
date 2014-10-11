@@ -47,7 +47,7 @@
 
 <c:if test = "${movieDetail.releaseDate < currentDate && not empty username}">
 	
-	[booking?]
+Book your ticket:
 	<form action="control" method="GET">
 		<input type="text" name='bookingDate' id="datepicker">
 		
@@ -57,20 +57,16 @@
 	</form>
 	<br>
 	<c:if test = "${not empty bookingTimes}">
-		<form action="control" method="GET">
-			<table>
-				<c:forEach var="bean" items="${bookingTimes}">
-					<tr><td>${bean.name} :</td>
-					<c:forEach var="time" items="${bean.showTimes}">
-						<td><a href='control?doBook=1&movieid=${movieDetail.movieID}&cinemaid=${bean.cinemaID}&bookingdate=${bookingDate}&time=${time}'>${time}.00</a></td>
-					</c:forEach>
-					</tr>
+		<table>
+			<c:forEach var="bean" items="${bookingTimes}">
+				<tr><td>${bean.name} :</td>
+				<c:forEach var="time" items="${bean.showTimes}">
+					<td><a href='control?doBooking=1&movieid=${movieDetail.movieID}&movietitle=${movieDetail.title}&cinemaid=${bean.cinemaID}&cinemaname=${bean.name}&bookingdate=${bookingDate}&time=${time}'>${time}.00</a></td>
 				</c:forEach>
-			</table>
-		
-			<input type="hidden" name='bookingDate' value='${bookingDate}'>
-			<input type="hidden" name='movieid' value='${movieDetail.movieID}'>
-		</form>
+				</tr>
+			</c:forEach>
+		</table>
+	
 		<%request.getSession().removeAttribute("bookingTimes");%>
 	</c:if>
 	
@@ -101,45 +97,57 @@
 <br>
 	
 	
+</c:if>	
+
+<c:choose>
+	<c:when test='${empty username}'>
+		You need to login first before comment.<br>
+	</c:when>
 	
-	
-	<c:choose>
-		<c:when test='${empty username}'>
-			You need to login first before comment.<br>
-		</c:when>
+	<c:otherwise>
 		
-		<c:otherwise>
-			
-			<form action="control" method="POST" > 
-				Comment & Rate:    
-				<input type="radio" name="rating" value="1">1
-				<input type="radio" name="rating" value="2">2
-				<input type="radio" name="rating" value="3">3
-				<input type="radio" name="rating" value="4">4
-				<input type="radio" name="rating" value="5">5
-				<br>
-				<textarea name="comment" cols="30" rows="7"></textarea>
-				<br>
-				<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
-				<input type='hidden' name ='viewDetail' value='notNull'>
-				<input type='submit' value='Comment' name='addComment'>
-			</form>
-		</c:otherwise>
-	</c:choose>
-	
+		<form action="control" method="POST" > 
+			Comment & Rate:    
+			<input type="radio" name="rating" value="1">1
+			<input type="radio" name="rating" value="2">2
+			<input type="radio" name="rating" value="3">3
+			<input type="radio" name="rating" value="4">4
+			<input type="radio" name="rating" value="5">5
+			<br>
+			<textarea name="comment" cols="30" rows="7"></textarea>
+			<br>
+			<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
+			<input type='hidden' name ='viewDetail' value='notNull'>
+			<input type='submit' value='Comment' name='addComment'>
+		</form>
+	</c:otherwise>
+</c:choose>
 
 
-	
-	
-	<br>
-	Comments:
-	<c:forEach var="data" items="${movieComment}">
-		<table>
-			<tr><td>${data.user} -> <td>${data.rating}/5.0
-			<tr><td colspan='2'>${data.comment}
-		</table>
-	</c:forEach>
 
-</c:if>
+
+
+<br>
+Comments:
+
+
+
+<c:choose>
+	<c:when test='${empty movieComment}'>
+		No comment on this movies yet.
+	</c:when>
+	
+	<c:otherwise>
+		
+		<c:forEach var="data" items="${movieComment}">
+			<table>
+				<tr><td>${data.user} -> <td>${data.rating}/5.0
+				<tr><td colspan='2'>${data.comment}
+			</table>
+		</c:forEach>
+	</c:otherwise>
+</c:choose>
+
+
 </body>
 </html>
