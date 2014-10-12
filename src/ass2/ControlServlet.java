@@ -119,7 +119,7 @@ public class ControlServlet extends HttpServlet {
 			
 			//REFRESH VIEWING ALL MOVIES
 			command = commandMap.get("view");
-			isSuccess = command.execute(request,response);
+			command.execute(request,response);
 			
 			nextPage = "index.jsp";
 		}
@@ -141,7 +141,7 @@ public class ControlServlet extends HttpServlet {
 			
 			//REFRESH VIEWING ALL MOVIES
 			command = commandMap.get("view");
-			isSuccess = command.execute(request,response);
+			command.execute(request,response);
 		}
 		else if(addCinema != null){
 			prevPage = "addCinema.jsp";
@@ -188,7 +188,7 @@ public class ControlServlet extends HttpServlet {
 			
 			//REFRESH VIEWING DETAIL AND NOWSHOWING
 			command = commandMap.get("view");
-			isSuccess = command.execute(request,response);
+			command.execute(request,response);
 		}
 		else if(addShowTimes != null){
 			prevPage = "viewDetail.jsp";
@@ -199,7 +199,7 @@ public class ControlServlet extends HttpServlet {
 			
 			//REFRESH VIEWING DETAIL AND NOWSHOWING
 			command = commandMap.get("view");
-			isSuccess = command.execute(request,response);
+			command.execute(request,response);
 		}else if(doSearch != null){
 			prevPage = "index.jsp";
 			Command command = commandMap.get("search");

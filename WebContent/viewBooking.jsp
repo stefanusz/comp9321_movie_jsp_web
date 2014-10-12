@@ -30,8 +30,6 @@
 	</c:otherwise>
 </c:choose>
 
-<a href='index.jsp'>HOME</a>
-
 
 </body>
 </html>

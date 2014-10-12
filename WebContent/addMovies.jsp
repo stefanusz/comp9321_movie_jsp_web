@@ -14,7 +14,14 @@
 	  $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' }).val();
 	  
 	});
+	
+	$( "#submit").click(function(){
+	   if($.trim($('#movieTitle').val()) == ''){
+	      alert('Input can not be left blank');
+	   }
+	});
 	</script>
+	
 <title>Add New Movies</title>
 </head>
 <body>
@@ -38,7 +45,7 @@
 <form action="control" method="POST" enctype="multipart/form-data">
 
 <table>
-<tr><td>Movie Title: <td><input type='text' name='movieTitle'> 
+<tr><td>Movie Title: <td><input type='text' name='movieTitle' id='movieTitle'> 
 <tr><td>Poster: <td><input type="file" name="poster" size="50"/>
 <tr><td>Actors(use ',' for multiple actors): <td><input type='text' name='actor'>
 <tr><td>Genre:<td>
@@ -67,7 +74,7 @@
 
 </table>
 <input type='hidden' value='notNull' name='viewAllMovies'>
-<input type='submit' value='Add' name='addMovies'>
+<input type='submit' value='Add' name='addMovies' id='submit' onclick="sendMessage()">
 
 </form>
 
