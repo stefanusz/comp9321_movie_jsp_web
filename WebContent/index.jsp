@@ -6,6 +6,36 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$( "#checker" ).click(function(event){
+			   if($.trim($("#search").val()) == ""){
+			      alert('Please fill in what you want to search');
+			      event.preventDefault();
+			   }
+			   
+			});
+		
+		$( "#login" ).click(function(event){
+			 
+			   if($.trim($("#username").val()) == ""){
+				      alert('Please type in your username');
+				      event.preventDefault();
+				   }
+			   else if($.trim($("#password").val()) == ""){
+				      alert('Please type in your password');
+				      event.preventDefault();
+				   }
+			   
+			});
+		
+	});
+	</script>
 <title>Home</title>
 </head>
 <body>
@@ -24,9 +54,9 @@
 	<c:when test='${empty username}'>
 		<form action="control" method="POST">
 		<table>
-			<tr><td>Username: <td><input type='text' name='username'></td></tr>
-			<tr><td>Password: <td><input type='password' name='password'></td></tr>
-			<tr><td><input type='submit' value='Login' name='login'></td></tr>
+			<tr><td>Username: <td><input id="username" type='text' name='username'></td></tr>
+			<tr><td>Password: <td><input id="password" type='password' name='password'></td></tr>
+			<tr><td><input id="login" type='submit' value='Login' name='login'></td></tr>
 		</table>
 		Not a member yet? <a href='register.jsp'>Register!</a>
 		<br>
@@ -56,8 +86,8 @@
 
 <table>
 <form action ="control" method = "post">
-<tr><td>Search: <td><input type='text' name='search'></td></tr>
-<tr><td><input type='submit' value='Search' name='doSearch'></td></tr>
+<tr><td>Search: <td><input id="search" type='text' name='search'></td></tr>
+<tr><td><input id="checker" type='submit' value='Search' name='doSearch'></td></tr>
 </form>
 </table>
 

@@ -5,6 +5,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$( "#checker" ).click(function(event){
+			   if($.trim($("#field").val()) == ""){
+			      alert('Please fill in the amenity');
+			      event.preventDefault();
+			   }
+			});
+		
+	});
+	</script>
 <title>Add New Amenities</title>
 </head>
 <body>
@@ -17,10 +33,10 @@
 
 <form action="control" method="POST">
 <table>
-<tr><td>Amenities Name: <td><input type='text' name='amenitiesName'> 
+<tr><td>Amenities Name: <td><input id="field" type='text' name='amenitiesName'> 
 
 </table>
-<input type='submit' value='Add' name='addAmenities'>
+<input id="checker" type='submit' value='Add' name='addAmenities'>
 
 </form>
 

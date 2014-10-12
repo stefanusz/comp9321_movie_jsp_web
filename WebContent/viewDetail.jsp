@@ -14,6 +14,17 @@
 	  $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' }).val();
 	  
 	});
+	
+	$(document).ready(function() {
+		
+		$( "#checker" ).click(function(event){
+			   if($.trim($("#textField").val()) == ""){
+			      alert('All the field can not be left blank');
+			      event.preventDefault();
+			   }
+			});
+		
+	});
 	</script>
 <title>Movie Detail</title>
 </head>
@@ -76,6 +87,8 @@
 	
 		<c:if test = "${not empty username && role == 'admin'}">
 			Add Show Times (<b>${movieDetail.title}</b>):
+			<br>
+			<br>
 			<form action="control" method="POST">
 			<table>
 				<c:forEach var="bean" items="${movieEmptyTimes}">
@@ -114,11 +127,11 @@
 				<input type="radio" name="rating" value="4">4
 				<input type="radio" name="rating" value="5">5
 				<br>
-				<textarea name="comment" cols="30" rows="7"></textarea>
+				<textarea id="textField" name="comment" cols="30" rows="7"></textarea>
 				<br>
 				<input type='hidden' name ='movieid' value='${movieDetail.movieID}'>
 				<input type='hidden' name ='viewDetail' value='notNull'>
-				<input type='submit' value='Comment' name='addComment'>
+				<input id ="checker" type='submit' value='Comment' name='addComment'>
 			</form>
 		</c:otherwise>
 	</c:choose>
