@@ -26,19 +26,7 @@
          \comp9321_movie\poster\
      </param-value> 
    </context-param>
-   
-<servlet>
-		<description>
-		</description>
-		<display-name>MailSenderServlet</display-name>
-		<servlet-name>MailSenderServlet</servlet-name>
-		<servlet-class>
-		ass2.MailSenderServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MailSenderServlet</servlet-name>
-		<url-pattern>/MailSender</url-pattern>
-	</servlet-mapping>
+
 	<resource-ref>
 		<description>
    			 Resource reference to a factory for javax.mail.Session

@@ -225,7 +225,7 @@ public class ViewCommand implements Command{
 				
 				ArrayList<BookingBean> myBooking = new ArrayList<BookingBean>();
 				
-				String getBookingQuery = "SELECT * FROM booking b JOIN showtimes s ON b.showtimeid=s.showtimeid JOIN resolvemovies rm ON s.resolvemoviesid=rm.resolvemoviesid JOIN cinema c ON rm.cinemaid=c.cinemaid JOIN movies m on rm.movieid=m.movieid WHERE b.userid="+userID;
+				String getBookingQuery = "SELECT * FROM booking b JOIN showtimes s ON b.showtimeid=s.showtimeid JOIN resolvemovies rm ON s.resolvemoviesid=rm.resolvemoviesid JOIN cinema c ON rm.cinemaid=c.cinemaid JOIN movies m on rm.movieid=m.movieid WHERE b.userid="+userID+"ORDER BY bookingID";
 		        ResultSet resultBooking= stmtBooking.executeQuery(getBookingQuery);
 		        while(resultBooking.next()){
 		        	BookingBean newBookingBean = new BookingBean();

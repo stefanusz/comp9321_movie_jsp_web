@@ -23,6 +23,11 @@ public class BookCommand implements Command{
 
 			String doBooking = request.getParameter("doBooking");
 			
+			
+			// *************************************************
+			// 				PROCESS OF BOOKING
+			// *************************************************
+			
 			if(doBooking != null){
 				String movieID = request.getParameter("movieid");
 				String movieTitle = request.getParameter("movietitle");
@@ -42,8 +47,14 @@ public class BookCommand implements Command{
 				}
 				
 				
-				String getShowTimeIDQuery ="SELECT * FROM showtimes s JOIN resolvemovies rm ON s.resolvemoviesid = rm.resolvemoviesid WHERE rm.cinemaid="+cinemaID+" AND rm.movieid = "+movieID+" AND s.time ='"+time+"'";
+				String getShowTimeIDQuery = "SELECT * FROM showtimes s JOIN resolvemovies rm ON s.resolvemoviesid = rm.resolvemoviesid WHERE rm.cinemaid="
+						+ cinemaID
+						+ " AND rm.movieid = "
+						+ movieID
+						+ " AND s.time ='" + time + "'";
+				
 				ResultSet resultShowTime = stmtShowTime.executeQuery(getShowTimeIDQuery);
+				
 				if(resultShowTime.next()){
 					showTimeID = resultShowTime.getInt("showtimeid");
 				}
@@ -77,6 +88,8 @@ public class BookCommand implements Command{
 			conn.close();
 			stmtCapacity.close();
 			stmtBoughtTickets.close();
+			stmtShowTime.close();
+			
 			
 		} catch (Exception e) {
 			
