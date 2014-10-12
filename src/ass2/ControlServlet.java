@@ -129,14 +129,14 @@ public class ControlServlet extends HttpServlet {
 			prevPage = "register.jsp";
 			Command command = commandMap.get("register");
 			isSuccess = command.execute(request,response);
-			request.getSession().setAttribute("message", "Successfully registered");
+			if(isSuccess) request.getSession().setAttribute("message", "Successfully registered");
 			nextPage = "index.jsp";
 		}
 		else if(addMovies != null){
 			prevPage = "addMovies.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
-			request.getSession().setAttribute("message", "Movies successfully added");
+			if(isSuccess) request.getSession().setAttribute("message", "Movies successfully added");
 			nextPage = "viewAllMovies.jsp";
 			
 			//REFRESH VIEWING ALL MOVIES
@@ -147,14 +147,14 @@ public class ControlServlet extends HttpServlet {
 			prevPage = "addCinema.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
-			request.getSession().setAttribute("message", "Cinema successfully added");
+			if(isSuccess) request.getSession().setAttribute("message", "Cinema successfully added");
 			nextPage = "index.jsp";
 		}
 		else if(addAmenities != null){
 			prevPage = "addAmenities.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
-			request.getSession().setAttribute("message", "Amenities successfully added");
+			if(isSuccess) request.getSession().setAttribute("message", "Amenities successfully added");
 			nextPage = "index.jsp";
 			
 		}
@@ -162,28 +162,28 @@ public class ControlServlet extends HttpServlet {
 			prevPage = "addActor.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
-			request.getSession().setAttribute("message", "Actor successfully added");
+			if(isSuccess) request.getSession().setAttribute("message", "Actor successfully added");
 			nextPage = "index.jsp";
 		}
 		else if(editProfile != null){
 			prevPage = "editProfile.jsp";
 			Command command = commandMap.get("edit");
 			isSuccess = command.execute(request,response);
-			request.getSession().setAttribute("message", "Profile successfully edited");
+			if(isSuccess) request.getSession().setAttribute("message", "Profile successfully edited");
 			nextPage = "editProfile.jsp";
 		}
 		else if(addGenre != null){
 			prevPage = "addGenre.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
-			request.getSession().setAttribute("message", "Genre successfully added");
+			if(isSuccess) request.getSession().setAttribute("message", "Genre successfully added");
 			nextPage = "index.jsp";
 		}
 		else if(addComment != null){
 			prevPage = "viewDetail.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
-			request.getSession().setAttribute("message", "Comment successfully added");
+			if(isSuccess) request.getSession().setAttribute("message", "Comment successfully added");
 			nextPage = "viewDetail.jsp";
 			
 			//REFRESH VIEWING DETAIL AND NOWSHOWING
@@ -194,7 +194,7 @@ public class ControlServlet extends HttpServlet {
 			prevPage = "viewDetail.jsp";
 			Command command = commandMap.get("add");
 			isSuccess = command.execute(request,response);
-			request.getSession().setAttribute("message", "ShowTimes successfully added");
+			if(isSuccess) request.getSession().setAttribute("message", "ShowTimes successfully added");
 			nextPage = "viewDetail.jsp";
 			
 			//REFRESH VIEWING DETAIL AND NOWSHOWING
@@ -215,10 +215,7 @@ public class ControlServlet extends HttpServlet {
 		
 		
 		if(!isSuccess){
-			message = "An error occurred!";
-			request.getSession().setAttribute("message", message);
 			nextPage = prevPage;
-		
 		}
 		
 		if(login != null || logout != null){

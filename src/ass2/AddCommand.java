@@ -67,15 +67,15 @@ public class AddCommand implements Command {
 				
 				//VALIDATION
 			    if(movieTitle.equals("") || actor.equals("") || director.equals("") || sypnosis.equals("") || ageRating.equals("")||releaseDate.equals("")){
-			    	System.out.println("empty");
+			    	request.getSession().setAttribute("message", "Please fill all fields");
 					return false;
 				}
 			    else if(sypnosisArray.length > 100){
-			    	System.out.println("sypnosis too long");
+			    	request.getSession().setAttribute("message", "Sypnosis is over 100 words");
 			    	return false;
 			    }
 			    else if(genres.length < 1){
-			    	System.out.println("genre empty");
+			    	request.getSession().setAttribute("message", "Please choose genre type");
 			    	return false;
 			    }
 			    //ResultSet result = stmt.executeQuery("SELECT USERNAME FROM users WHERE USERNAME = '"+username+"'");
@@ -164,6 +164,7 @@ public class AddCommand implements Command {
 				
 				//VALIDATION
 			    if(cinemaName.equals("") || location.equals("") || capacity.equals("")){
+			    	request.getSession().setAttribute("message", "Please fill all fields");
 					return false;
 				}
 
@@ -207,6 +208,7 @@ public class AddCommand implements Command {
 				
 				//VALIDATION
 			    if(amenitiesName.equals("")){
+			    	request.getSession().setAttribute("message", "Please enter the amenities");
 					return false;
 				}
 				String insertQuery = "INSERT INTO amenities VALUES (DEFAULT,'"
@@ -224,6 +226,7 @@ public class AddCommand implements Command {
 				
 				//VALIDATION
 			    if(actorName.equals("")){
+			    	request.getSession().setAttribute("message", "Please enter actor name");
 					return false;
 				}
 				String insertQuery = "INSERT INTO actor VALUES (DEFAULT,'"
@@ -241,6 +244,7 @@ public class AddCommand implements Command {
 				
 				//VALIDATION
 			    if(genreName.equals("")){
+			    	request.getSession().setAttribute("message", "Please enter genre type");
 					return false;
 				}
 				String insertQuery = "INSERT INTO genre VALUES (DEFAULT,'"
@@ -268,6 +272,7 @@ public class AddCommand implements Command {
 				
 				//VALIDATION
 			    if(rating.equals("")){
+			    	request.getSession().setAttribute("message", "Please enter the comment");
 					return false;
 				}
 				
