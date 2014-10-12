@@ -17,6 +17,10 @@ SELECT * FROM resolvemovies;
 SELECT * FROM booking;
 
 
+SELECT * FROM booking b JOIN showtimes s ON b.showtimeid=s.showtimeid JOIN resolvemovies rm ON s.resolvemoviesid=rm.resolvemoviesid JOIN cinema c ON rm.cinemaid=c.cinemaid JOIN movies m on rm.movieid=m.movieid WHERE b.userid=7;
+SELECT * FROM booking b JOIN showtimes s ON b.showtimeid=s.showtimeid WHERE userid=7;
+
+
 SELECT * FROM users WHERE username = 'ste';
 
 DELETE from users WHERE username ='mike';
@@ -25,7 +29,7 @@ SELECT HashBytes('MD5','admin');
 
 
 UPDATE users SET role = 'admin' WHERE username = 'admin';
-UPDATE users SET status = 'active' WHERE username = 'admin';
+UPDATE users SET status = 'active' WHERE username = 'q';
 
 SELECT name from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = 7;
 

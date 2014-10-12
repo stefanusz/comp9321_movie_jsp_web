@@ -32,10 +32,12 @@ public class ViewCommand implements Command{
 			stmtNowShowing = conn.createStatement();
 			stmtComingSoon = conn.createStatement();
 			stmtRating = conn.createStatement();
+			stmtBooking = conn.createStatement();
 			
 			String viewAllMovies =  request.getParameter("viewAllMovies");
 			String viewDetail =  request.getParameter("viewDetail");
 			String getShowTimes = request.getParameter("getShowTimes");
+			String viewBooking = request.getParameter("viewBooking");
 			
 
 			if (viewAllMovies != null) {
@@ -218,6 +220,33 @@ public class ViewCommand implements Command{
 				request.getSession().setAttribute("currentDate", date);
 			}
 			
+			else if(viewBooking != null){
+				String userID = (String) request.getSession().getAttribute("userid");
+				
+				ArrayList<BookingBean> myBooking = new ArrayList<BookingBean>();
+				
+				String getBookingQuery = "SELECT * FROM booking b JOIN showtimes s ON b.showtimeid=s.showtimeid JOIN resolvemovies rm ON s.resolvemoviesid=rm.resolvemoviesid JOIN cinema c ON rm.cinemaid=c.cinemaid JOIN movies m on rm.movieid=m.movieid WHERE b.userid="+userID;
+		        ResultSet resultBooking= stmtBooking.executeQuery(getBookingQuery);
+		        while(resultBooking.next()){
+		        	BookingBean newBookingBean = new BookingBean();
+		        	
+		        	String cinemaName = resultBooking.getString("name");
+		        	String movieTitle = resultBooking.getString("title");
+		        	String bookingDate = resultBooking.getString("bookingDate");
+		        	String time = resultBooking.getString("time");
+		        	int noOfTicket = resultBooking.getInt("noofticket");
+		        	
+		        	newBookingBean.setCinemaName(cinemaName);
+		        	newBookingBean.setMovieTitle(movieTitle);
+		        	newBookingBean.setBookingDate(bookingDate);
+		        	newBookingBean.setTime(time);
+		        	newBookingBean.setNoOfTicket(noOfTicket);
+		        	
+		        	myBooking.add(newBookingBean);
+		        }
+		        request.setAttribute("myBooking", myBooking);
+			}
+			
 			
 			//VIEW NOW SHOWING AND COMING SOON IN THE INDEX PAGE
 			ArrayList<MovieBean> nowShowing = new ArrayList<MovieBean>();
@@ -326,6 +355,7 @@ public class ViewCommand implements Command{
 			stmtNowShowing.close();
 			stmtComingSoon.close();
 			stmtRating.close();
+			stmtBooking.close();
 			
 			
 		} catch (Exception e) {
@@ -351,4 +381,5 @@ public class ViewCommand implements Command{
 	private Statement stmtNowShowing;
 	private Statement stmtComingSoon;
 	private Statement stmtRating;
+	private Statement stmtBooking;
 }

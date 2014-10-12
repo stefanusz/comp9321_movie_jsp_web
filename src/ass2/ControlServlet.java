@@ -42,11 +42,10 @@ public class ControlServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String viewAllMovies = request.getParameter("viewAllMovies");
 		String viewDetail = request.getParameter("viewDetail");
-
 		String activation = request.getParameter("activation");
-		System.out.println("printed activation"+ activation);
-
 		String doBooking = request.getParameter("doBooking");
+		String viewBooking = request.getParameter("viewBooking");
+		
 		
 
 		String nextPage = "index.jsp";
@@ -70,6 +69,11 @@ public class ControlServlet extends HttpServlet {
 			Command command = commandMap.get("book");
 			command.execute(request, response);
 			nextPage = "addBooking.jsp";
+		}
+		else if(viewBooking != null){
+			Command command = commandMap.get("view");
+			command.execute(request, response);
+			nextPage = "viewBooking.jsp";
 		}
 		//TO INDEX PAGE AT THE BEGINNING
 			Command command = commandMap.get("view");

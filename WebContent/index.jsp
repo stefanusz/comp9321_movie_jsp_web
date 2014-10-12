@@ -34,7 +34,8 @@
 	</c:when>
 	
 	<c:otherwise>
-		Welcome back, ${username}! <a href='editProfile.jsp'>(edit your profile)</a>
+		Welcome back, ${username}! <a href='editProfile.jsp'>(edit your profile)</a><br>
+		<a href='control?viewBooking=1'>My Booking</a><br>
 		<form action="control" method="POST" ><input type='submit' value='Logout' name='logout'></td></form>
 	</c:otherwise>
 </c:choose>
