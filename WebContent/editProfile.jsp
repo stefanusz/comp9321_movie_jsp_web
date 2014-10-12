@@ -10,7 +10,6 @@
 <body>
 <%@ include file="header.html"%>
 <h1>Edit Profile</h1>
-<a href='control'>HOME</a>
 
 <c:out value=" ${message} " />
 <% 

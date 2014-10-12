@@ -57,20 +57,25 @@ public class AddCommand implements Command {
 				director = director.toLowerCase();
 				sypnosis = sypnosis.toLowerCase();
 				ageRating = ageRating.toLowerCase();
-
 				
-				//request.setAttribute("movieTitle", movieTitle);
+				movieTitle = movieTitle.replace("'", " ");
+				director = director.replace("'", " ");
+				sypnosis = sypnosis.replace("'", " ");
+				ageRating = ageRating.replace("'", " ");
 				
 				String[] sypnosisArray = sypnosis.split(" ");
 				
 				//VALIDATION
 			    if(movieTitle.equals("") || actor.equals("") || director.equals("") || sypnosis.equals("") || ageRating.equals("")||releaseDate.equals("")){
+			    	System.out.println("empty");
 					return false;
 				}
 			    else if(sypnosisArray.length > 100){
+			    	System.out.println("sypnosis too long");
 			    	return false;
 			    }
 			    else if(genres.length < 1){
+			    	System.out.println("genre empty");
 			    	return false;
 			    }
 			    //ResultSet result = stmt.executeQuery("SELECT USERNAME FROM users WHERE USERNAME = '"+username+"'");
@@ -112,6 +117,9 @@ public class AddCommand implements Command {
 				String[] actors = actor.split(",");
 				for(String name : actors){
 					name = name.toLowerCase();
+					name = name.trim();
+					name = name.replace("'", " ");
+					
 					ResultSet getActor = stmtActor.executeQuery("SELECT * FROM actor WHERE name='"+name+"'");
 					int actorID = 0;
 					
@@ -147,6 +155,10 @@ public class AddCommand implements Command {
 				cinemaName = cinemaName.toLowerCase();
 				location = location.toLowerCase();
 				capacity = capacity.toLowerCase();
+
+				cinemaName = cinemaName.replace("'"," ");
+				location = location.replace("'"," ");
+				capacity = capacity.replace("'"," ");
 				
 				int capacityInt;
 				
@@ -190,6 +202,8 @@ public class AddCommand implements Command {
 			else if (addAmenities != null) {
 				String amenitiesName = request.getParameter("amenitiesName");
 				amenitiesName = amenitiesName.toLowerCase();
+				amenitiesName = amenitiesName.trim();
+				amenitiesName = amenitiesName.replace("'", " ");
 				
 				//VALIDATION
 			    if(amenitiesName.equals("")){
@@ -204,8 +218,9 @@ public class AddCommand implements Command {
 			//***************************************************************
 			else if (addActor != null) {
 				String actorName = request.getParameter("actorName");
-								
 				actorName = actorName.toLowerCase();
+				actorName = actorName.trim();
+				actorName = actorName.replace("'", " ");
 				
 				//VALIDATION
 			    if(actorName.equals("")){
@@ -221,6 +236,8 @@ public class AddCommand implements Command {
 			else if (addGenre != null) {
 				String genreName = request.getParameter("genreName");
 				genreName = genreName.toLowerCase();
+				genreName = genreName.trim();
+				genreName = genreName.replace("'", " ");
 				
 				//VALIDATION
 			    if(genreName.equals("")){
@@ -246,8 +263,8 @@ public class AddCommand implements Command {
 				int intMovieID = Integer.parseInt(movieID);
 				
 				comment = comment.toLowerCase();
-				
-				System.out.println(intRating +" "+intUserID+" "+intMovieID+" "+comment);
+				comment = comment.trim();
+				comment = comment.replace("'", " ");
 				
 				//VALIDATION
 			    if(rating.equals("")){
@@ -312,7 +329,6 @@ public class AddCommand implements Command {
 				String showTimeID = request.getParameter("showtimeid");
 				String noOfTickets = request.getParameter("nooftickets");
 				String userID = (String) request.getSession().getAttribute("userid");
-				System.out.println(bookingDate);
 				
 				String insertQuery = "INSERT INTO booking VALUES (DEFAULT,"+userID+","+noOfTickets+","+showTimeID+",'"+bookingDate+"')";
 				stmtInsert.execute(insertQuery);
