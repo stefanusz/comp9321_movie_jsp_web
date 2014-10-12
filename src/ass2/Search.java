@@ -22,6 +22,10 @@ public class Search implements Command {
 		String search = request.getParameter("search");
 
 		if (search != null) {
+			
+			if(search.equalsIgnoreCase("")){
+				return false;
+			}
 
 			try {
 				conn = DBConnectionFactory.getConnection();
