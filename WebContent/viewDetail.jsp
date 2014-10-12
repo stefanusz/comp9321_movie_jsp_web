@@ -23,7 +23,7 @@
 <%@ include file="header.html"%>
 
 <h2>${movieDetail.title}</h2>
-<img src="${movieDetail.poster}">
+<img src="${movieDetail.poster}" height="300" width="150" >
 <table>
 <tr><td><b>Actors:</b><td><c:forEach var="actor" items="${movieDetail.actor}">
 							${actor}  
