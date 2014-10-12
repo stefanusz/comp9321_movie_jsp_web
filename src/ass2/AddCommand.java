@@ -2,13 +2,9 @@ package ass2;
 
 import java.io.File;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -16,18 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.derby.client.am.Decimal;
 
 @MultipartConfig
 public class AddCommand implements Command {
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean execute(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
 			conn = DBConnectionFactory.getConnection();
-			stmt = conn.createStatement();
+			stmtInsert = conn.createStatement();
+			stmtActor = conn.createStatement();
+			stmtActor2 = conn.createStatement();
+			stmtCinema = conn.createStatement();
+			stmtMovies = conn.createStatement();
+			stmtResolveMovies = conn.createStatement();
 
 			String addMovies =  request.getParameter("addMovies");
 			String addCinema = request.getParameter("addCinema");
@@ -76,10 +75,10 @@ public class AddCommand implements Command {
 						+ movieTitle + "','" + imagePath + "','" + director
 						+ "','" + sypnosis + "','" + ageRating + "','"+releaseDate+"')";
 				
-				stmt.execute(insertQuery);
+				stmtInsert.execute(insertQuery);
 				
 				//GET THE NEWEST MOVIEID
-				ResultSet movieSet = stmt.executeQuery("SELECT * FROM movies WHERE title='"+movieTitle+"'");
+				ResultSet movieSet = stmtMovies.executeQuery("SELECT * FROM movies WHERE title='"+movieTitle+"'");
 				int movieID = 0;
 				while(movieSet.next()){
 					 movieID = movieSet.getInt("movieid");
@@ -89,22 +88,20 @@ public class AddCommand implements Command {
 				for(String genre : genres){
 					int genreID = Integer.parseInt(genre);
 					insertQuery = "INSERT INTO resolvegenre VALUES (" + movieID + "," + genreID + ")";
-					stmt.execute(insertQuery);
+					stmtInsert.execute(insertQuery);
 				}
 				
 				//INSERT INTO RESOLVEACTOR
 				String[] actors = actor.split(",");
 				for(String name : actors){
 					name = name.toLowerCase();
-					Statement stmtActor = conn.createStatement();
 					ResultSet getActor = stmtActor.executeQuery("SELECT * FROM actor WHERE name='"+name+"'");
 					int actorID = 0;
 					
 					if(!getActor.next()){
-						stmt.execute("INSERT INTO actor VALUES (DEFAULT,'"+name+"')");
+						stmtInsert.execute("INSERT INTO actor VALUES (DEFAULT,'"+name+"')");
 		
 						//GET THE NEWEST actorID
-						Statement stmtActor2 = conn.createStatement();
 						ResultSet getActorID = stmtActor2.executeQuery("SELECT * FROM actor WHERE name='"+name+"'");
 						
 						while(getActorID.next()){
@@ -115,7 +112,7 @@ public class AddCommand implements Command {
 						actorID = getActor.getInt("actorid");
 					}
 					
-					stmt.execute("INSERT INTO resolveactor VALUES ("+movieID+","+actorID+")");
+					stmtInsert.execute("INSERT INTO resolveactor VALUES ("+movieID+","+actorID+")");
 					
 				}
 
@@ -145,13 +142,13 @@ public class AddCommand implements Command {
 					String insertQuery = "INSERT INTO cinema VALUES (DEFAULT,'"
 							+ cinemaName + "','" + location + "',"
 							+ capacityInt + ")";
-					stmt.execute(insertQuery);
+					stmtInsert.execute(insertQuery);
 				} catch (NumberFormatException e) {
 					return false;
 				}
 				
 				//GET THE NEWEST cinemaID
-				ResultSet cinemaSet = stmt.executeQuery("SELECT * FROM cinema WHERE name='"+cinemaName+"'");
+				ResultSet cinemaSet = stmtCinema.executeQuery("SELECT * FROM cinema WHERE name='"+cinemaName+"'");
 				int cinemaID = 0;
 				while(cinemaSet.next()){
 					 cinemaID = cinemaSet.getInt("cinemaid");
@@ -161,7 +158,7 @@ public class AddCommand implements Command {
 				for(String amenity : amenities){
 					int amenitiesID = Integer.parseInt(amenity);
 					String insertQuery = "INSERT INTO resolveamenities VALUES (" + cinemaID + "," + amenitiesID + ")";
-					stmt.execute(insertQuery);
+					stmtInsert.execute(insertQuery);
 				}
 				
 				
@@ -177,7 +174,7 @@ public class AddCommand implements Command {
 				}
 				String insertQuery = "INSERT INTO amenities VALUES (DEFAULT,'"
 						+ amenitiesName + "')";
-				stmt.execute(insertQuery);
+				stmtInsert.execute(insertQuery);
 			}
 			else if (addActor != null) {
 				String actorName = request.getParameter("actorName");
@@ -190,7 +187,7 @@ public class AddCommand implements Command {
 				}
 				String insertQuery = "INSERT INTO actor VALUES (DEFAULT,'"
 						+ actorName +"')";
-				stmt.execute(insertQuery);
+				stmtInsert.execute(insertQuery);
 			}
 			else if (addGenre != null) {
 				String genreName = request.getParameter("genreName");
@@ -202,7 +199,7 @@ public class AddCommand implements Command {
 				}
 				String insertQuery = "INSERT INTO genre VALUES (DEFAULT,'"
 						+ genreName + "')";
-				stmt.execute(insertQuery);
+				stmtInsert.execute(insertQuery);
 			}
 			else if (addComment != null) {
 				
@@ -226,17 +223,15 @@ public class AddCommand implements Command {
 				}
 				
 				String insertQuery = "INSERT INTO comment VALUES (DEFAULT,"+intMovieID+","+intUserID+",'"+comment+"',"+intRating+".0)";
-				stmt.execute(insertQuery);
+				stmtInsert.execute(insertQuery);
 				
 				
 			}
 			else if (addShowTimes != null) {
-		        Statement stmtCinema = conn.createStatement();
 		        String getCinemaQuery = "SELECT * FROM cinema";
 		        ResultSet resultCinema= stmtCinema.executeQuery(getCinemaQuery);
 		        while(resultCinema.next()){
 		        	String cinemaID = resultCinema.getString("cinemaid");
-		        	String cinemaName = resultCinema.getString("name");
 		        	
 		        	String[] showTimes = request.getParameterValues(cinemaID);
 		        	if(showTimes == null){
@@ -248,7 +243,6 @@ public class AddCommand implements Command {
 		        	
 
 		        	//GET THE RESOLVEMOVIESID
-		        	Statement stmtResolveMovies = conn.createStatement();
 		        	String getResolveMoviesIDQuery = "SELECT * FROM resolvemovies WHERE movieID="+movieID+" AND cinemaid ="+cinemaID;
 			        ResultSet resultResolveMovies= stmtResolveMovies.executeQuery(getResolveMoviesIDQuery);
 			        
@@ -259,7 +253,7 @@ public class AddCommand implements Command {
 			        if(resolveMoviesID == 0){
 			        	//IF NOT, INSERT
 			        	String insertQuery = "INSERT INTO resolvemovies VALUES (DEFAULT,"+cinemaID+","+movieID+")";
-						stmt.execute(insertQuery);
+						stmtInsert.execute(insertQuery);
 						//THEN GET THE NEWEST RESOLVEMOVIESID
 						resultResolveMovies= stmtResolveMovies.executeQuery(getResolveMoviesIDQuery);
 				        if(resultResolveMovies.next()){
@@ -269,7 +263,7 @@ public class AddCommand implements Command {
 			        
 			        for(String time : showTimes){
 			        	String insertQuery = "INSERT INTO showtimes VALUES (DEFAULT,"+resolveMoviesID+",'"+time+"')";
-						stmt.execute(insertQuery);
+						stmtInsert.execute(insertQuery);
 		        	}
 			        
 		        }
@@ -283,12 +277,18 @@ public class AddCommand implements Command {
 				System.out.println(bookingDate);
 				
 				String insertQuery = "INSERT INTO booking VALUES (DEFAULT,"+userID+","+noOfTickets+","+showTimeID+",'"+bookingDate+"')";
-				stmt.execute(insertQuery);
+				stmtInsert.execute(insertQuery);
 				
 	        }
 
 
 			conn.close();
+			stmtInsert.close();
+			stmtActor.close();
+			stmtActor2.close();
+			stmtCinema.close();
+			stmtMovies.close();
+			stmtResolveMovies.close();
 			return true;
 
 		} catch (Exception e) {
@@ -312,5 +312,10 @@ public class AddCommand implements Command {
 	}
 
 	private Connection conn;
-	private Statement stmt;
+	private Statement stmtInsert;
+	private Statement stmtActor;
+	private Statement stmtActor2;
+	private Statement stmtCinema;
+	private Statement stmtMovies;
+	private Statement stmtResolveMovies;
 }

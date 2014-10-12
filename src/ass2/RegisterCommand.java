@@ -69,7 +69,7 @@ public class RegisterCommand implements Command{
 			//SENDING OF EMAIL ENDS HERE.			
 			
 			conn.close();
-			
+			stmt.close();
 			
 		} catch (Exception e) {
 			

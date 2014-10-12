@@ -3,16 +3,11 @@ package ass2;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import common.ServiceLocatorException;
-
 
 public class EditCommand implements Command{
 
@@ -64,20 +59,8 @@ public class EditCommand implements Command{
 		    }
 		    
 		    
-		    
-		    
-		    
-		    /*System.out.println(oldPassword);
-		    System.out.println(newPassword);
-		    System.out.println(newPassword2);*/
-		    
-		    
-		    
 		    //UPDATE PASSWORD
-		 
 		    if(!oldPassword.equals("") || !newPassword.equals("") || !newPassword2.equals("")){ //if any of them is not empty
-		    	
-		    	
 	    		if(dbPassword.equals(hashing(oldPassword))){
 		    		if(newPassword.equals(newPassword2)){
 		    			String updateQuery = "UPDATE users SET password='"+hashing(newPassword)+"' WHERE username='"+username+"'"; 
@@ -90,13 +73,10 @@ public class EditCommand implements Command{
 		    	else{
 		    		return false;
 		    	}
-		    	
-		    	
 		    }
 			
 		    
 		    //UPDATE OTHER DATA
-
 			String updateQuery = "UPDATE users SET first_name='"+firstName+"',last_name='"+lastName+"',nickname='"+nickname+"',email='"+email+"' WHERE username='"+username+"'"; 
 			stmt.execute(updateQuery);
 			
@@ -108,6 +88,7 @@ public class EditCommand implements Command{
 			
 			
 			conn.close();
+			stmt.close();
 			
 		} catch (Exception e) {
 			
