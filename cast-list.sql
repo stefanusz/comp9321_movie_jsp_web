@@ -29,7 +29,7 @@ SELECT HashBytes('MD5','admin');
 
 
 UPDATE users SET role = 'admin' WHERE username = 'admin';
-UPDATE users SET status = 'active' WHERE username = 'admin';
+UPDATE users SET status = 'active' WHERE username = 'test';
 
 SELECT name from resolvegenre r JOIN genre g ON g.genreid = r.genreid WHERE movieid = 7;
 

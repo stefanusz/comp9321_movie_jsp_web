@@ -59,7 +59,7 @@ public class BookCommand implements Command{
 					showTimeID = resultShowTime.getInt("showtimeid");
 				}
 				
-				String getBoughtTicketsQuery ="SELECT SUM(noofticket) AS totalbought FROM booking WHERE showtimeid="+showTimeID;
+				String getBoughtTicketsQuery ="SELECT SUM(noofticket) AS totalbought FROM booking WHERE showtimeid="+showTimeID+" AND bookingdate='"+bookingDate+"'";
 				ResultSet resultBoughtTickets = stmtBoughtTickets.executeQuery(getBoughtTicketsQuery);
 				if(resultBoughtTickets.next()){
 					 boughtTickets = resultBoughtTickets.getInt("totalbought");
