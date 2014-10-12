@@ -43,6 +43,15 @@
 
 <br>
 <br>
+<c:if test="${role == 'admin'}">
+	<a href='addMovies.jsp'>Add Movies</a><br>
+		<a href='addActor.jsp'>Add Actor</a><br>
+	<a href='addGenre.jsp'>Add Genre</a><br>
+		<a href='addCinema.jsp'>Add Cinema</a><br>
+		<a href='addAmenities.jsp'>Add Amenities</a><br>
+	
+</c:if>
+<br>
 
 <table>
 <form action ="control" method = "post">
@@ -50,8 +59,9 @@
 <tr><td><input type='submit' value='Search' name='doSearch'></td></tr>
 </form>
 </table>
+<br>
 
-Now Showing:
+<h2>Now Showing:</h2>
 <table>
 <tr><th>Poster<th>Title<th>Rating
 
@@ -60,17 +70,15 @@ Now Showing:
 </c:forEach>
 
 </table>
+
+
 <a href='control?viewAllMovies=1'>View All</a>
 <br>
 <br>
 
 <br>
 
-Coming Soon:
-<table>
-
-</table>
-
+<h2>Coming Soon:</h2>
 <table>
 <tr><th>Poster<th>Title<th>Rating<th>Release date
 

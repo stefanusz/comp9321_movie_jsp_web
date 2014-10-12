@@ -19,23 +19,14 @@
 </head>
 <body>
 <%@ include file="header.html"%>
-<h1>Add New Movies</h1>
 
+<h1>Add New Movies</h1>
 
 <%@ include file="headerForm.jsp"%>
 
 
-
-<c:out value=" ${message} " />
-<% 
-	request.getSession().setAttribute("message", "");
-%>
-
-
-
 <%@ page import="java.sql.*" %>
 <%@ page import="ass2.*" %>
-
 
 <%
 	Connection conn = DBConnectionFactory.getConnection();
@@ -79,6 +70,8 @@
 <input type='submit' value='Add' name='addMovies'>
 
 </form>
+
+
 
 </body>
 </html>
