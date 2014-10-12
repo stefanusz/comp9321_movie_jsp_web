@@ -78,7 +78,7 @@
 	  <option value='R18+'>R18+</option>
 	</select>
 	
-<tr><td>Release Date: <td> <input id="textField" type="text" name='releaseDate' id="datepicker">
+<tr><td>Release Date: <td> <input type="text" name='releaseDate' id="datepicker">
 
 </table>
 <input type='hidden' value='notNull' name='viewAllMovies'>

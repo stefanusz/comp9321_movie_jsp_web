@@ -69,7 +69,7 @@
 		<table>
 		<tr><th>Poster<th>Title<th>Rating
 		<c:forEach var="data" items="${nowShowing}">
-			<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}
+			<tr><td><img src="${data.poster}" alt="capture_test" height="84" width="60"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}
 		</c:forEach>
 		</table>
 	</c:when>

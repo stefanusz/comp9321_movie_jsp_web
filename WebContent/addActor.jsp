@@ -5,6 +5,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$( "#checker" ).click(function(event){
+			   if($.trim($("#textField").val()) == ""){
+			      alert('All the field can not be left blank');
+			      event.preventDefault();
+			   }
+			});
+		
+	});
+	</script>
 <title>Add New Actor</title>
 </head>
 <body>
@@ -16,9 +32,9 @@
 
 <form action="control" method="POST">
 <table>
-<tr><td>Actor Name: <td><input type='text' name='actorName'>
+<tr><td>Actor Name: <td><input id="textField" type='text' name='actorName'>
 </table>
-<input type='submit' value='Add' name='addActor'>
+<input id= "checker" type='submit' value='Add' name='addActor'>
 
 </form>
 
