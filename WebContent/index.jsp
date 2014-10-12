@@ -43,14 +43,15 @@
 
 <br>
 <br>
+
 <c:if test="${role == 'admin'}">
 	<a href='addMovies.jsp'>Add Movies</a><br>
 		<a href='addActor.jsp'>Add Actor</a><br>
 	<a href='addGenre.jsp'>Add Genre</a><br>
 		<a href='addCinema.jsp'>Add Cinema</a><br>
-		<a href='addAmenities.jsp'>Add Amenities</a><br>
-	
+		<a href='addAmenities.jsp'>Add Amenities</a><br>	
 </c:if>
+
 <br>
 
 <table>
@@ -59,34 +60,47 @@
 <tr><td><input type='submit' value='Search' name='doSearch'></td></tr>
 </form>
 </table>
+
 <br>
 
 <h2>Now Showing:</h2>
-<table>
-<tr><th>Poster<th>Title<th>Rating
-
-<c:forEach var="data" items="${nowShowing}">
-	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}
-</c:forEach>
-
-</table>
+<c:choose>
+	<c:when test='${not empty nowShowing}'>
+		<table>
+		<tr><th>Poster<th>Title<th>Rating
+		<c:forEach var="data" items="${nowShowing}">
+			<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}
+		</c:forEach>
+		</table>
+	</c:when>
+	
+	<c:otherwise>
+		No movies available at the moment.<br> 
+	</c:otherwise>
+</c:choose>
 
 
 <a href='control?viewAllMovies=1'>View All</a>
 <br>
 <br>
-
 <br>
 
 <h2>Coming Soon:</h2>
-<table>
-<tr><th>Poster<th>Title<th>Rating<th>Release date
+<c:choose>
+	<c:when test='${not empty nowShowing}'>
+		<table>
+		<tr><th>Poster<th>Title<th>Rating<th>Release date
+		<c:forEach var="data" items="${comingSoon}">
+			<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}<td>${data.releaseDate}
+		</c:forEach>
+		</table>
+	</c:when>
+	
+	<c:otherwise>
+		No movies available at the moment.<br> 
+	</c:otherwise>
+</c:choose>
 
-<c:forEach var="data" items="${comingSoon}">
-	<tr><td><img src="${data.poster}" alt="capture_test" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}<td>${data.releaseDate}
-</c:forEach>
-
-</table>
 
 </body>
 </html>
