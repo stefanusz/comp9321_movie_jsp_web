@@ -69,7 +69,7 @@
 		<table>
 		<tr><th>Poster<th>Title<th>Rating
 		<c:forEach var="data" items="${nowShowing}">
-			<tr><td><img src="${data.poster}" alt="capture_test" height="100" width="74"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}
+			<tr><td><img src="${data.poster}" alt="capture_test" height="100" width="67"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}
 		</c:forEach>
 		</table>
 	</c:when>
@@ -91,7 +91,7 @@
 		<table>
 		<tr><th>Poster<th>Title<th>Rating<th>Release date
 		<c:forEach var="data" items="${comingSoon}">
-			<tr><td><img src="${data.poster}" alt="capture_test" height="100" width="74"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}<td>${data.releaseDate}
+			<tr><td><img src="${data.poster}" alt="capture_test" height="100" width="67"><td><a href='control?viewDetail=1&movieid=${data.movieID}'>${data.title}</a><td>${data.ratingString}<td>${data.releaseDate}
 		</c:forEach>
 		</table>
 	</c:when>
