@@ -52,10 +52,6 @@ public class Search implements Command {
 					movies.setDirector(result.getString("director"));
 					movies.setAgeRating(result.getString("ageRating"));
 
-					System.out.println("movie id is "+ movieID);
-					System.out.println("movie title is "+ result.getString("title"));
-					System.out.println("movie poster is "+ result.getString("poster"));
-					System.out.println("movie director is "+ result.getString("director"));
 					
 			        String getActorQuery = "SELECT name FROM resolveactor r JOIN actor a ON a.actorid = r.actorid WHERE movieid = " + movieID;
 			        ResultSet result2 = stmt2.executeQuery(getActorQuery);
@@ -63,8 +59,6 @@ public class Search implements Command {
 			        while(result2.next()){
 			        	
 			        	String actorName = result2.getString("name");
-			        	
-						System.out.println("actor "+ result2.getString("name"));
 
 			        	movies.setActor(actorName);
 			        	
@@ -77,8 +71,6 @@ public class Search implements Command {
 					while(result3.next()){
 			        	
 			        	String genre = result3.getString("name");
-			        	
-						System.out.println("genre "+ result3.getString("name"));
 
 			        	movies.setGenre(genre);
 			        	

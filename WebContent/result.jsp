@@ -5,6 +5,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$( "#checker" ).click(function(event){
+			   if($.trim($("#search").val()) == ""){
+			      alert('Please fill in what you want to search');
+			      event.preventDefault();
+			   }
+			});
+		
+	});
+	</script>
 <title>Result</title>
 </head>
 <body>
@@ -12,13 +28,21 @@
 
 <%@ include file="header.html"%>
 <h2>Search Results:</h2>
+
+<table>
+<form action ="control" method = "post">
+<tr><td>Search: <td><input id="search" type='text' name='search'></td></tr>
+<tr><td><input id="checker" type='submit' value='Search' name='doSearch'></td></tr>
+</form>
+</table>
+
 <c:choose>
 	<c:when test="${not empty searchResult}">
 		<table>
 		<tr><th>Poster<th>Title<th>Genre<th>Actors<th>Rating
 		
 		<c:forEach var="result" items="${searchResult}">
-			<tr><td><img src="${result.poster}" alt="${result.poster}" height="42" width="42"><td><a href='control?viewDetail=1&movieid=${result.movieID}'>${result.title}</a><td>
+			<tr><td><img src="${result.poster}" alt="${result.poster}" height="100" width="67"><td><a href='control?viewDetail=1&movieid=${result.movieID}'>${result.title}</a><td>
 				<c:forEach var="genre" items="${result.genre}">
 					${genre} <br>
 				</c:forEach>	
@@ -36,7 +60,5 @@
 	</c:otherwise>
 </c:choose>
 
-
-<a href='index.jsp'>HOME</a>
 </body>
 </html>
