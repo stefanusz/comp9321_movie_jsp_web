@@ -46,16 +46,18 @@ public class EditCommand implements Command{
 		    
 		    //VALIDATION
 		    if(firstName.equals("") || nickname.equals("") || email.equals("")){
+		    	request.getSession().setAttribute("message", "All fields must be filled");
 				return false;
 			}
 		    sqlQuery = "SELECT * FROM users WHERE email = '" +email+"'";
 			ResultSet checkEmail = stmt.executeQuery(sqlQuery);
-			int emailCounter = 0;
-		    while (checkEmail.next()) {
-		        emailCounter++;
-		    }
-		    if(emailCounter > 1){
-		    	return false;
+			
+		    if (checkEmail.next()) {
+		    	String dbUser = checkEmail.getString("username");
+		    	if(!dbUser.equals(username)){
+		    		request.getSession().setAttribute("message", "Email already exists");
+			    	return false;
+		    	}
 		    }
 		    
 		    
@@ -67,10 +69,12 @@ public class EditCommand implements Command{
 		    			stmt.executeUpdate(updateQuery);
 		    		}
 		    		else{
+		    			request.getSession().setAttribute("message", "Password and Re-type password not the same");
 		    			return false;
 		    		}
 		    	}
 		    	else{
+		    		request.getSession().setAttribute("message", "Old password is wrong");
 		    		return false;
 		    	}
 		    }

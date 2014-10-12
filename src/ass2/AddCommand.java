@@ -27,6 +27,7 @@ public class AddCommand implements Command {
 			stmtCinema = conn.createStatement();
 			stmtMovies = conn.createStatement();
 			stmtResolveMovies = conn.createStatement();
+			stmtValidation= conn.createStatement();
 
 			String addMovies = request.getParameter("addMovies");
 			String addCinema = request.getParameter("addCinema");
@@ -78,10 +79,11 @@ public class AddCommand implements Command {
 			    	request.getSession().setAttribute("message", "Please choose genre type");
 			    	return false;
 			    }
-			    //ResultSet result = stmt.executeQuery("SELECT USERNAME FROM users WHERE USERNAME = '"+username+"'");
-				//if(result.next()){
-			    //	return false;
-				//}
+			    ResultSet result = stmtValidation.executeQuery("SELECT * FROM movies WHERE title = '"+movieTitle+"'");
+				if(result.next()){
+					request.getSession().setAttribute("message", "Title already exists");
+			    	return false;
+				}
 			    
 			    // TESTING UPLOAD OF FILE.
 				Part filePart = request.getPart("poster");
@@ -211,6 +213,12 @@ public class AddCommand implements Command {
 			    	request.getSession().setAttribute("message", "Please enter the amenities");
 					return false;
 				}
+			    ResultSet result = stmtValidation.executeQuery("SELECT * FROM amenities WHERE name = '"+amenitiesName+"'");
+				if(result.next()){
+					request.getSession().setAttribute("message", "Amenities already exists");
+			    	return false;
+				}
+				
 				String insertQuery = "INSERT INTO amenities VALUES (DEFAULT,'"
 						+ amenitiesName + "')";
 				stmtInsert.execute(insertQuery);
@@ -229,6 +237,12 @@ public class AddCommand implements Command {
 			    	request.getSession().setAttribute("message", "Please enter actor name");
 					return false;
 				}
+			    ResultSet result = stmtValidation.executeQuery("SELECT * FROM actor WHERE name = '"+actorName+"'");
+				if(result.next()){
+					request.getSession().setAttribute("message", "Actor already exists");
+			    	return false;
+				}
+				
 				String insertQuery = "INSERT INTO actor VALUES (DEFAULT,'"
 						+ actorName +"')";
 				stmtInsert.execute(insertQuery);
@@ -247,6 +261,12 @@ public class AddCommand implements Command {
 			    	request.getSession().setAttribute("message", "Please enter genre type");
 					return false;
 				}
+			    ResultSet result = stmtValidation.executeQuery("SELECT * FROM genre WHERE name = '"+genreName+"'");
+				if(result.next()){
+					request.getSession().setAttribute("message", "Genre already exists");
+			    	return false;
+				}
+				
 				String insertQuery = "INSERT INTO genre VALUES (DEFAULT,'"
 						+ genreName + "')";
 				stmtInsert.execute(insertQuery);
@@ -348,6 +368,7 @@ public class AddCommand implements Command {
 			stmtCinema.close();
 			stmtMovies.close();
 			stmtResolveMovies.close();
+			stmtValidation.close();
 			return true;
 
 		} catch (Exception e) {
@@ -377,4 +398,5 @@ public class AddCommand implements Command {
 	private Statement stmtCinema;
 	private Statement stmtMovies;
 	private Statement stmtResolveMovies;
+	private Statement stmtValidation;
 }

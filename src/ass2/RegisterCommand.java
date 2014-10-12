@@ -37,17 +37,21 @@ public class RegisterCommand implements Command{
 		    
 		    //VALIDATION
 		    if(username.equals("") || firstName.equals("") || nickname.equals("") || email.equals("")){
+		    	request.getSession().setAttribute("message", "All fields must be filled");
 				return false;
 			}
 			if(!password.equals(password2)){
+				request.getSession().setAttribute("message", "Re-type password is not the same");
 				return false;
 			}
 			ResultSet result = stmt.executeQuery("SELECT USERNAME FROM users WHERE USERNAME = '"+username+"'");
 			if(result.next()){
+				request.getSession().setAttribute("message", "Username already exists");
 				return false;
 			}
 			result = stmt.executeQuery("SELECT EMAIL FROM users WHERE EMAIL = '"+email+"'");
 			if(result.next()){
+				request.getSession().setAttribute("message", "Email already exists");
 				return false;
 			}
 			
